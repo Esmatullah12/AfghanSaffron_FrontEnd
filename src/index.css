@@ -1,3 +1,4 @@
+@import "tailwindcss";
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,9 +24,8 @@ a:hover {
 }
 
 body {
+  font-family: 'Nunito Sans', sans-serif;
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -33,6 +33,37 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+.navbar-icon-button {
+  all: unset;                   
+  display: inline-block;       
+  cursor: pointer;
+  line-height: 0;              
+  padding: 0 !important;        
+  margin: 0 !important;        
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+}
+
+.navbar-icon-button:focus {
+  outline: none !important;
+}
+
+.navbar-icon-button:hover,
+.navbar-icon-button:active {
+  background: transparent !important;
+}
+
+.navbar-icon-button:focus {
+  outline: none !important;
+}
+
+.navbar-icon-button:hover,
+.navbar-icon-button:active {
+  background: transparent !important;
 }
 
 button {
