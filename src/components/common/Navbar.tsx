@@ -1,18 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import logo from "../../assets/Logo.jpg";
 import { IoIosGlobe } from "react-icons/io";
+import { IoLogoInstagram, IoLogoTiktok } from "react-icons/io5";
 import { HiOutlineShoppingBag, HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { AiOutlineUser } from "react-icons/ai";
+import ReactCountryFlag from "react-country-flag";   // <-- NEW
 
 const Navbar: React.FC = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);          // mobile menu
+  const [langOpen, setLangOpen] = useState(false); // language dropdown
   const [isScrolled, setIsScrolled] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
 
-  // Scroll effect for sticky behavior
+  // Close dropdown when clicking outside
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+    const handleClickOutside = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
     };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -20,32 +32,33 @@ const Navbar: React.FC = () => {
   const navItems = [
     { label: "Products", href: "#" },
     { label: "About Us", href: "#" },
-    { label: "Blog", href: "#" }
+    { label: "Blog", href: "#" },
   ];
 
   const rightIcons = [
     { icon: IoIosGlobe, label: "Language", hasBadge: false },
     { icon: HiOutlineShoppingBag, label: "Shopping Bag", hasBadge: true, badgeCount: 3 },
-    { icon: AiOutlineUser, label: "User Account", hasBadge: false }
+    { icon: AiOutlineUser, label: "User Account", hasBadge: false },
+  ];
+
+  const languages = [
+    { code: "en", name: "English",   countryCode: "US" },
+    { code: "ms", name: "Malaysia",  countryCode: "MY" },
   ];
 
   return (
-    <header 
+    <header
       className={`w-full sticky top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? "bg-white/95 backdrop-blur-xl shadow-2xl border-b border-gray-200" 
+        isScrolled
+          ? "bg-white/95 backdrop-blur-xl shadow-2xl border-b border-gray-200"
           : "bg-white/90 backdrop-blur-lg shadow-lg"
       }`}
     >
       <nav className="w-full">
         <div className="flex items-center justify-between h-20 px-6 lg:px-12">
-          
-          {/* Left: Logo */}
+          {/* LOGO */}
           <div className="flex items-center flex-1 justify-start">
-            <a 
-              href="#" 
-              className="flex items-center space-x-3 group transition-all duration-300"
-            >
+            <a href="#" className="flex items-center space-x-3 group transition-all duration-300">
               <div className="relative">
                 <img src={logo} alt="" className="w-12 h-auto object-contain" />
               </div>
@@ -57,124 +70,180 @@ const Navbar: React.FC = () => {
             </a>
           </div>
 
-          {/* Center: Navigation Menu */}
+          {/* DESKTOP MENU */}
           <div className="hidden lg:flex flex-1 justify-center">
             <div className="flex items-center space-x-16">
               {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="relative group"
-                >
+                <a key={item.label} href={item.href} className="relative group">
                   <span className="font-normal text-xl text-gray-800 tracking-wide transition-all duration-300 group-hover:text-[#44155B] group-hover:font-medium">
                     {item.label}
                   </span>
-                  {/* Animated underline */}
                   <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E42F1C] transition-all duration-500 group-hover:w-full" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Right: Icons */}
-<div className="flex items-center flex-1 justify-end">
-  <div className="hidden lg:flex items-center space-x-14">
-  {rightIcons.map((item, index) => (
-    <button
-      key={item.label}
-      aria-label={item.label}
-      type="button"
-      className="relative group focus:outline-none"
-    >
-      {/* Centered icon with padding (clickable area) */}
-      <div className="p-3 rounded-2xl transition-all duration-300 hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
-        <item.icon
-          className={`
-            h-7 w-7 transition-all duration-300
-            ${index === 0
-              ? "text-gray-700 group-hover:text-[#44155B] group-active:text-[#44155B] group-hover:scale-110 group-active:scale-110"
-              : "text-gray-600 group-hover:text-[#44155B] group-active:text-[#44155B] group-hover:scale-105 group-active:scale-105"
-            }
-          `}
-        />
-      </div>
+          {/* RIGHT ICONS (DESKTOP) */}
+          <div className="flex items-center flex-1 justify-end">
+            <div className="hidden lg:flex items-center space-x-14">
+              {rightIcons.map((item, index) => {
+                const isLang = index === 0;
+                return (
+                  <div key={item.label} className="relative" ref={isLang ? langRef : null}>
+                    {/* ---- LANGUAGE BUTTON (Desktop) ---- */}
+                    {isLang ? (
+                      <div className="group">
+                        <button
+                          aria-label={item.label}
+                          type="button"
+                          className="p-3 rounded-2xl transition-all duration-300 hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+                          onClick={() => setLangOpen(!langOpen)} // click fallback
+                        >
+                          <item.icon
+                            className={`h-7 w-7 transition-all duration-300 text-gray-700 group-hover:text-[#44155B] group-hover:scale-110`}
+                          />
+                        </button>
 
-      {/* Badge - now perfectly on top-right of the ICON */}
-      {item.hasBadge && (
-        <span className="absolute top-1 right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-[#44155B] rounded-full border-2 border-white shadow-lg">
-          {item.badgeCount}
-        </span>
-      )}
-    </button>
-  ))}
-</div>
-  {/* Mobile Menu Button */}
-  <div className="lg:hidden flex items-center space-x-4">
-    {/* Shopping bag for mobile */}
-    <button 
-      aria-label="Shopping Bag" 
-      className="relative p-3 rounded-2xl transition-all duration-300 hover:bg-purple-50"
-    >
-      <HiOutlineShoppingBag className="h-6 w-6 पहले:text-gray-600 hover:text-[#44155B] transition-colors duration-300" />
-      <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-[#44155B] rounded-full border-2 border-white">
-        3
-      </span>
-    </button>
-    
-    <button 
-      onClick={() => setOpen(!open)} 
-      aria-label="Toggle menu" 
-      className="p-3 rounded-2xl transition-all duration-300 hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
-    >
-      {open ? (
-        <HiOutlineX className="h-6 w-6 text-gray-600 hover:text-[#44155B] transition-colors duration-300" />
-      ) : (
-        <HiOutlineMenu className="h-6 w-6 text-gray-600 hover:text-[#44155B] transition-colors duration-300" />
-      )}
-    </button>
-  </div>
-</div>
+                        {/* ---- LANGUAGE DROPDOWN (Desktop) ---- */}
+                        <div
+                          className={`absolute right-0 mt-2 w-56 origin-top-right transition-all duration-200 ease-out ${
+                            langOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
+                          } group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto`}
+                          style={{ top: "100%" }}
+                        >
+                          <div className="bg-white/95 backdrop-blur-xl rounded-xl shadow-xl border border-gray-200 py-2 overflow-hidden animate-in slide-in-from-top-2 fade-in">
+                            {languages.map((lang) => (
+                              <button
+                                key={lang.code}
+                                className="flex w-full items-center gap-3 px-4 py-3 text-left text-gray-800 hover:bg-purple-50 hover:text-[#44155B] transition-all duration-200"
+                                onClick={() => {
+                                  // TODO: language switch logic
+                                  setLangOpen(false);
+                                }}
+                              >
+                                <ReactCountryFlag
+                                  countryCode={lang.countryCode}
+                                  svg
+                                  style={{ width: "1.4em", height: "1.4em" }}
+                                  className="rounded-sm shadow-sm"
+                                />
+                                <span className="font-medium">{lang.name}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      /* ---- OTHER ICONS ---- */
+                      <button
+                        aria-label={item.label}
+                        type="button"
+                        className="relative group focus:outline-none"
+                      >
+                        <div className="p-3 rounded-2xl transition-all duration-300 hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
+                          <item.icon
+                            className={`h-7 w-7 transition-all duration-300 text-gray-600 group-hover:text-[#44155B] group-hover:scale-105`}
+                          />
+                        </div>
+
+                        {item.hasBadge && (
+                          <span className="absolute top-1 right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-[#44155B] rounded-full border-2 border-white">
+                            {item.badgeCount}
+                          </span>
+                        )}
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* MOBILE ICONS */}
+            <div className="lg:hidden flex items-center space-x-4">
+              {/* Language (mobile – click) */}
+              <div className="relative" ref={langRef}>
+                <button
+                  aria-label="Language"
+                  className="p-3 rounded-2xl transition-all duration-300 hover:bg-purple-50"
+                  onClick={() => setLangOpen(!langOpen)}
+                >
+                  <IoIosGlobe className="h-7 w-7 text-gray-600 hover:text-[#44155B] transition-colors duration-300" />
+                </button>
+
+                {/* Mobile dropdown */}
+                {langOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white/95 backdrop-blur-xl rounded-xl shadow-xl border border-gray-200 py-2 z-50 animate-in slide-in-from-top-2 fade-in">
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        className="flex w-full items-center gap-3 px-4 py-3 text-left text-gray-800 hover:bg-purple-50 hover:text-[#44155B] transition-all duration-200"
+                        onClick={() => {
+                          // TODO: language switch
+                          setLangOpen(false);
+                        }}
+                      >
+                        <ReactCountryFlag
+                          countryCode={lang.countryCode}
+                          svg
+                          style={{ width: "1.4em", height: "1.4em" }}
+                          className="rounded-sm shadow-sm"
+                        />
+                        <span className="font-medium">{lang.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Shopping Bag */}
+              <button aria-label="Shopping Bag" className="relative p-3 rounded-2xl transition-all duration-300 hover:bg-purple-50">
+                <HiOutlineShoppingBag className="h-7 w-7 text-gray-600 hover:text-[#44155B] transition-colors duration-300" />
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-[#44155B] rounded-full border-2 border-white">
+                  3
+                </span>
+              </button>
+
+              {/* Hamburger */}
+              <button
+                onClick={() => setOpen(!open)}
+                aria-label="Toggle menu"
+                className="p-3 rounded-2xl transition-all duration-300 hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+              >
+                {open ? (
+                  <HiOutlineX className="h-6 w-6 text-gray-600 hover:text-[#44155B] transition-colors duration-300" />
+                ) : (
+                  <HiOutlineMenu className="h-6 w-6 text-gray-600 hover:text-[#44155B] transition-colors duration-300" />
+                )}
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Mobile Menu Panel */}
+        {/* MOBILE MENU */}
         {open && (
           <div className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-gray-200 animate-in slide-in-from-top duration-300">
-            {/* Navigation Links */}
             <div className="px-6 py-6 space-y-6">
-              {navItems.map((item) => (
+              {[...navItems, { label: "Account", href: "#", icon: AiOutlineUser }].map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="block py-3 text-xl font-light text-gray-800 transition-all duration-300 hover:text-[#44155B] hover:font-medium hover:pl-4 border-l-4 border-transparent hover:border-[#44155B]"
+                  className="flex items-center gap-3 py-3 text-xl font-normal text-gray-800 transition-all duration-300 hover:text-[#44155B] hover:font-medium hover:pl-4 border-l-4 border-transparent hover:border-[#E42F1C]"
                   onClick={() => setOpen(false)}
                 >
-                  {item.label}
+                  <span>{item.label}</span>
                 </a>
               ))}
             </div>
 
-            {/* Mobile Action Buttons */}
             <div className="px-6 py-6 border-t border-gray-200 bg-gray-50/50">
-              <div className="flex items-center justify-around">
-                {rightIcons.map((item) => (
-                  <button 
-                    key={item.label}
-                    aria-label={item.label}
-                    className="flex flex-col items-center p-4 rounded-2xl transition-all duration-300 hover:bg-white hover:shadow-lg group"
-                  >
-                    <item.icon 
-                      className="h-7 w-7 text-gray-600 transition-all duration-300 group-hover:text-[#44155B] group-hover:scale-110 mb-2" 
-                    />
-                    <span className="text-sm font-light text-gray-600 group-hover:text-[#44155B]">
-                      {item.label.split(' ')[0]}
-                    </span>
-                    {item.hasBadge && (
-                      <span className="absolute top-2 right-6 inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-[#44155B] rounded-full">
-                        {item.badgeCount}
-                      </span>
-                    )}
-                  </button>
-                ))}
+              <div className="flex justify-center gap-6">
+                <a href="#" aria-label="Instagram" className="p-3 rounded-full hover:bg-white transition-all duration-300 group">
+                  <IoLogoInstagram className="h-9 w-9 text-gray-600 group-hover:text-[#44155B] transition-colors duration-300" />
+                </a>
+                <a href="#" aria-label="TikTok" className="p-3 rounded-full hover:bg-white transition-all duration-300 group">
+                  <IoLogoTiktok className="h-9 w-9 text-gray-600 group-hover:text-[#44155B] transition-colors duration-300" />
+                </a>
               </div>
             </div>
           </div>
