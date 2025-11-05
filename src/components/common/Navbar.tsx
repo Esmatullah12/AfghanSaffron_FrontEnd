@@ -29,8 +29,6 @@ const Navbar: React.FC = () => {
     { icon: AiOutlineUser, label: "User Account", hasBadge: false }
   ];
 
-  const hoverColor = "#44155B";
-
   return (
     <header 
       className={`w-full sticky top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -52,7 +50,7 @@ const Navbar: React.FC = () => {
                 <img src={logo} alt="" className="w-12 h-auto object-contain" />
               </div>
               <div className="flex flex-col">
-                <span className="font-lora text-2xl font-bold text-gray-900 tracking-tight">
+                <span className="lora text-2xl font-bold text-gray-900 tracking-tight">
                   Afghan Saffron
                 </span>
               </div>
@@ -62,17 +60,17 @@ const Navbar: React.FC = () => {
           {/* Center: Navigation Menu */}
           <div className="hidden lg:flex flex-1 justify-center">
             <div className="flex items-center space-x-16">
-              {navItems.map((item, index) => (
+              {navItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
                   className="relative group"
                 >
-                  <span className="font-normal text-2xl text-gray-800 tracking-wide transition-all duration-300 group-hover:text-[#44155B] group-hover:font-medium">
+                  <span className="font-normal text-xl text-gray-800 tracking-wide transition-all duration-300 group-hover:text-[#44155B] group-hover:font-medium">
                     {item.label}
                   </span>
                   {/* Animated underline */}
-                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#44155B] transition-all duration-500 group-hover:w-full" />
+                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E42F1C] transition-all duration-500 group-hover:w-full" />
                 </a>
               ))}
             </div>
@@ -86,34 +84,30 @@ const Navbar: React.FC = () => {
       key={item.label}
       aria-label={item.label}
       type="button"
-      className={`
-        navbar-icon-button
-        relative
-        group
-        focus:outline-none
-      `}
+      className="relative group focus:outline-none"
     >
-      <item.icon
-        className={`
-          h-7 w-7
-          transition-all duration-300
-          ${index === 0
-            ? "text-gray-700 group-hover:text-[#44155B] group-active:text-[#44155B] group-hover:scale-110 group-active:scale-110"
-            : "text-gray-600 group-hover:text-[#44155B] group-active:text-[#44155B] group-hover:scale-105 group-active:scale-105"
-          }
-        `}
-      />
+      {/* Centered icon with padding (clickable area) */}
+      <div className="p-3 rounded-2xl transition-all duration-300 hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
+        <item.icon
+          className={`
+            h-7 w-7 transition-all duration-300
+            ${index === 0
+              ? "text-gray-700 group-hover:text-[#44155B] group-active:text-[#44155B] group-hover:scale-110 group-active:scale-110"
+              : "text-gray-600 group-hover:text-[#44155B] group-active:text-[#44155B] group-hover:scale-105 group-active:scale-105"
+            }
+          `}
+        />
+      </div>
 
+      {/* Badge - now perfectly on top-right of the ICON */}
       {item.hasBadge && (
-        <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-[#44155B] rounded-full border-2 border-white shadow-lg">
+        <span className="absolute top-1 right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-[#44155B] rounded-full border-2 border-white shadow-lg">
           {item.badgeCount}
         </span>
       )}
     </button>
   ))}
 </div>
-
-
   {/* Mobile Menu Button */}
   <div className="lg:hidden flex items-center space-x-4">
     {/* Shopping bag for mobile */}
