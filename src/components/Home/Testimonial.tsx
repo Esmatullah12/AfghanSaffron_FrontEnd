@@ -58,7 +58,7 @@ const Testimonial: React.FC = () => {
     ));
 
   return (
-    <section className="py-20 bg-[#FFF8E6]">
+    <section className="py-20 bg-white">
       <h2 className="text-center text-4xl font-bold text-[#C78200] mb-12">
         What Our Customers Say
       </h2>
