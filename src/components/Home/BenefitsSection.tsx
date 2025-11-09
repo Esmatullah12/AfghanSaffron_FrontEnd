@@ -1,4 +1,3 @@
-import React from "react";
 import { IoDiamondOutline } from "react-icons/io5";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { GoVerified } from "react-icons/go";

@@ -10,8 +10,7 @@ const testimonials = [
   {
     id: 1,
     name: "Aisha Rahmani",
-    review:
-      "The aroma and color of this saffron is unlike anything I've bought before. Pure and authentic!",
+    review: "The aroma and color of this saffron is unlike anything I've bought before. Pure and!",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjDGMp734S91sDuUFqL51_xRTXS15iiRoHew&s",
     rating: 5,
     role: "Café Owner",
@@ -19,10 +18,9 @@ const testimonials = [
   {
     id: 2,
     name: "Chef Lorenzo",
-    review:
-      "Our desserts have elevated in taste and presentation since using this saffron. Highly recommend!",
+    review: "Our desserts have elevated in taste and presentation since using this saffron. Highly!",
     image: "https://static.vecteezy.com/system/resources/previews/060/231/338/non_2x/classic-chef-profile-illustration-with-hat-and-mustache-ideal-for-culinary-designs-vector.jpg",
-    rating: 5,
+    rating: 3,
     role: "Michelin Chef",
   },
   {
@@ -58,7 +56,7 @@ const Testimonial: React.FC = () => {
     ));
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20">
       <h2 className="text-center text-4xl font-bold text-[#C78200] mb-12">
         What Our Customers Say
       </h2>
@@ -72,36 +70,38 @@ const Testimonial: React.FC = () => {
           768: { slidesPerView: 2 },
           1280: { slidesPerView: 3 },
         }}
-        className="max-w-6xl mx-auto px-6"
+        className="max-w-6xl"
       >
         {testimonials.map((t) => (
-          <SwiperSlide key={t.id}>
-            <div className="bg-white rounded-3xl shadow-lg p-8 flex flex-col h-full border border-gray-100">
-              {/* Quote mark */}
-              <div className="text-[#5A00A3] text-6xl font-bold mb-4">”</div>
+         <SwiperSlide key={t.id}>
+  <div className="p-8 md:p-4  mb-6"> {/* This padding creates space for shadow */}
+    <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col h-full border border-gray-100 transition-all duration-300 hover:shadow-3xl hover:-translate-y-2">
+      {/* Quote mark */}
+      <div className="text-[#5A00A3] text-7xl font-bold mb-4 leading-none">”</div>
 
-              {/* Review */}
-              <p className="text-gray-800 text-lg font-medium leading-relaxed flex-grow">
-                {t.review}
-              </p>
+      {/* Review */}
+      <p className="text-gray-800 text-lg font-medium leading-relaxed flex-grow">
+        {t.review}
+      </p>
 
-              {/* Stars */}
-              <div className="flex mt-6">{renderStars(t.rating)}</div>
+      {/* Stars */}
+      <div className="flex mt-6">{renderStars(t.rating)}</div>
 
-              {/* User section */}
-              <div className="flex items-center gap-4 mt-8">
-                <img
-                  src={t.image}
-                  alt=""
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <h3 className="font-semibold text-gray-900">{t.name}</h3>
-                  <p className="text-gray-500 text-sm">{t.role}</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
+      {/* User section */}
+      <div className="flex items-center gap-4 mt-8">
+        <img
+          src={t.image}
+          alt={t.name}
+          className="w-14 h-14 rounded-full object-cover ring-4 ring-purple-100"
+        />
+        <div>
+          <h3 className="font-semibold text-gray-900 text-lg">{t.name}</h3>
+          <p className="text-gray-500 text-sm">{t.role}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</SwiperSlide>
         ))}
       </Swiper>
     </section>
