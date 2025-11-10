@@ -59,6 +59,17 @@ h1 {
   background: transparent !important;
 }
 
+.swiper-pagination-bullet {
+  background-color: #44155B !important;
+  opacity: 0.4;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #44155B !important; /* Active dot */
+  opacity: 1;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

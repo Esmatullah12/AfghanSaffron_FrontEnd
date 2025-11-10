@@ -3,14 +3,17 @@ import Hero from "../components/home/Hero"
 import BenefitsSection from "../components/home/BenefitsSection"
 import PRoductShowCase from "../components/home/ProductShowCase"
 import Testimonial from "../components/home/Testimonial"
+import AboutUs from "../components/home/AboutUs"
+
 const Home = () => {
     return (
         <div>
             <Navbar/>
             <Hero />
             <PRoductShowCase />
-            <BenefitsSection />
             <Testimonial />
+            <BenefitsSection />
+            <AboutUs />
         </div>
     )
 }
