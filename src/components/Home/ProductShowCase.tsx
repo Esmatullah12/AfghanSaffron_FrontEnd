@@ -83,7 +83,7 @@ const ProductShowCase: React.FC = () => {
                 <div className="absolute top-4 right-4 flex gap-3">
                   <button
                     onClick={() => toggleLike(product.id)}
-                    className="flex items-center justify-center bg-white p-2 rounded-full shadow-md w-10 h-10"
+                    className="flex items-center justify-center bg-white p-2 rounded-full shadow-md w-10 h-10 hover:bg-[#fcefeeff]"
                   >
                     {liked.includes(product.id) ? (
                       <FaHeart className="text-xl cursor-pointer" style={{ color: "#E42F1C" }} />
@@ -92,7 +92,7 @@ const ProductShowCase: React.FC = () => {
                     )}
                   </button>
 
-                  <button className="group w-10 h-10 relative bg-white flex items-center justify-center rounded-full shadow-md hover:shadow-lg transition">
+                  <button className="group w-10 h-10 relative bg-white flex items-center justify-center rounded-full shadow-md hover:shadow-lg transition  hover:bg-[#f2e0fcff]">
                     <HiOutlineShoppingBag className="text-2xl text-gray-800 transition-colors duration-300 group-hover:text-[#44155B] cursor-pointer" />
                     <FaPlus className="absolute rounded-full right-2 bottom-2 bg-white text-[12px] text-gray-800 shadow-sm transition-colors duration-300 group-hover:text-[#44155B] cursor-pointer" />
                   </button>
