@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FaPlus } from "react-icons/fa";
+import Button from "../common/Button";
 
 const products = [
   {
@@ -71,7 +72,7 @@ const ProductShowCase: React.FC = () => {
           {products.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-xl transition duration-300"
+              className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-sm transition duration-300"
             >
               <div className="relative">
                 <img
@@ -107,8 +108,7 @@ const ProductShowCase: React.FC = () => {
                   <span className="line-through text-gray-400 mr-2 text-sm">${product.oldPrice}</span>
                   <span className="text-red-600 font-bold text-lg">${product.price}</span>
                 </div>
-
-                <button className="bg-gray-900 text-white px-6 py-2 rounded-full text-sm hover:bg-black transition-all cursor-pointer">Buy Now</button>
+                <Button text="Buy Now"/>
               </div>
             </div>
           ))}

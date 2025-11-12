@@ -1,13 +1,10 @@
 import React from "react";
-import {
-  FaTiktok,
-  FaInstagram,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaInstagram, FaWhatsapp} from "react-icons/fa";
+import { SiTiktok } from "react-icons/si";
 import { FiPhone } from "react-icons/fi";
 import { LuMail } from "react-icons/lu";
-import { IoLocationOutline } from "react-icons/io5";
-import Logo from "../../assets/Logo.jpg"; // Update path if needed
+import { GrLocation } from "react-icons/gr";
+import Logo from "../../assets/Logo.png";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -25,10 +22,10 @@ const Footer: React.FC = () => {
               <img
                 src={Logo}
                 alt="AfghanSaffron Logo"
-                className="w-12 h-12 object-contain rounded-full shadow-md"
+                className="w-12 h-12 object-contain"
               />
               <h1 className="text-2xl font-bold">
-                Afghan<span className="text-[#CFA45C]">Saffron</span>
+                Afghan <span className="text-primary">Saffron</span>
               </h1>
             </div>
 
@@ -43,16 +40,16 @@ const Footer: React.FC = () => {
                 href="https://tiktok.com/@Esmatullah173"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#CFA45C] hover:scale-110 transition-transform"
+                className="text-primary hover:scale-110 transition-transform"
                 aria-label="TikTok"
               >
-                <FaTiktok size={26} />
+                <SiTiktok size={26} />
               </a>
               <a
                 href="https://instagram.com/Esmatullah173"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#CFA45C] hover:scale-110 transition-transform"
+                className="text-primary hover:scale-110 transition-transform"
                 aria-label="Instagram"
               >
                 <FaInstagram size={26} />
@@ -61,7 +58,7 @@ const Footer: React.FC = () => {
                 href="https://wa.me/93789123456"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#CFA45C] hover:scale-110 transition-transform"
+                className="text-primary hover:scale-110 transition-transform"
                 aria-label="WhatsApp"
               >
                 <FaWhatsapp size={26} />
@@ -75,27 +72,27 @@ const Footer: React.FC = () => {
 
           {/* Column 2: Explore Links */}
           <div className="flex flex-col items-center md:items-start">
-            <h4 className="text-sm font-bold text-[#44155B] mb-5 uppercase tracking-wider">
+            <h4 className="text-sm font-bold text-primary mb-5 uppercase tracking-wider">
               Explore
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <a href="#bestseller" className="hover:text-[#CFA45C] transition">
+                <a href="#bestseller" className="hover:text-primary transition">
                   Best Seller
                 </a>
               </li>
               <li>
-                <a href="#saffron" className="hover:text-[#CFA45C] transition">
+                <a href="#saffron" className="hover:text-primary transition">
                   Premium Saffron
                 </a>
               </li>
               <li>
-                <a href="#track" className="hover:text-[#CFA45C] transition">
+                <a href="#track" className="hover:text-primary transition">
                   Track Your Order
                 </a>
               </li>
               <li>
-                <a href="#about" className="hover:text-[#CFA45C] transition">
+                <a href="#about" className="hover:text-primary transition">
                   About Us
                 </a>
               </li>
@@ -109,21 +106,20 @@ const Footer: React.FC = () => {
             </h4>
             <div className="space-y-4 text-sm">
               <p className="flex items-start gap-2">
-                <IoLocationOutline className="text-[#CFA45C] mt-0.5" size={18} />
+                <GrLocation className="text-primary mt-0.5" size={20} />
                 <span>
                   Kabul, Afghanistan<br />
-                  <span className="text-xs text-gray-600">Herat Saffron Fields</span>
                 </span>
               </p>
               <p className="flex items-center gap-2">
-                <FiPhone className="text-[#CFA45C]" size={18} />
-                <a href="tel:+93789123456" className="hover:text-[#CFA45C]">
+                <FiPhone className="text-primary" size={18} />
+                <a href="tel:+93789123456" className="hover:text-primary">
                   +93 789 123 456
                 </a>
               </p>
               <p className="flex items-center gap-2">
-                <LuMail className="text-[#CFA45C]" size={18} />
-                <a href="mailto:hello@afghansaffron.com" className="hover:text-[#CFA45C]">
+                <LuMail className="text-primary" size={18} />
+                <a href="mailto:hello@afghansaffron.com" className="hover:text-primary">
                   hello@afghansaffron.com
                 </a>
               </p>
@@ -158,7 +154,7 @@ const Footer: React.FC = () => {
         <div className="mt-12 pt-6 border-t border-purple-300 text-center text-xs text-gray-600">
           <p>
             © {currentYear} <span className="font-bold text-[#44155B]">AfghanSaffron</span>. All rights reserved. 
-            | Proudly from <span className="text-[#CFA45C] font-medium">Afghanistan</span>
+            | Proudly from <span className="text-primary font-medium">Afghanistan</span>
           </p>
         </div>
       </div>

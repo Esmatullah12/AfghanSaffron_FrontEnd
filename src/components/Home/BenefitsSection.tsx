@@ -37,7 +37,7 @@ const BenefitsSection = () => {
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="p-8 bg-white rounded-2xl transition-shadow duration-300 hover:shadow-md"
+              className="p-8 bg-white rounded-2xl transition-shadow duration-300 border border-gray-200"
             >
               <div className="flex flex-col items-center text-center space-y-4">
                 {benefit.icon}

@@ -1,78 +1,40 @@
 @import "tailwindcss";
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@theme {
+  --color-primary: #44155B;
+  --color-secondary: #E42F1C;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-lora: "Lora", serif;
+  --font-nunitoSans: "Nunito Sans", sans-serif;
 }
 
+:root {
+  font-family: "Nunito Sans", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+}
 
 body {
-  font-family: 'Nunito Sans', sans-serif;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .navbar-icon-button {
-  all: unset;                   
-  display: inline-block;       
+  all: unset;
+  display: inline-block;
   cursor: pointer;
-  line-height: 0;              
-  padding: 0 !important;        
-  margin: 0 !important;        
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  outline: none !important;
-  @apply p-0 bg-transparent border-0 focus:outline-none;
-}
-
-.navbar-icon-button:focus {
-  outline: none !important;
-}
-
-.navbar-icon-button:hover,
-.navbar-icon-button:active {
-  background: transparent !important;
-}
-
-.navbar-icon-button:focus {
-  outline: none !important;
-}
-
-.navbar-icon-button:hover,
-.navbar-icon-button:active {
-  background: transparent !important;
+  line-height: 0;
 }
 
 .swiper-pagination-bullet {
-  background-color: #44155B !important;
+  background-color: var(--color-primary) !important;
   opacity: 0.4;
 }
 
 .swiper-pagination-bullet-active {
-  background-color: #44155B !important; /* Active dot */
+  background-color: var(--color-primary) !important;
   opacity: 1;
-}
-
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
 }

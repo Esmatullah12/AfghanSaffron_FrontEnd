@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import logo from "../../assets/Logo.jpg";
+import logo from "../../assets/Logo.png";
 import { IoIosGlobe } from "react-icons/io";
 import { IoLogoInstagram, IoLogoTiktok } from "react-icons/io5";
 import { HiOutlineShoppingBag, HiOutlineMenu, HiOutlineX } from "react-icons/hi";

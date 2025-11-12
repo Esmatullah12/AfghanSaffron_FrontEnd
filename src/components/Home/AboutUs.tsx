@@ -1,5 +1,6 @@
 import React from "react";
 import Kabul from "../../assets/aboutUs.png";
+import Button from "../common/Button";
 
 const AboutUs: React.FC = () => {
   return (
@@ -34,9 +35,7 @@ const AboutUs: React.FC = () => {
                 and authenticity — directly from our farms to your kitchen.
               </p>
               <div className="mt-8">
-                <button className="cursor-pointer bg-[#44155B] text-white px-8 py-3 rounded-full hover:bg-[#5E217D] transition duration-300 shadow-md">
-                  Discover Our Story
-                </button>
+                <Button text="Discover Our Story" />
               </div>
             </div>
           </div>
