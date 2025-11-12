@@ -5,12 +5,13 @@ import { FiPhone } from "react-icons/fi";
 import { LuMail } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
 import Logo from "../../assets/Logo.png";
+import Button from "./Button";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#f2e0fcff] py-16 font-sans">
+    <footer className="bg-[#f2e0fcff] pt-10 pb-3 font-sans">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         {/* Main Grid */}
@@ -34,7 +35,6 @@ const Footer: React.FC = () => {
               <span className="font-semibold">And You Will Be A Success.</span>
             </p>
 
-            {/* Social Icons */}
             <div className="flex space-x-5">
               <a
                 href="https://tiktok.com/@Esmatullah173"
@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
                 className="text-primary hover:scale-110 transition-transform"
                 aria-label="TikTok"
               >
-                <SiTiktok size={26} />
+                <SiTiktok size={22} />
               </a>
               <a
                 href="https://instagram.com/Esmatullah173"
@@ -70,8 +70,7 @@ const Footer: React.FC = () => {
             </p>
           </div>
 
-          {/* Column 2: Explore Links */}
-          <div className="flex flex-col items-center md:items-start">
+          <div className="flex flex-col items-center md:items-start mt-8">
             <h4 className="text-sm font-bold text-primary mb-5 uppercase tracking-wider">
               Explore
             </h4>
@@ -99,8 +98,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 3: Contact Info */}
-          <div className="flex flex-col items-center md:items-start">
+          <div className="flex flex-col items-center md:items-start mt-8">
             <h4 className="text-sm font-bold text-[#44155B] mb-5 uppercase tracking-wider">
               Contact Us
             </h4>
@@ -126,8 +124,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 4: Newsletter */}
-          <div className="flex flex-col items-center md:items-start">
+          <div className="flex flex-col items-center md:items-start mt-8">
             <h4 className="text-sm font-bold text-[#44155B] mb-5 uppercase tracking-wider">
               Stay Updated
             </h4>
@@ -138,19 +135,13 @@ const Footer: React.FC = () => {
               <input
                 type="email"
                 placeholder="Enter e-mail"
-                className="px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CFA45C] text-sm placeholder-gray-500"
+                className="px-4 py-2.5 border border-primary/40 rounded-full focus:outline-none text-sm placeholder-gray-500 focus:border-primary"
               />
-              <button
-                type="submit"
-                className="bg-[#44155B] text-white px-6 py-2.5 rounded-lg hover:bg-[#5E217D] transition text-sm font-semibold shadow-md"
-              >
-                JOIN
-              </button>
+              <Button text="JOIN" />
             </form>
           </div>
         </div>
 
-        {/* Bottom Line */}
         <div className="mt-12 pt-6 border-t border-purple-300 text-center text-xs text-gray-600">
           <p>
             © {currentYear} <span className="font-bold text-[#44155B]">AfghanSaffron</span>. All rights reserved. 
