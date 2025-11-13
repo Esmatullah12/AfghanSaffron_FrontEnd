@@ -61,9 +61,8 @@ const Hero: React.FC = () => {
               <div className="absolute inset-0 bg-black/40" />
             </div>
 
-            {/* Changed alignment classes */}
             <div className="absolute inset-0 flex flex-col items-start justify-center text-left text-white px-6 lg:px-24">
-              <h1 className="text-4xl lg:text-6xl font-bold mb-4 drop-shadow-lg">
+              <h1 className="font-display text-4xl lg:text-6xl font-semibold mb-4 drop-shadow-lg">
                 {slide.title}
               </h1>
               <p className="text-lg lg:text-xl max-w-2xl opacity-90 drop-shadow-md">

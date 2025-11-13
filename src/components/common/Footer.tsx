@@ -13,11 +13,8 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[#f2e0fcff] pt-10 pb-3 font-sans">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
-        {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-gray-700">
 
-          {/* Column 1: Brand + Logo + Social */}
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center gap-3 mb-4">
               <img
@@ -25,8 +22,8 @@ const Footer: React.FC = () => {
                 alt="AfghanSaffron Logo"
                 className="w-12 h-12 object-contain"
               />
-              <h1 className="text-2xl font-bold">
-                Afghan <span className="text-primary">Saffron</span>
+              <h1 className="text-2xl font-display font-semibold text-primary">
+                Afghan <span className="text-secondary">Saffron</span>
               </h1>
             </div>
 
@@ -99,7 +96,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div className="flex flex-col items-center md:items-start mt-8">
-            <h4 className="text-sm font-bold text-[#44155B] mb-5 uppercase tracking-wider">
+            <h4 className="text-sm font-bold text-primary mb-5 uppercase tracking-wider">
               Contact Us
             </h4>
             <div className="space-y-4 text-sm">
@@ -125,7 +122,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div className="flex flex-col items-center md:items-start mt-8">
-            <h4 className="text-sm font-bold text-[#44155B] mb-5 uppercase tracking-wider">
+            <h4 className="text-sm font-bold text-primary mb-5 uppercase tracking-wider">
               Stay Updated
             </h4>
             <p className="text-sm mb-4 max-w-xs">
@@ -144,7 +141,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-12 pt-6 border-t border-purple-300 text-center text-xs text-gray-600">
           <p>
-            © {currentYear} <span className="font-bold text-[#44155B]">AfghanSaffron</span>. All rights reserved. 
+            © {currentYear} <span className="font-bold text-primary">AfghanSaffron</span>. All rights reserved. 
             | Proudly from <span className="text-primary font-medium">Afghanistan</span>
           </p>
         </div>

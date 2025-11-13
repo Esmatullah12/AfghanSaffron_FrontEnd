@@ -3,13 +3,13 @@
 @theme {
   --color-primary: #44155B;
   --color-secondary: #E42F1C;
-
+  
+  --font-display: "Playfair Display", sans-serif;
   --font-lora: "Lora", serif;
   --font-nunitoSans: "Nunito Sans", sans-serif;
 }
 
 :root {
-  font-family: "Nunito Sans", sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;

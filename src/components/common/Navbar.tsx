@@ -47,14 +47,15 @@ const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`w-full sticky top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-xl shadow-2xl border-b border-gray-200"
-          : "bg-white/90 backdrop-blur-lg shadow-lg"
-      }`}
-    >
+  className={`w-full sticky top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    isScrolled
+      ? "bg-white/30 backdrop-blur-xl shadow-xl border-b border-white/20"
+      : "bg-white/30 backdrop-blur-xl border border-white/20"
+  }`}
+>
+
       <nav className="w-full background-transparent">
-        <div className="flex items-center justify-between h-20 px-6 lg:px-12">
+        <div className="flex items-center justify-between h-16 px-6 lg:px-12">
           {/* LOGO */}
           <div className="flex items-center flex-1 justify-start">
             <a href="#" className="flex items-center space-x-3 group transition-all duration-300">
@@ -62,7 +63,7 @@ const Navbar: React.FC = () => {
                 <img src={logo} alt="" className="w-12 h-auto object-contain" />
               </div>
               <div className="flex flex-col">
-                <span className="lora text-2xl font-bold text-gray-900 tracking-tight">
+                <span className="font-display text-2xl tracking-wider font-bold text-primary">
                   Afghan Saffron
                 </span>
               </div>
