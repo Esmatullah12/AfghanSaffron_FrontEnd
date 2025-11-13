@@ -11,19 +11,19 @@ export type Benefit = {
 
 export const benefits: Benefit[] = [
   {
-    icon: <IoDiamondOutline className="text-5xl" style={{ color: "#44155B" }} />,
+    icon: <IoDiamondOutline className="text-5xl text-primary"/>,
     title: "Premium Quality",
     description:
       "We ensure top-quality products made from the finest materials, designed to meet your expectations.",
   },
   {
-    icon: <LiaShippingFastSolid className="text-5xl" style={{ color: "#44155B" }} />,
+    icon: <LiaShippingFastSolid className="text-5xl text-primary"/>,
     title: "Free Shipping",
     description:
       "Enjoy free and fast delivery on all your orders, right to your doorstep without extra cost.",
   },
   {
-    icon: <GoVerified className="text-5xl" style={{ color: "#44155B" }} />,
+    icon: <GoVerified className="text-5xl text-primary"/>,
     title: "Warranty",
     description:
       "We stand by our products with a solid warranty to ensure your complete peace of mind.",

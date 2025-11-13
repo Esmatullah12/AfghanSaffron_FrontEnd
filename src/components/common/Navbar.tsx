@@ -84,7 +84,7 @@ const Navbar: React.FC = () => {
           </div>
 
           <div className="flex items-center flex-1 justify-end">
-            <div className="hidden lg:flex items-center space-x-14">
+            <div className="hidden lg:flex items-center space-x-8">
               {rightIcons.map((item, index) => {
                 const isLang = index === 0;
                 return (
@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
                     {languages.map((lang) => (
                       <button
                         key={lang.code}
-                        className="flex w-full items-center gap-3 px-4 py-3 text-left text-gray-800 hover:bg-purple-50 hover:text-[#44155B] transition-all duration-200"
+                        className="flex w-full  items-center gap-3 px-4 py-3 text-left text-gray-800 hover:bg-purple-50 hover:text-[#44155B] transition-all duration-200"
                         onClick={() => {
                           setLangOpen(false);
                         }}

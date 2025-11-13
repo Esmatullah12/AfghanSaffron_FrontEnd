@@ -128,7 +128,7 @@ const Footer: React.FC = () => {
             <p className="text-sm mb-4 max-w-xs">
               Receive special offers and saffron harvest updates.
             </p>
-            <form className="flex flex-col sm:flex-row gap-2 w-full max-w-xs">
+            <form className="flex flex-col sm:flex-row gap-2 w-full max-w-xs  h-9">
               <input
                 type="email"
                 placeholder="Enter e-mail"

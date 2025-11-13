@@ -4,13 +4,19 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FaPlus } from "react-icons/fa";
 import Button from "../common/Button";
 import {products} from "../../data/products";
+import { useNavigate } from "react-router-dom";
 
 const ProductShowCase: React.FC = () => {
   const [liked, setLiked] = useState<number[]>([]);
+  const navigate = useNavigate();
 
   const toggleLike = (id: number) => {
     setLiked((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
   };
+
+  const handleProductClick = (id: number) =>{
+    navigate(`/product/${id}`);
+  }
 
   return (
     <section className="bg-white py-16">
@@ -25,26 +31,29 @@ const ProductShowCase: React.FC = () => {
             >
               <div className="relative">
                 <img
-                  src={product.image}
+                  src={product.thumbnail}
                   alt={product.title}
                   className="w-full h-64 object-cover hover:scale-105 transition duration-500"
                 />
 
                 <div className="absolute top-4 right-4 flex gap-3">
                   <button
-                    onClick={() => toggleLike(product.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleLike(product.id);
+                    }}
                     className="flex items-center justify-center bg-white p-2 rounded-full shadow-md w-10 h-10 hover:bg-[#fcefeeff]"
                   >
                     {liked.includes(product.id) ? (
-                      <FaHeart className="text-xl cursor-pointer" style={{ color: "#E42F1C" }} />
+                      <FaHeart className="text-xl cursor-pointer text-secondary" />
                     ) : (
-                      <FaRegHeart className="text-xl text-gray-700 hover:text-primary cursor-pointer" />
+                      <FaRegHeart className="text-xl text-gray-700 hover:text-primary cursor-pointer hover:text-secondary" />
                     )}
                   </button>
 
-                  <button className="group w-10 h-10 relative bg-white flex items-center justify-center rounded-full shadow-md hover:shadow-lg transition  hover:bg-[#f2e0fcff]">
-                    <HiOutlineShoppingBag className="text-2xl text-gray-800 transition-colors duration-300 group-hover:text-primary cursor-pointer" />
-                    <FaPlus className="absolute rounded-full right-2 bottom-2 bg-white text-[12px] text-gray-800  shadow-sm transition-colors duration-300 group-hover:text-primary cursor-pointer group-hover:bg-[#f2e0fcff]" />
+                  <button onClick={(e) => e.stopPropagation()} className="group w-10 h-10 relative bg-white flex items-center justify-center rounded-full shadow-md hover:shadow-lg transition  hover:bg-[#f2e0fcff]">
+                    <HiOutlineShoppingBag className="text-2xl text-gray-600 transition-colors duration-300 group-hover:text-primary cursor-pointer" />
+                    <FaPlus className="absolute rounded-full text-gray-600 right-2 bottom-2 bg-white text-[12px] shadow-sm transition-colors duration-300 group-hover:text-primary cursor-pointer group-hover:bg-[#f2e0fcff]" />
                   </button>
                 </div>
               </div>
@@ -57,7 +66,7 @@ const ProductShowCase: React.FC = () => {
                   <span className="line-through text-gray-400 mr-2 text-sm">${product.oldPrice}</span>
                   <span className="text-red-600 font-bold text-lg">${product.price}</span>
                 </div>
-                <Button text="Buy Now"/>
+                <Button text="Buy Now" onClick={(e)=>{ e.stopPropagation(); handleProductClick(product.id);}} />
               </div>
             </div>
           ))}
