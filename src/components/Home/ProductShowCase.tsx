@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import Button from "../common/Button";
 import {products} from "../../data/products";
 import { useNavigate } from "react-router-dom";
+import LikeButton from "../common/LikeButton";
 
 const ProductShowCase: React.FC = () => {
   const [liked, setLiked] = useState<number[]>([]);
@@ -27,6 +28,7 @@ const ProductShowCase: React.FC = () => {
           {products.map((product) => (
             <div
               key={product.id}
+              onClick={() => handleProductClick(product.id)}
               className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-sm transition duration-300"
             >
               <div className="relative">
@@ -37,20 +39,7 @@ const ProductShowCase: React.FC = () => {
                 />
 
                 <div className="absolute top-4 right-4 flex gap-3">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleLike(product.id);
-                    }}
-                    className="flex items-center justify-center bg-white p-2 rounded-full shadow-md w-10 h-10 hover:bg-[#fcefeeff]"
-                  >
-                    {liked.includes(product.id) ? (
-                      <FaHeart className="text-xl cursor-pointer text-secondary" />
-                    ) : (
-                      <FaRegHeart className="text-xl text-gray-700 hover:text-primary cursor-pointer hover:text-secondary" />
-                    )}
-                  </button>
-
+                  <LikeButton isLiked={liked.includes(product.id)} onToggle={() => toggleLike(product.id)}/>
                   <button onClick={(e) => e.stopPropagation()} className="group w-10 h-10 relative bg-white flex items-center justify-center rounded-full shadow-md hover:shadow-lg transition  hover:bg-[#f2e0fcff]">
                     <HiOutlineShoppingBag className="text-2xl text-gray-600 transition-colors duration-300 group-hover:text-primary cursor-pointer" />
                     <FaPlus className="absolute rounded-full text-gray-600 right-2 bottom-2 bg-white text-[12px] shadow-sm transition-colors duration-300 group-hover:text-primary cursor-pointer group-hover:bg-[#f2e0fcff]" />
