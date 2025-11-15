@@ -9,7 +9,6 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { BiLeaf } from "react-icons/bi";
 import { BsCupHot } from "react-icons/bs";
 import { HiOutlineMinus, HiOutlinePlus  } from "react-icons/hi";
-import {BsCurrencyDollar } from "react-icons/bs";
 
 const features = [
   {
