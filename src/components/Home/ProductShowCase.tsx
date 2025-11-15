@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FaPlus } from "react-icons/fa";
 import Button from "../common/Button";
