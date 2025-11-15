@@ -4,12 +4,34 @@ import { products } from "../data/products";
 import Layout from "../components/layout/Layout";
 import Button from "../components/common/Button";
 import LikeButton from "../components/common/LikeButton";
+import { RiMentalHealthLine } from "react-icons/ri";
+import { FaRegCircleCheck } from "react-icons/fa6";
+import { BiLeaf } from "react-icons/bi";
+import { BsCupHot } from "react-icons/bs";
+
+const features = [
+{
+icon: <RiMentalHealthLine className="text-4xl" />,
+title: "Mood Support",
+},
+{
+icon: <FaRegCircleCheck className="text-4xl" />,
+title: "High Purity",
+},
+{
+icon: <BsCupHot className="text-4xl" />,
+title: "Premium Aroma",
+},
+{
+icon: <BiLeaf className="text-4xl" />,
+title: "Natural & Sustainable",
+}
+];
 
 const ProductDetail: React.FC = () => {
     const {id} = useParams<{id: string}>();
     const product = products.find(p => p.id === Number(id));
     const [selectedImage, setSelectedImage] = useState(product?.images?.[0] || '');
-    const [selectedSize, setSelectedSize] = useState("1gr");
 
     if (!product) {
         return <div className="text-center mt-20 text-gray-500">Product not found.</div>;
@@ -61,11 +83,20 @@ const ProductDetail: React.FC = () => {
         </div>
 
         {/* Extra Info */}
-        <div className="mt-8 text-sm text-gray-500">
-          <p>✔ 100% Organic & Pure</p>
-          <p>✔ Hand-picked & Naturally Dried</p>
-          <p>✔ Ships in 3–5 business days</p>
-        </div>
+       <div className="w-full py-12 bg-white">
+<div className="max-w-5xl mx-auto text-center mb-5">
+<p className="text-gray-600">Premium quality, ethically sourced, and crafted for wellness.</p>
+</div>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto px-6">
+{features.map((f, i) => (
+<div key={i} className="flex flex-col items-center text-center p-3 rounded-2xl shadow-sm border border-gray-300">
+{f.icon}
+<h3 className="mt-4 text-xs font-medium">{f.title}</h3>
+</div>
+))}
+</div>
+</div>
       </div>
     </div>
     </Layout>
