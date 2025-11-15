@@ -7,12 +7,13 @@ import Login from './pages/Login'
 function App() {
 
   return (
-    <Router>
+    <Router basename="/AfghanSaffron_FrontEnd">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<ProductList />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
     </Router>
   )

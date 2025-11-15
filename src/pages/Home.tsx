@@ -1,6 +1,6 @@
 import Hero from "../components/Home/Hero"
 import BenefitsSection from "../components/Home/BenefitsSection"
-import PRoductShowCase from "../components/Home/ProductShowCase"
+import ProductShowCase from "../components/Home/ProductShowCase"
 import Testimonial from "../components/Home/Testimonial"
 import AboutUs from "../components/Home/AboutUs"
 import Layout from "../components/layout/Layout"
@@ -10,7 +10,7 @@ const Home = () => {
         <div>
             <Layout>
                 <Hero />
-                <PRoductShowCase />
+                <ProductShowCase />
                 <Testimonial />
                 <BenefitsSection />
                 <AboutUs />
