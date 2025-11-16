@@ -16,6 +16,7 @@
 }
 
 body {
+  
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
@@ -37,4 +38,83 @@ body {
 .swiper-pagination-bullet-active {
   background-color: var(--color-primary) !important;
   opacity: 1;
+}
+
+.reg-input{
+ box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+}
+
+
+.term-checkbox-wrapper .checkbox {
+  --bg: #2A1B36;
+  --brdr: #44155B;
+  --brdr-actv: #E42F1C;
+  --brdr-hovr: #5a2d82;
+  --border-active: var(--brdr-actv);
+  --size: 1;
+  --dur: 0.3s;
+  display: inline-block;
+  width: calc(var(--size) * 22px);
+  position: relative;
+}
+.term-checkbox-wrapper .checkbox:after {
+  content: "";
+  width: 100%;
+  padding-top: 100%;
+  display: block;
+}
+.term-checkbox-wrapper .checkbox > * {
+  position: absolute;
+}
+
+/* native input (hidden) */
+.term-checkbox-wrapper .checkbox input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  background-color: var(--bg);
+  border-radius: calc(var(--size) * 4px);
+  border: calc(var(--newBrdr, var(--size)) * 1px) solid;
+  color: var(--newBrdrClr, var(--brdr));
+  outline: none;
+  margin: 0;
+  padding: 0;
+  transition: all calc(var(--dur) / 3) linear;
+  height: 100%;
+  width: 100%;
+}
+
+/* hover & checked – thicker border */
+.term-checkbox-wrapper .checkbox input:hover,
+.term-checkbox-wrapper .checkbox input:checked {
+  --newBrdr: calc(var(--size) * 2);
+}
+.term-checkbox-wrapper .checkbox input:hover { --newBrdrClr: var(--brdr-hovr); }
+.term-checkbox-wrapper .checkbox input:checked {
+  --newBrdrClr: var(--brdr-actv);
+  transition-delay: calc(var(--dur) / 1.3);
+}
+
+/* check-mark animation */
+.term-checkbox-wrapper .checkbox input:checked + svg {
+  --dashArray: 16 93;
+  --dashOffset: 109;
+}
+
+/* SVG check-mark */
+.term-checkbox-wrapper .checkbox svg {
+  fill: none;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  stroke: var(--stroke, var(--border-active));
+  stroke-dasharray: var(--dashArray, 93);
+  stroke-dashoffset: var(--dashOffset, 94);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px;
+  transition: stroke-dasharray var(--dur), stroke-dashoffset var(--dur);
+  height: 100%;
+  width: 100%;
 }
