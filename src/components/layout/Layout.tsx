@@ -1,4 +1,4 @@
-import Navbar from "../common/Navbar";
+import Navbar from "../common/navbar/Navbar";
 import Footer from "../common/Footer";
 
 

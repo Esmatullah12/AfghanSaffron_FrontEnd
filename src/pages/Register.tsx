@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../components/common/Button";
 import register from "../assets/register.jpg";
 import Layout from "../components/layout/Layout";
+import { FcGoogle } from "react-icons/fc";
 
 interface SignUpData {
   email: string;
@@ -52,7 +53,7 @@ const SignUp: React.FC = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-[#E8D9F0] flex items-center justify-center">
+      <div className="py-10 bg-gray-200 flex items-center justify-center">
         <div className="bg-gray-50 text-white p-8 rounded-3xl shadow-2xl max-w-3xl border border-primary grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* LEFT IMAGE */}
           <div className="rounded-2xl overflow-hidden border border-gray-300 hidden md:block h-115">
@@ -64,7 +65,7 @@ const SignUp: React.FC = () => {
           </div>
 
           {/* RIGHT FORM */}
-          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
             <h2 className="text-3xl font-display font-semibold text-primary">
               Create an account
             </h2>
@@ -72,7 +73,7 @@ const SignUp: React.FC = () => {
             {/* First + Last Name */}
             <div className="grid grid-cols-2 gap-4">
               <input
-                className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-10 rounded-full outline-none"
+                className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none"
                 type="text"
                 name="firstName"
                 placeholder="First Name"
@@ -81,7 +82,7 @@ const SignUp: React.FC = () => {
                 required
               />
               <input
-                className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-10 rounded-full outline-none"
+                className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none"
                 type="text"
                 name="lastName"
                 placeholder="Last Name"
@@ -93,7 +94,7 @@ const SignUp: React.FC = () => {
 
             {/* Email */}
             <input
-              className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-10 rounded-full outline-none"
+              className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none"
               type="email"
               name="email"
               placeholder="Email"
@@ -105,7 +106,7 @@ const SignUp: React.FC = () => {
             {/* Phone row */}
             <div className="grid grid-cols-3 gap-4">
               <input
-                className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-10 rounded-full outline-none"
+                className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none"
                 type="number"
                 name="phoneCountryCode"
                 placeholder="Code"
@@ -114,7 +115,7 @@ const SignUp: React.FC = () => {
                 required
               />
               <input
-                className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-10 rounded-full outline-none col-span-2"
+                className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none col-span-2"
                 type="text"
                 name="phone"
                 placeholder="Phone Number"
@@ -126,7 +127,7 @@ const SignUp: React.FC = () => {
 
             {/* Address */}
             <textarea
-              className="bg-[#2A1B36] p-3 h-15 reg-input border border-gray-400 rounded-2xl bg-transparent text-primary resize-none outline-none"
+              className="bg-[#2A1B36] p-3 h-14 reg-input border border-gray-400 rounded-2xl bg-transparent text-primary resize-none outline-none"
               name="address"
               placeholder="Address"
               value={form.address}
@@ -137,7 +138,7 @@ const SignUp: React.FC = () => {
 
             {/* Password */}
             <input
-              className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-10 rounded-full outline-none"
+              className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none"
               type="password"
               name="password"
               placeholder="Password"
@@ -148,7 +149,7 @@ const SignUp: React.FC = () => {
 
             {/* Confirm Password */}
             <input
-              className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-10 rounded-full outline-none"
+              className="bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none"
               type="password"
               name="confirmPassword"
               placeholder="Confirm Password"
@@ -158,7 +159,7 @@ const SignUp: React.FC = () => {
             />
 
             {/* ==== TERMS CHECKBOX ==== */}
-            <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-1 text-sm pl-1">
               <div className="term-checkbox-wrapper">
                 <span className="checkbox">
                   <input
@@ -180,7 +181,7 @@ const SignUp: React.FC = () => {
 
                 {/* Hidden SVG symbol for checkbox animation */}
                 <svg xmlns="http://www.w3.org/2000/svg" style={{ display: "none" }}>
-                  <symbol id="term-checkbox" viewBox="0 0 22 22">
+                  <symbol className="text-primary" id="term-checkbox" viewBox="0 0 22 22">
                     <path
                       fill="none"
                       stroke="currentColor"
@@ -190,7 +191,7 @@ const SignUp: React.FC = () => {
                 </svg>
               </div>
 
-              <label htmlFor="terms-checkbox" className="text-primary cursor-pointer select-none">
+              <label htmlFor="terms-checkbox" className="text-primary cursor-pointer select-none pb-1">
                 I agree to the{" "}
                 <span className="font-bold underline cursor-pointer">Terms &amp; Conditions</span>
               </label>
@@ -198,6 +199,9 @@ const SignUp: React.FC = () => {
 
             {/* Submit */}
             <Button text="Create Account" />
+            <button className="google-btn border border-primary rounded-full flex justify-center items-center py-1 cursor-pointer mt-2">
+              <FcGoogle size={28} />
+            </button>
             {/* <button
               type="submit"
               className="w-full py-3 rounded-lg text-white font-semibold"

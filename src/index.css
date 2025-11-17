@@ -46,13 +46,13 @@ body {
 
 
 .term-checkbox-wrapper .checkbox {
-  --bg: #2A1B36;
+  --bg: transparent;
   --brdr: #44155B;
-  --brdr-actv: #E42F1C;
+  --brdr-actv: #44155B;
   --brdr-hovr: #5a2d82;
   --border-active: var(--brdr-actv);
-  --size: 1;
-  --dur: 0.3s;
+  --size: 0.9;
+  --dur: 0.6s;
   display: inline-block;
   width: calc(var(--size) * 22px);
   position: relative;
@@ -117,4 +117,9 @@ body {
   transition: stroke-dasharray var(--dur), stroke-dashoffset var(--dur);
   height: 100%;
   width: 100%;
+}
+
+.google-btn:hover {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  transition: all 0.6s ease-in-out;
 }
