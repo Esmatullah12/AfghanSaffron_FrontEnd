@@ -1,7 +1,7 @@
 const navItems = [
-  { label: "Products", href: "#" },
-  { label: "About Us", href: "#" },
-  { label: "Blog", href: "#" },
+  { label: "PRODUCTS", href: "#" },
+  { label: "ABOUT US", href: "#" },
+  { label: "BLOG", href: "#" },
 ];
 
 const NavLinks = () => (
@@ -9,7 +9,7 @@ const NavLinks = () => (
     <div className="flex items-center space-x-16">
       {navItems.map((item) => (
         <a key={item.label} href={item.href} className="relative group">
-          <span className="font-normal text-xl text-gray-800 tracking-wide transition-all duration-300 group-hover:text-[#44155B] group-hover:font-medium">
+          <span className="font-bold text-[1.1rem] text-gray-800 tracking-widest transition-all duration-300 group-hover:text-[#44155B]">
             {item.label}
           </span>
           <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E42F1C] transition-all duration-500 group-hover:w-full" />

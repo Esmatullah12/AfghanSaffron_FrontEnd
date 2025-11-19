@@ -2,7 +2,7 @@
 import { IoLogoInstagram, IoLogoTiktok } from "react-icons/io5";
 
 const SocialLinks = () => (
-  <div className="flex justify-center gap-6">
+  <div className="flex justify-center gap-3">
     <a
       href="https://instagram.com"
       target="_blank"
