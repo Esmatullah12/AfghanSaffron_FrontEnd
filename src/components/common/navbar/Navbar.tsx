@@ -35,12 +35,12 @@ const Navbar = () => {
       <nav className="flex items-center justify-between h-16 px-6 lg:px-12">
         <Logo />
         <NavLinks />
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center gap-x-6">
           <LanguageSwitcher />
           <CartButton count={3} />
           <UserMenu className="hidden lg:block"/>
+          <MobileMenu />
         </div>
-        <MobileMenu />
       </nav>
     </header>
   );

@@ -2,18 +2,23 @@
 import { AiOutlineUser, AiOutlineHistory, AiOutlineHeart } from "react-icons/ai";
 import { IoLogOutOutline } from "react-icons/io5";
 import Button from "../../Button";
-import { useState } from "react";
-import LoginModal from "../../../../pages/Login";
 
 interface UserMenuContentProps {
   isLoggedIn: boolean;
   user?: { name: string; email: string };
   onClose: () => void;
   onLogout: () => void;
+  openLogin: () => void; 
 }
 
-const UserMenuContent = ({ isLoggedIn, user, onClose, onLogout }: UserMenuContentProps) => {
-  const [openLogin, setOpenLogin] = useState(false);
+const UserMenuContent = ({
+  isLoggedIn,
+  user,
+  onClose,
+  onLogout,
+  openLogin,
+}: UserMenuContentProps) => {
+
   if (isLoggedIn && user) {
     return (
       <>
@@ -38,13 +43,14 @@ const UserMenuContent = ({ isLoggedIn, user, onClose, onLogout }: UserMenuConten
             <a
               key={item.label}
               href={item.href}
-              className="flex items-center gap-3 px-5 py-3 text-gray-800 hover:bg-purple-50 hover:text-[#44155B] transition-all"
               onClick={onClose}
+              className="flex items-center gap-3 px-5 py-3 text-gray-800 hover:bg-purple-50 hover:text-[#44155B] transition-all"
             >
               <item.icon className="h-5 w-5" />
               <span>{item.label}</span>
             </a>
           ))}
+
           <button
             onClick={() => { onLogout(); onClose(); }}
             className="flex w-full items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50 transition-all"
@@ -58,33 +64,25 @@ const UserMenuContent = ({ isLoggedIn, user, onClose, onLogout }: UserMenuConten
   }
 
   return (
-    <>
     <div className="p-6 text-center space-y-5">
-        <div className="w-18 h-18 mx-auto bg-gray-100 rounded-full flex items-center justify-center border border-gray-300 ring-4 ring-purple-200">
-          <AiOutlineUser className="h-12 w-12 text-gray-400" />
-        </div>
 
-        <h3 className="text-lg font-semibold text-gray-800">Welcome!</h3>
-        <p className="text-sm text-gray-600">Sign in to access your account</p>
-
-        <div className="space-y-3 pt-3 flex flex-col items-center">
-          <Button
-            className="w-full"
-            text="Login"
-            onClick={() => setOpenLogin(true)}
-          />
-
-          <Button
-            className="w-full"
-            text="Sign Up"
-            onClick={() => (window.location.href = "/AfghanSaffron_FrontEnd/register")}
-          />
-        </div>
+      <div className="w-18 h-18 mx-auto bg-gray-100 rounded-full flex items-center justify-center border border-gray-300 ring-4 ring-purple-200">
+        <AiOutlineUser className="h-12 w-12 text-gray-400" />
       </div>
 
-      {openLogin && <LoginModal onClose={() => setOpenLogin(false)} />}
-    </>
-    
+      <h3 className="text-lg font-semibold text-gray-800">Welcome!</h3>
+      <p className="text-sm text-gray-600">Sign in to access your account</p>
+
+      <div className="space-y-3 pt-3 flex flex-col items-center">
+        <Button className="w-full" text="Login" onClick={openLogin} />
+
+        <Button
+          className="w-full"
+          text="Sign Up"
+          onClick={() => (window.location.href = "/AfghanSaffron_FrontEnd/register")}
+        />
+      </div>
+    </div>
   );
 };
 

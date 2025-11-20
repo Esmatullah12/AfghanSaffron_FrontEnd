@@ -28,7 +28,7 @@ const MobileMenu = () => {
             onClose={() => setOpen(false)}
             onLogout={() => alert("Logged out!")}
           />
-        </div>
+        </div> 
       )}
     </>
   );
