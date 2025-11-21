@@ -16,7 +16,7 @@ interface MobileMenuContentProps {
   onLogout: () => void;
 }
 
-const MobileMenuContent = ({ onClose, onLogout }: MobileMenuContentProps) => (
+const MobileMenuContent = ({ onClose }: MobileMenuContentProps) => (
   <div className="w-3xs position fixed right-0 top-0 bg-white border-l border-b border-gray-400" style={{borderRadius: '0 0 0 3rem'}}>
     <div className="px-6 py-12 space-y-6">
       {navItems.map((item) => (

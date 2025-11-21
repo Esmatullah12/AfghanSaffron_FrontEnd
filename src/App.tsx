@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Home from './pages/Home'
 import ProductList from './pages/ProductList'
 import ProductDetail from './pages/ProductDetail'
-import Login from './pages/Login'
+import Login from "./pages/Login"
 import Register from "./pages/Register"
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<ProductList />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login onClose={() => {}} />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>

@@ -7,7 +7,7 @@ type Props = {
   onClose: () => void;
 };
 
-export default function Login({ onClose }: Props) {
+export const Login = ({ onClose }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -50,7 +50,7 @@ export default function Login({ onClose }: Props) {
           </div>
 
 
-          ‌<Button text="Sign In" className="w-full h-10 mt-4"/>
+          <Button text="Sign In" className="w-full h-10 mt-4"/>
 
           <div className="text-center my-2 text-sm text-gray-500">Or Sign in with</div>
 
@@ -66,3 +66,5 @@ export default function Login({ onClose }: Props) {
     </>
   );
 }
+
+export default Login;

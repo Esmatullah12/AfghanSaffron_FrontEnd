@@ -5,6 +5,10 @@ import UserMenuTrigger from "./UserMenuTrigger";
 import UserMenuContent from "./UserMenuContent";
 import LoginModal from "../../../../pages/Login"; // adjust path if needed
 
+type UserMenuProps = {
+  className?: string;
+};
+
 const UserMenu = ({ className }: UserMenuProps) => {
   const [open, setOpen] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
