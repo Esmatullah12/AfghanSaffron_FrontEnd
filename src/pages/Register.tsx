@@ -198,9 +198,9 @@ const SignUp: React.FC = () => {
             </div>
 
             {/* Submit */}
-            <Button text="Create Account" />
-            <button className="google-btn border border-primary rounded-full flex justify-center items-center py-1 cursor-pointer mt-2">
-              <FcGoogle size={28} />
+            <Button text="Create Account" className="h-10"/>
+            <button className="google-btn h-10 border border-primary rounded-full text-primary flex justify-center items-center py-1 cursor-pointer mt-2">
+              <FcGoogle size={28} /><span className="ml-2">Continue with Google</span>
             </button>
             {/* <button
               type="submit"

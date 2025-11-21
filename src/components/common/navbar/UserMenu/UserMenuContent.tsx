@@ -74,12 +74,15 @@ const UserMenuContent = ({
       <p className="text-sm text-gray-600">Sign in to access your account</p>
 
       <div className="space-y-3 pt-3 flex flex-col items-center">
-        <Button className="w-full" text="Login" onClick={openLogin} />
+        <Button className="w-full" text="Login" onClick={() => {openLogin(); onClose();}} />
 
         <Button
           className="w-full"
           text="Sign Up"
-          onClick={() => (window.location.href = "/AfghanSaffron_FrontEnd/register")}
+          onClick={() => {
+            onClose();
+            (window.location.href = "/AfghanSaffron_FrontEnd/register");
+          }}
         />
       </div>
     </div>

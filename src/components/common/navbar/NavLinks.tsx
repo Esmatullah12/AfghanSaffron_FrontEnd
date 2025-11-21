@@ -9,10 +9,10 @@ const NavLinks = () => (
     <div className="flex items-center space-x-16">
       {navItems.map((item) => (
         <a key={item.label} href={item.href} className="relative group">
-          <span className="font-bold text-[1.1rem] text-gray-800 tracking-widest transition-all duration-300 group-hover:text-[#44155B]">
+          <span className="font-bold text-[1.1rem] text-gray-800 tracking-widest transition-all duration-300 group-hover:text-primary">
             {item.label}
           </span>
-          <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E42F1C] transition-all duration-500 group-hover:w-full" />
+          <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary transition-all duration-500 group-hover:w-full" />
         </a>
       ))}
     </div>

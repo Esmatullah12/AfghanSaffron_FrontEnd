@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
 import LanguageSwitcher from "./LanguageSwitcher";

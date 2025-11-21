@@ -27,7 +27,7 @@ const LanguageSwitcher = () => {
         aria-expanded={open}
         className="p-3 rounded-2xl hover:bg-purple-50 transition-all duration-300"
       >
-        <IoIosGlobe className="h-7 w-7 text-gray-700 hover:text-[#44155B]" />
+        <IoIosGlobe className="h-7 w-7 text-gray-700 hover:text-primary" />
       </button>
 
       {open && (
@@ -35,7 +35,7 @@ const LanguageSwitcher = () => {
           {languages.map((lang) => (
             <button
               key={lang.code}
-              className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-purple-50 hover:text-[#44155B]"
+              className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-purple-50 hover:text-primary"
               onClick={() => setOpen(false)}
             >
               <ReactCountryFlag countryCode={lang.countryCode} svg className="rounded-sm" style={{ width: "1.4em", height: "1.4em" }} />
