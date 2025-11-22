@@ -63,7 +63,7 @@ const ProductDetail: React.FC = () => {
             <img
               src={selectedImage}
               alt={product.title}
-              className="w-full max-w-sm aspect-square object-cover rounded-2xl shadow-lg"
+              className="w-full max-w-sm aspect-square object-cover rounded-2xl shadow-lg border-2 border-primary"
             />
           </div>
         </div>
