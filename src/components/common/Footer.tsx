@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex flex-col items-center md:items-start mt-8">
+          <div className="flex flex-col items-center md:items-start mt-8 text-center md:text-left">
             <h4 className="text-sm font-bold text-primary mb-5 uppercase tracking-wider">
               Explore
             </h4>
@@ -95,24 +95,24 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col items-center md:items-start mt-8">
+          <div className="flex flex-col items-center md:items-start mt-8 ">
             <h4 className="text-sm font-bold text-primary mb-5 uppercase tracking-wider">
               Contact Us
             </h4>
             <div className="space-y-4 text-sm">
-              <p className="flex items-start gap-2">
+              <p className="flex items-start gap-2 justify-center">
                 <GrLocation className="text-primary mt-0.5" size={20} />
-                <span>
+                <span className="text-center md:text-left">
                   Kabul, Afghanistan<br />
                 </span>
               </p>
-              <p className="flex items-center gap-2">
+              <p className="flex items-center justify-center gap-2">
                 <FiPhone className="text-primary" size={18} />
-                <a href="tel:+93789123456" className="hover:text-primary">
+                <a href="tel:+93789123456" className="hover:text-primary text-center md:text-left">
                   +93 789 123 456
                 </a>
               </p>
-              <p className="flex items-center gap-2">
+              <p className="flex items-center gap-2 justify-center">
                 <LuMail className="text-primary" size={18} />
                 <a href="mailto:hello@afghansaffron.com" className="hover:text-primary">
                   hello@afghansaffron.com

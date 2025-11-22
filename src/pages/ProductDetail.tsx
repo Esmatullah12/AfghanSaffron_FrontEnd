@@ -8,7 +8,7 @@ import { RiMentalHealthLine } from "react-icons/ri";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { BiLeaf } from "react-icons/bi";
 import { BsCupHot } from "react-icons/bs";
-import { HiOutlineMinus, HiOutlinePlus  } from "react-icons/hi";
+import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
 
 const features = [
   {
@@ -35,8 +35,8 @@ const ProductDetail: React.FC = () => {
   const product = products.find((p) => p.id === Number(id));
   const [selectedImage, setSelectedImage] = useState(product?.images?.[0] || "");
 
-  const increment = () => setQuantity(prev => prev + 1);
-  const decrement = () => setQuantity(prev => Math.max(1, prev - 1));
+  const increment = () => setQuantity((prev) => prev + 1);
+  const decrement = () => setQuantity((prev) => Math.max(1, prev - 1));
 
   if (!product) {
     return <div className="text-center mt-20 text-gray-500">Product not found.</div>;
@@ -44,9 +44,9 @@ const ProductDetail: React.FC = () => {
 
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 py-18">
-        <div className="flex gap-6">
-          <div className="flex flex-col gap-3">
+      <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 py-18 bg-white">
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex flex-row md:flex-col gap-3 order-2 md:order-1 mt-4 md:mt-0">
             {product.images.map((img, index) => (
               <img
                 key={index}
@@ -59,19 +59,18 @@ const ProductDetail: React.FC = () => {
               />
             ))}
           </div>
-
-          <div className="flex-1">
+          <div className="flex-1 order-1 md:order-2">
             <img
               src={selectedImage}
               alt={product.title}
-              className="w-full h-[450px] object-cover rounded-2xl shadow-lg"
+              className="w-full max-w-sm aspect-square object-cover rounded-2xl shadow-lg"
             />
           </div>
         </div>
-
-        {/* Right: Product Info */}
         <div>
-          <h2 className="text-3xl tracking-wider font-semibold text-primary font-display">{product.title}</h2>
+          <h2 className="text-3xl tracking-wider font-semibold text-primary font-display">
+            {product.title}
+          </h2>
           <p className="text-sm text-gray-500 mt-2">by Afghan Saffron Co.</p>
 
           <div className="flex items-center gap-2 mt-3">
@@ -84,24 +83,25 @@ const ProductDetail: React.FC = () => {
 
           <div className="mt-6 flex gap-4">
             <div className="flex items-center border border-gray-300 rounded-full overflow-hidden">
-        <button
-          onClick={decrement}
-          className="p-2 hover:bg-gray-100 transition-colors"
-          aria-label="Decrease quantity"
-        >
-          <HiOutlineMinus className="w-4 h-4" />
-        </button>
-        <div className="px-8 py-2 text- font-medium min-w-12 text-center">
-          {quantity}
-        </div>
-        <button
-          onClick={increment}
-          className="p-2 hover:bg-gray-100 transition-colors"
-          aria-label="Increase quantity"
-        >
-          <HiOutlinePlus className="w-4 h-4" />
-        </button>
-      </div>
+              <button
+                onClick={decrement}
+                className="p-2 hover:bg-gray-100 transition-colors"
+                aria-label="Decrease quantity"
+              >
+                <HiOutlineMinus className="w-4 h-4" />
+              </button>
+
+              <div className="px-8 py-2 font-medium min-w-[3rem] text-center">{quantity}</div>
+
+              <button
+                onClick={increment}
+                className="p-2 hover:bg-gray-100 transition-colors"
+                aria-label="Increase quantity"
+              >
+                <HiOutlinePlus className="w-4 h-4" />
+              </button>
+            </div>
+
             <Button text="Add to Cart" />
             <LikeButton isLiked={false} onToggle={() => console.log("like")} />
           </div>
@@ -112,11 +112,16 @@ const ProductDetail: React.FC = () => {
               <p className="text-gray-600">Premium quality, ethically sourced, and crafted for wellness.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto px-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto px-6">
               {features.map((f, i) => (
-                <div key={i} className="flex flex-col items-center text-center p-3 rounded-2xl shadow-sm border border-gray-300">
+                <div
+                  key={i}
+                  className="flex flex-col items-center text-center p-3 rounded-2xl shadow-sm border border-gray-300"
+                >
                   {f.icon}
-                  <h3 className="mt-4 text-[10px] font-bold tracking-wide uppercase text-gray-600">{f.title}</h3>
+                  <h3 className="mt-4 text-[10px] font-bold tracking-wide uppercase text-gray-600">
+                    {f.title}
+                  </h3>
                 </div>
               ))}
             </div>

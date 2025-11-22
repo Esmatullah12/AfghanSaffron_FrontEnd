@@ -1,8 +1,8 @@
-import Hero from "../components/Home/Hero"
-import BenefitsSection from "../components/Home/BenefitsSection"
-import ProductShowCase from "../components/Home/ProductShowCase"
-import Testimonial from "../components/Home/Testimonial"
-import AboutUs from "../components/Home/AboutUs"
+import Hero from "../components/home/Hero"
+import BenefitsSection from "../components/home/BenefitsSection"
+import ProductShowCase from "../components/home/ProductShowCase"
+import Testimonial from "../components/home/Testimonial"
+import AboutUs from "../components/home/AboutUs"
 import Layout from "../components/layout/Layout"
 
 const Home = () => {

@@ -54,7 +54,7 @@ const Testimonial: React.FC = () => {
     ));
 
   return (
-    <section className="py-20">
+    <section className="py-20 bg-gray-50">
       <h2 className="font-display font-semibold text-primary text-center text-4xl mb-12">
         What Our Customers Say
       </h2>

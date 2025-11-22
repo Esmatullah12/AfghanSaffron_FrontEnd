@@ -19,7 +19,7 @@ const ProductShowCase: React.FC = () => {
   }
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-gray-50 py-16">
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="font-display font-semibold text-primary tracking-wider text-4xl mb-14">Product Showcase</h2>
 
