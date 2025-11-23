@@ -53,7 +53,7 @@ const SignUp: React.FC = () => {
 
   return (
     <Layout>
-      <div className="py-10 bg-gray-200 flex items-center justify-center">
+      <div className="py-10 bg-gray-200 flex items-center justify-center px-8">
         <div className="bg-gray-50 text-white p-8 rounded-3xl shadow-2xl max-w-3xl border border-primary grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* LEFT IMAGE */}
           <div className="rounded-2xl overflow-hidden border border-gray-300 hidden md:block h-115">

@@ -4,6 +4,7 @@ import ProductShowCase from "../components/home/ProductShowCase"
 import Testimonial from "../components/home/Testimonial"
 import AboutUs from "../components/home/AboutUs"
 import Layout from "../components/layout/Layout"
+import ContactUs from "../components/home/ContactUs"
 
 const Home = () => {
     return (
@@ -14,6 +15,7 @@ const Home = () => {
                 <Testimonial />
                 <BenefitsSection />
                 <AboutUs />
+                <ContactUs />
             </Layout>
         </div>
     )

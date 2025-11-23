@@ -6,6 +6,7 @@ import { LuMail } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
 import Logo from "../../assets/Logo.png";
 import Button from "./Button";
+import SocialMediaLinks from "./SocialMediaLinks";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -32,35 +33,7 @@ const Footer: React.FC = () => {
               <span className="font-semibold">And You Will Be A Success.</span>
             </p>
 
-            <div className="flex space-x-5">
-              <a
-                href="https://tiktok.com/@Esmatullah173"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:scale-110 transition-transform"
-                aria-label="TikTok"
-              >
-                <SiTiktok size={22} />
-              </a>
-              <a
-                href="https://instagram.com/Esmatullah173"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:scale-110 transition-transform"
-                aria-label="Instagram"
-              >
-                <FaInstagram size={26} />
-              </a>
-              <a
-                href="https://wa.me/93789123456"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:scale-110 transition-transform"
-                aria-label="WhatsApp"
-              >
-                <FaWhatsapp size={26} />
-              </a>
-            </div>
+            <SocialMediaLinks className="text-primary"/>
 
             <p className="text-xs text-gray-500 mt-4">
               Follow us: <span className="font-medium">@Esmatullah173</span>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const navItems = [
   { label: "PRODUCTS", to: "/#product-showcase" },
   { label: "ABOUT US", to: "/#about-us" },
-  { label: "BLOG", to: "#" },
+  { label: "CONTACT US", to: "/#contact-us" },
 ];
 
 const NavLinks = () => {
@@ -29,7 +29,7 @@ const NavLinks = () => {
           <button
             key={item.label}
             onClick={() => handleClick(item.to)}
-            className="relative group font-bold text-[1.1rem] text-gray-800 tracking-widest transition-all duration-300 group-hover:text-primary"
+            className="relative group font-bold text-[1.1rem] text-gray-800 tracking-widest transition-all duration-300 group-hover:text-primary cursor-pointer"
           >
             {item.label}
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary transition-all duration-500 group-hover:w-full" />
