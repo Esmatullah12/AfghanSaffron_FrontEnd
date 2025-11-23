@@ -1,6 +1,4 @@
 import React from "react";
-import { FaInstagram, FaWhatsapp} from "react-icons/fa";
-import { SiTiktok } from "react-icons/si";
 import { FiPhone } from "react-icons/fi";
 import { LuMail } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
