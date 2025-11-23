@@ -19,7 +19,7 @@ const ProductShowCase: React.FC = () => {
   }
 
   return (
-    <section className="bg-gray-50 py-16">
+    <section id="product-showcase" className="bg-gray-50 py-16">
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="font-display font-semibold text-primary tracking-wider text-4xl mb-14">Product Showcase</h2>
 
@@ -48,7 +48,9 @@ const ProductShowCase: React.FC = () => {
 
               <div className="text-center px-6 py-6">
                 <h3 className="font-display text-primary text-xl font-semibold mb-2">{product.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{product.description}</p>
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  {product.description.split(".")[0]} <span className="text-lg">...</span>
+                </p>
 
                 <div className="my-3">
                   <span className="line-through text-gray-400 mr-2 text-sm">${product.oldPrice}</span>

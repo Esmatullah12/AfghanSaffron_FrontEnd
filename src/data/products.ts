@@ -20,7 +20,7 @@ export const products = [
       product3,
     ],
     title: "Super Negin",
-    description: "The most prized saffron, composed solely of the longest, most potent, all-red threads.",
+    description: "Super Negin Afghan saffron is the pinnacle of purity and luxury — hand-picked. from the finest crocus flowers grown in the sun-kissed fields of Herat. Its long, vibrant red threads carry an unmatched aroma, rich flavor, and powerful color that only the world’s highest-grade saffron can offer. Harvested with exceptional care by skilled farmers and dried naturally to preserve its premium potency, Super Negin saffron transforms every dish, drink, or wellness ritual into a truly elevated experience. Choose Super Negin — the rarest, most aromatic, and most potent saffron Afghanistan has to offer.",
     price: 8,
     oldPrice: 12
   },
@@ -34,7 +34,7 @@ export const products = [
       product6,
     ],
     title: "2.5g Super Negin",
-    description: "Rich, full-bodied aroma and vibrant color. A premium portion for culinary passion.",
+    description: "Super Negin Afghan saffron is the pinnacle of purity and luxury — hand-picked. from the finest crocus flowers grown in the sun-kissed fields of Herat. Its long, vibrant red threads carry an unmatched aroma, rich flavor, and powerful color that only the world’s highest-grade saffron can offer. Harvested with exceptional care by skilled farmers and dried naturally to preserve its premium potency, Super Negin saffron transforms every dish, drink, or wellness ritual into a truly elevated experience. Choose Super Negin — the rarest, most aromatic, and most potent saffron Afghanistan has to offer.",
     price: 16,
     oldPrice: 24
   },
@@ -48,7 +48,7 @@ export const products = [
       product9,
     ],
     title: "Negin",
-    description: "Features long, pure red threads providing premium quality with minimal yellow parts.",
+    description: "Negin saffron offers an exceptional balance of quality, aroma. and value, making it one of the most sought-after grades among chefs and saffron enthusiasts. Harvested from the vibrant crocus flowers of Afghanistan, Negin threads are long, uniformly red, and rich in the natural compounds that give saffron its deep color and warm, honey-like fragrance. Carefully hand-selected and dried using traditional methods, Negin saffron delivers a luxurious flavor profile that elevates every dish while remaining more accessible than the ultra-rare Super Negin. For those seeking premium quality without compromise, Negin saffron is the perfect choice.",
     price: 12,
     oldPrice: 15
   },
@@ -62,7 +62,7 @@ export const products = [
       product6,
     ],
     title: "Pushal",
-    description: "Includes red threads attached to a small portion of yellow style, offering proof of authenticity.",
+    description: "Pushal saffron is a vibrant and aromatic choice that offers excellent quality with a more affordable price point, making it ideal for everyday culinary use. Distinguished by its longer threads that include a small portion of the yellow style, Pushal delivers a naturally strong aroma, warm flavor, and beautiful golden color when infused. Harvested with care in Afghanistan’s renowned saffron-growing regions, it preserves the authentic character of the crocus flower while providing great value. Whether for cooking, tea, or wellness, Pushal saffron brings genuine Afghan richness to your daily rituals.",
     price: 8,
     oldPrice: 10
   },

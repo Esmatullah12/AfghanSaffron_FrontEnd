@@ -44,7 +44,7 @@ const ProductDetail: React.FC = () => {
 
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 py-18 bg-white">
+      <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 pt-12 pb-0 bg-white">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex flex-row md:flex-col gap-3 order-2 md:order-1 mt-4 md:mt-0">
             {product.images.map((img, index) => (
@@ -63,7 +63,7 @@ const ProductDetail: React.FC = () => {
             <img
               src={selectedImage}
               alt={product.title}
-              className="w-full max-w-sm aspect-square object-cover rounded-2xl shadow-lg border-2 border-primary"
+              className="w-full max-w-sm aspect-square object-cover rounded-2xl shadow-lg border border-primary"
             />
           </div>
         </div>
@@ -79,9 +79,11 @@ const ProductDetail: React.FC = () => {
             <span className="bg-green-100 text-green-600 text-sm px-2 py-1 rounded-md">20% off</span>
           </div>
 
-          <p className="text-gray-600 mt-4">{product.description}</p>
+          <p className="text-gray-500 text-sm leading-relaxed">
+            {product.description.split(".")[0]} <span className="text-lg">...</span>
+          </p>
 
-          <div className="mt-6 flex gap-4">
+          <div className="mt-4 flex gap-4">
             <div className="flex items-center border border-gray-300 rounded-full overflow-hidden">
               <button
                 onClick={decrement}
@@ -107,8 +109,8 @@ const ProductDetail: React.FC = () => {
           </div>
 
           {/* Extra Info */}
-          <div className="w-full py-6 bg-gray-100 my-5 rounded-2xl border border-gray-400">
-            <div className="max-w-5xl mx-auto text-center mb-5">
+          <div className="w-full py-4 bg-gray-100 my-5 rounded-2xl border border-gray-400">
+            <div className="max-w-5xl mx-auto text-center mb-3">
               <p className="text-gray-600">Premium quality, ethically sourced, and crafted for wellness.</p>
             </div>
 
@@ -127,6 +129,10 @@ const ProductDetail: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="max-w-6xl mx-auto px-6 py-12 bg-white">
+        <h2 className="text-3xl tracking-wider font-semibold text-primary font-display mb-4">Read more about {product.title}</h2>
+        <p>{product.description}</p>
       </div>
     </Layout>
   );

@@ -100,19 +100,19 @@ const Footer: React.FC = () => {
               Contact Us
             </h4>
             <div className="space-y-4 text-sm">
-              <p className="flex items-start gap-2 justify-center">
+              <p className="flex items-start gap-2">
                 <GrLocation className="text-primary mt-0.5" size={20} />
                 <span className="text-center md:text-left">
                   Kabul, Afghanistan<br />
                 </span>
               </p>
-              <p className="flex items-center justify-center gap-2">
+              <p className="flex items-center just gap-2">
                 <FiPhone className="text-primary" size={18} />
                 <a href="tel:+93789123456" className="hover:text-primary text-center md:text-left">
                   +93 789 123 456
                 </a>
               </p>
-              <p className="flex items-center gap-2 justify-center">
+              <p className="flex items-center gap-2">
                 <LuMail className="text-primary" size={18} />
                 <a href="mailto:hello@afghansaffron.com" className="hover:text-primary">
                   hello@afghansaffron.com
