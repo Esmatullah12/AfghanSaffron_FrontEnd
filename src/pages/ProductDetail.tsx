@@ -8,7 +8,7 @@ import { RiMentalHealthLine } from "react-icons/ri";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { BiLeaf } from "react-icons/bi";
 import { BsCupHot } from "react-icons/bs";
-import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
+import { IncrementDecrement } from "../components/common/IncrementDecrement";
 
 const features = [
   {
@@ -30,13 +30,9 @@ const features = [
 ];
 
 const ProductDetail: React.FC = () => {
-  const [quantity, setQuantity] = useState(1);
   const { id } = useParams<{ id: string }>();
   const product = products.find((p) => p.id === Number(id));
   const [selectedImage, setSelectedImage] = useState(product?.images?.[0] || "");
-
-  const increment = () => setQuantity((prev) => prev + 1);
-  const decrement = () => setQuantity((prev) => Math.max(1, prev - 1));
 
   if (!product) {
     return <div className="text-center mt-20 text-gray-500">Product not found.</div>;
@@ -84,25 +80,7 @@ const ProductDetail: React.FC = () => {
           </p>
 
           <div className="mt-4 flex gap-4">
-            <div className="flex items-center border border-gray-300 rounded-full overflow-hidden">
-              <button
-                onClick={decrement}
-                className="p-2 hover:bg-gray-100 transition-colors"
-                aria-label="Decrease quantity"
-              >
-                <HiOutlineMinus className="w-4 h-4" />
-              </button>
-
-              <div className="px-8 py-2 font-medium min-w-[3rem] text-center">{quantity}</div>
-
-              <button
-                onClick={increment}
-                className="p-2 hover:bg-gray-100 transition-colors"
-                aria-label="Increase quantity"
-              >
-                <HiOutlinePlus className="w-4 h-4" />
-              </button>
-            </div>
+            <IncrementDecrement className="px-4 py-2"/>
 
             <Button text="Add to Cart" />
             <LikeButton isLiked={false} onToggle={() => console.log("like")} />

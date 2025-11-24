@@ -1,17 +1,17 @@
+import Button from "../common/Button";
+
 export default function CouponBox() {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm">
+    <div className="bg-white p-4 rounded-2xl">
       <h3 className="font-semibold mb-3">Coupon Code</h3>
 
       <input
         type="text"
         placeholder="Enter Your Coupon Code"
-        className="w-full border p-2 rounded mb-3"
+        className="bg-transparent reg-input border border-gray-300 text-primary px-3 h-10 rounded-3xl mb-4 outline-none w-full"
       />
 
-      <button className="w-full bg-blue-600 text-white py-2 rounded">
-        Apply Your Coupon
-      </button>
+      <Button text="Apply Your Coupon" className="w-full" />
     </div>
   );
 }

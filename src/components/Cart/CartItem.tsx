@@ -1,36 +1,32 @@
+import { IncrementDecrement } from "../common/IncrementDecrement";
+
 interface CartItemProps {
   item: {
-    image: string;
-    name: string;
-    color: string;
-    qty: number;
+    id: number,
+    thumbnail: string;
+    weight: string;
+    quantity: number;
+    title: string;
     price: number;
   };
 }
 
+
 export default function CartItem({ item }: CartItemProps) {
   return (
-    <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm">
-      {/* Product Info */}
+    <div className="flex items-center justify-between bg-white p-4 rounded-xl border border-gray-200">
       <div className="flex gap-4">
-        <img src={item.image} className="w-20 h-20 object-cover rounded" />
+        <img src={item.thumbnail} className="w-20 h-20 object-cover rounded" />
         <div>
-          <h3 className="font-semibold">{item.name}</h3>
-          <p className="text-sm text-gray-500">Color: {item.color}</p>
+          <h3 className="font-semibold">{item.title}</h3>
+          <p className="text-sm text-gray-500">Color: {item.weight}</p>
         </div>
       </div>
 
-      {/* Quantity */}
-      <div className="flex items-center gap-2">
-        <button className="px-2 py-1 bg-gray-200 rounded">-</button>
-        <span>{item.qty}</span>
-        <button className="px-2 py-1 bg-gray-200 rounded">+</button>
-      </div>
+      <IncrementDecrement className="px-2 py-1"/>
 
-      {/* Price */}
       <div className="font-semibold">${item.price}</div>
 
-      {/* Trash Icon */}
       <button className="text-gray-500 hover:text-red-500">🗑️</button>
     </div>
   );
