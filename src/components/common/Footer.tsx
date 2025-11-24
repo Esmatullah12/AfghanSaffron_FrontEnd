@@ -9,6 +9,8 @@ import SocialMediaLinks from "./SocialMediaLinks";
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
+  const token = localStorage.set
+
   return (
     <footer className="bg-[#f2e0fcff] pt-10 pb-3 font-sans">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">

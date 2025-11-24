@@ -3,7 +3,8 @@ import SocialMediaLinks from "../common/SocialMediaLinks";
 
 export default function ContactUs() {
   return (
-    <section id="contact-us" className="w-full bg-white  mt-12 mb-18 px-16">
+    <section id="contact-us"
+     className="w-full bg-white  mt-12 mb-18 px-16">
         <h1  className="font-display text-3xl md:text-4xl font-bold text-center mb-6 text-primary">Contact Us</h1>
           <p className="text-gray-700 mb-8 text-center border-gray-300 mx-auto">
             Please feel free to contact us and we will get back to you as soon as we can.
