@@ -1,4 +1,3 @@
-// components/navbar/UserMenu/UserMenuTrigger.tsx
 import { AiOutlineUser } from "react-icons/ai";
 
 interface UserMenuTriggerProps {
