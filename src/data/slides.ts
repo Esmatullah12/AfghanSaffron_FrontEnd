@@ -1,7 +1,7 @@
-import SliderImage1 from "../assets/SliderImage1.svg";
-import SliderImage2 from "../assets/SliderImage2.svg";
-import SliderImage3 from "../assets/SliderImage3.svg";
-import SliderImage4 from "../assets/SliderImage4.svg";
+import SliderImage1 from "../assets/slider/SliderImage1.svg";
+import SliderImage2 from "../assets/slider/SliderImage2.svg";
+import SliderImage3 from "../assets/slider/SliderImage3.svg";
+import SliderImage4 from "../assets/slider/SliderImage4.svg";
 
 export const slides = [
   {

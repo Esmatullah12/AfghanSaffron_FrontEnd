@@ -1,9 +1,7 @@
-// components/navbar/UserMenu/UserMenu.tsx
-
 import { useState, useRef, useEffect } from "react";
 import UserMenuTrigger from "./UserMenuTrigger";
 import UserMenuContent from "./UserMenuContent";
-import LoginModal from "../../../../pages/Login"; // adjust path if needed
+import LoginModal from "../../../../pages/Login";
 
 type UserMenuProps = {
   className?: string;
