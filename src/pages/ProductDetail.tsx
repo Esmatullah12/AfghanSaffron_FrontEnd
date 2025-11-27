@@ -45,12 +45,13 @@ interface product {
 interface ProductImg{
   id: number;
   productId: number;
-  imageUrl: string;\
+  imageUrl: string;
 
 }
 
 const ProductDetail: React.FC = () => {
   const [productImgs, setProductImgs] = useState<ProductImg[]>([]);
+  const [product, setProduct] = useState<product | null>(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
 
@@ -62,14 +63,27 @@ const ProductDetail: React.FC = () => {
       setLoading(true);
       try{
         const res = await api.get(`api/Product/GetDetail/${id}`);
+        setProduct(res.data);
       }catch(err){
         console.log("error fetching product details", err);
       }finally{
         setLoading(false);
       }
     }
-  })
+  }, [id]);
 
+  useEffect(() =>{
+    const fetchProductImages = async () => {
+      try{
+        const res = await api.get(`api/Product/GetImages/${id}`);
+        setProductImgs(res.data);
+      }catch(err){
+        console.log("error fetching product images", err);
+      }
+    }
+
+    fetchProductImages();
+  }, [id]);
 
   if (!product) {
     return <div className="text-center mt-20 text-gray-500">Product not found.</div>;
@@ -107,8 +121,8 @@ const ProductDetail: React.FC = () => {
           <p className="text-sm text-gray-500 mt-2">by Afghan Saffron Co.</p>
 
           <div className="flex items-center gap-2 mt-3">
-            <p className="text-2xl font-bold text-secondary">${product.price}</p>
-            <span className="text-gray-400 line-through">{product.oldPrice}</span>
+            <p className="text-2xl font-bold text-secondary">${product.salePrice}</p>
+            <span className="text-gray-400 line-through">{product.regularPrice}</span>
             <span className="bg-green-100 text-green-600 text-sm px-2 py-1 rounded-md">20% off</span>
           </div>
 
