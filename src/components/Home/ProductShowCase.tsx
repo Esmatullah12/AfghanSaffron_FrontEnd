@@ -7,14 +7,14 @@ import LikeButton from "../common/LikeButton";
 import api from "../../api/axiosInstance";
 
 interface Product{
-  Id:number
+  id:number
   name:string,
   description:string,
   averageRating:number,
   price:number,
   weight:number,
   grade:string,
-  imageUrl:string
+  mainImageUrl:string
 }
 
 const ProductShowCase: React.FC = () => {
@@ -41,7 +41,7 @@ const ProductShowCase: React.FC = () => {
       };
 
       try{
-        const res = await api.post("/Product/GetProductsList", payload);
+        const res = await api.post("api/Product/GetProductsList", payload);
         setProducts(res.data.data || res.data);
       }catch(err){
         console.log("error fetching products", err);
@@ -51,6 +51,8 @@ const ProductShowCase: React.FC = () => {
     };
     fetchProducts();
   }, [])
+
+  const baseURL = import.meta.env.VITE_API_URL;
 
   if (loading) return <p>Loading...</p>;
 
@@ -62,19 +64,18 @@ const ProductShowCase: React.FC = () => {
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-12 cursor-pointer">
           {products.map((product) => (
             <div
-              key={product.Id}
-              onClick={() => handleProductClick(product.Id)}
-              className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-sm transition duration-300"
+            key={product.id}
+            onClick={() => handleProductClick(product.id)}
+            className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-sm transition duration-300"
             >
               <div className="relative">
                 <img
-                  src={product.imageUrl}
+                  src={`${baseURL}/${product.mainImageUrl}`}
                   alt={product.name}
                   className="w-full h-64 object-cover hover:scale-105 transition duration-500"
                 />
-
                 <div className="absolute top-4 right-4 flex gap-3">
-                  <LikeButton isLiked={liked.includes(product.Id)} onToggle={() => toggleLike(product.Id)}/>
+                  <LikeButton isLiked={liked.includes(product.id)} onToggle={() => toggleLike(product.id)}/>
                   <button onClick={(e) => e.stopPropagation()} className="group w-10 h-10 relative bg-white flex items-center justify-center rounded-full shadow-md hover:shadow-lg transition  hover:bg-[#f2e0fcff]">
                     <HiOutlineShoppingBag className="text-2xl text-gray-600 transition-colors duration-300 group-hover:text-primary cursor-pointer" />
                     <FaPlus className="absolute rounded-full text-gray-600 right-2 bottom-2 bg-white text-[12px] shadow-sm transition-colors duration-300 group-hover:text-primary cursor-pointer group-hover:bg-[#f2e0fcff]" />
@@ -92,7 +93,7 @@ const ProductShowCase: React.FC = () => {
                   <span className="line-through text-gray-400 mr-2 text-sm">${product.price}</span>
                   <span className="text-red-600 font-bold text-lg">${product.price}</span>
                 </div>
-                <Button text="Buy Now" onClick={(e)=>{ e.stopPropagation(); handleProductClick(product.Id);}} />
+                <Button text="Buy Now" onClick={(e)=>{ e.stopPropagation(); handleProductClick(product.id);}} />
               </div>
             </div>
           ))}

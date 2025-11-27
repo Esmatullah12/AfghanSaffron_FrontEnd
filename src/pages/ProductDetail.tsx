@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { products } from "../data/products";
 import Layout from "../components/layout/Layout";
@@ -9,6 +9,7 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { BiLeaf } from "react-icons/bi";
 import { BsCupHot } from "react-icons/bs";
 import { IncrementDecrement } from "../components/common/IncrementDecrement";
+import api from "../api/axiosInstance";
 
 const features = [
   {
@@ -29,10 +30,46 @@ const features = [
   },
 ];
 
+interface product {
+  id: string;
+  title: string;
+  description: string;
+  salePrice: number;
+  regularPrice: number;
+  stockQuantity: number;
+  weight: number;
+  grade: string;
+  mainImageUrl: string;
+}
+
+interface ProductImg{
+  id: number;
+  productId: number;
+  imageUrl: string;\
+
+}
+
 const ProductDetail: React.FC = () => {
+  const [productImgs, setProductImgs] = useState<ProductImg[]>([]);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
-  const product = products.find((p) => p.id === Number(id));
+
+  
   const [selectedImage, setSelectedImage] = useState(product?.images?.[0] || "");
+
+  useEffect(() =>{
+    const fetchProduct = async () => {
+      setLoading(true);
+      try{
+        const res = await api.get(`api/Product/GetDetail/${id}`);
+      }catch(err){
+        console.log("error fetching product details", err);
+      }finally{
+        setLoading(false);
+      }
+    }
+  })
+
 
   if (!product) {
     return <div className="text-center mt-20 text-gray-500">Product not found.</div>;
