@@ -3,7 +3,7 @@ import BenefitsSection from "../components/home/BenefitsSection"
 import ProductShowCase from "../components/home/ProductShowCase"
 import Testimonial from "../components/home/Testimonial"
 import AboutUs from "../components/home/AboutUs"
-import Layout from "../components/layout/Layout"
+import Layout from "../layout/Layout"
 import ContactUs from "../components/home/ContactUs"
 
 const Home = () => {

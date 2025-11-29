@@ -1,5 +1,5 @@
-import Navbar from "../common/navbar/Navbar";
-import Footer from "../common/Footer";
+import Footer from "../components/common/Footer";
+import Navbar from "../components/common/navbar/Navbar";
 
 
 type LayoutProps = {

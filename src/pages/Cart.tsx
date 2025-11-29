@@ -1,5 +1,5 @@
 import Button from "../components/common/Button";
-import Layout from "../components/layout/Layout";
+import Layout from "../layout/Layout";
 import CartItemList from "./../components/Cart/CartItemList";
 import CouponBox from "./../components/Cart/CouponBox";
 import OrderSummary from "./../components/Cart/OrderSummary";

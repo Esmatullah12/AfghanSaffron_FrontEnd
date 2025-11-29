@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Button from "../components/common/Button";
 import register from "../assets/register.jpg";
-import Layout from "../components/layout/Layout";
+import Layout from "../layout/Layout";
 import { FcGoogle } from "react-icons/fc";
+import Button from "../components/common/Button";
 
 interface SignUpData {
   email: string;

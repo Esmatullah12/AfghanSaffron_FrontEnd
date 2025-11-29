@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { products } from "../data/products";
-import Layout from "../components/layout/Layout";
-import Button from "../components/common/Button";
-import LikeButton from "../components/common/LikeButton";
+import Layout from "../layout/Layout";
 import { RiMentalHealthLine } from "react-icons/ri";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { BiLeaf } from "react-icons/bi";
 import { BsCupHot } from "react-icons/bs";
-import { IncrementDecrement } from "../components/common/IncrementDecrement";
 import api from "../api/axiosInstance";
+import { IncrementDecrement } from "../components/common/IncrementDecrement";
+import Button from "../components/common/Button";
+import LikeButton from "../components/common/LikeButton";
 
 const features = [
   {
@@ -43,10 +42,7 @@ interface product {
 }
 
 interface ProductImg{
-  id: number;
-  productId: number;
-  imageUrl: string;
-
+  imagePath: string;
 }
 
 const ProductDetail: React.FC = () => {
@@ -55,8 +51,8 @@ const ProductDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
 
-  
-  const [selectedImage, setSelectedImage] = useState(product?.images?.[0] || "");
+
+  const [selectedImage, setSelectedImage] = useState(productImgs?.[0]?.imagePath || "");
 
   useEffect(() =>{
     const fetchProduct = async () => {
@@ -70,12 +66,13 @@ const ProductDetail: React.FC = () => {
         setLoading(false);
       }
     }
+    fetchProduct();
   }, [id]);
 
   useEffect(() =>{
     const fetchProductImages = async () => {
       try{
-        const res = await api.get(`api/Product/GetImages/${id}`);
+        const res = await api.get(`api/Product/ProductImages/${id}`);
         setProductImgs(res.data);
       }catch(err){
         console.log("error fetching product images", err);
@@ -85,23 +82,31 @@ const ProductDetail: React.FC = () => {
     fetchProductImages();
   }, [id]);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
+  
+  if (loading) {
+    return <div className="text-center mt-20 text-gray-500">Loading...</div>;
+  }
+  
   if (!product) {
     return <div className="text-center mt-20 text-gray-500">Product not found.</div>;
   }
-
+  
   return (
     <Layout>
       <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 pt-12 pb-0 bg-white">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex flex-row md:flex-col gap-3 order-2 md:order-1 mt-4 md:mt-0">
-            {product.images.map((img, index) => (
+            {productImgs.map((img, index) => (
               <img
                 key={index}
-                src={img}
+                src={`${baseUrl}/${img.imagePath}`}
                 alt={product.title}
-                onClick={() => setSelectedImage(img)}
+                onLoad={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
+                onClick={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
                 className={`w-20 h-20 object-cover rounded-xl cursor-pointer border-2 transition-all duration-300 ${
-                  selectedImage === img ? "border-primary" : "border-gray-200"
+                  selectedImage === `${baseUrl}/${img.imagePath}` ? "border-primary" : "border-gray-200"
                 }`}
               />
             ))}

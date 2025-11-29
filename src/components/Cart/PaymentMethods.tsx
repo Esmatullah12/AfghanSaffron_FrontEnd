@@ -1,9 +1,9 @@
-import Button from "../common/Button";
 
 import paypal from "../../assets/payment/paypal.png";
 import stripe from "../../assets/payment/stripe.png";
 import mastercard from "../../assets/payment/mastercard.png";
 import betcoin from "../../assets/payment/betcoin.png";
+import Button from "../common/Button";
 
 export default function PaymentMethods() {
   return (
