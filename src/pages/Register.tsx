@@ -3,6 +3,7 @@ import register from "../assets/register.jpg";
 import Layout from "../layout/Layout";
 import { FcGoogle } from "react-icons/fc";
 import Button from "../components/common/Button";
+import api from "../api/axiosInstance";
 
 interface SignUpData {
   email: string;
@@ -13,7 +14,6 @@ interface SignUpData {
   phoneCountryCode: number;
   phone: string;
   address: string;
-  termsAccepted?: boolean;
 }
 
 const SignUp: React.FC = () => {
@@ -26,7 +26,6 @@ const SignUp: React.FC = () => {
     phoneCountryCode: 60,
     phone: "",
     address: "",
-    termsAccepted: false,
   });
 
   const handleChange = (
@@ -42,13 +41,29 @@ const SignUp: React.FC = () => {
 
     setForm((prev) => ({
       ...prev,
-      [name]: parsedValue as any,
+      [name]: parsedValue,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(form); // send to API here
+    try{
+      const response = await api.post("api/Auth/register", form)
+      const data = response.data;
+      if(data.success){
+        console.log("User created successfully!");
+        console.log("Message:", data.message);
+        console.log("Requires Email Verification:", data.requiresEmailVerification);
+        console.log("Email Confirmed:", data.emailConfirmed);
+        console.log("User Info:", data.userInfo);
+        alert(data.message);
+      }else{
+        console.log("Registration failed:", data.errors);
+        alert("Registration failed. Check errors in console.");
+      }
+    }catch(err){
+      console.log("Error Occured when Creating new User", err);
+    }
   };
 
   return (
@@ -166,7 +181,6 @@ const SignUp: React.FC = () => {
                     id="terms-checkbox"
                     type="checkbox"
                     required
-                    checked={form.termsAccepted}
                     onChange={(e) =>
                       setForm((prev) => ({
                         ...prev,

@@ -9,7 +9,7 @@ interface Slide{
   id:number,
   title:string,
   description:string,
-  imageUrl  :string
+  imageUrl:string
 }
 
 const Hero: React.FC = () => {
@@ -27,7 +27,7 @@ const Hero: React.FC = () => {
     fetchSlides();
   }, [])
 
-  const baseUrl = import.meta.env.BASE_URL;
+  const baseUrl = import.meta.env.VITE_API_URL;
   return (
     <section className="relative w-full h-[80vh] overflow-hidden">
       <Swiper
@@ -52,7 +52,6 @@ const Hero: React.FC = () => {
                 />
               <div className="absolute inset-0 bg-black/40" />
             </div>
-
             <div className="absolute inset-0 flex flex-col items-start justify-center text-left text-white px-6 lg:px-24">
               <h1 className="font-display tracking-normal text-4xl lg:text-6xl font-semibold mb-4 drop-shadow-lg">
                 {slide.title}
