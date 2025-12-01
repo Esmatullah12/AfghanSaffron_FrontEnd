@@ -1,10 +1,11 @@
-import Hero from "../components/home/Hero"
-import BenefitsSection from "../components/home/BenefitsSection"
-import ProductShowCase from "../components/home/ProductShowCase"
-import Testimonial from "../components/home/Testimonial"
-import AboutUs from "../components/home/AboutUs"
+import AboutUs from "../components/Home/AboutUs"
+import BenefitsSection from "../components/Home/BenefitsSection"
+import ContactUs from "../components/Home/ContactUs"
+import Hero from "../components/Home/Hero"
+import ProductShowCase from "../components/Home/ProductShowCase"
+import Testimonial from "../components/Home/Testimonial"
 import Layout from "../layout/Layout"
-import ContactUs from "../components/home/ContactUs"
+
 
 const Home = () => {
     return (

@@ -1,13 +1,33 @@
-// src/components/home/Hero.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
-import { slides } from "../../data/slides";
-
 import "swiper/css";
 import "swiper/css/effect-fade";
+import api from "../../api/axiosInstance";
+
+interface Slide{
+  id:number,
+  title:string,
+  description:string,
+  imageUrl  :string
+}
 
 const Hero: React.FC = () => {
+  const [slides, setSlides] = useState<Slide[]>([]);
+
+  useEffect(() => {
+    const fetchSlides = async () => {
+      try {
+        const response = await api.get("api/Slider/list");
+        setSlides(response.data);
+      }catch(error){
+        console.error('Error fetching slides:', error);
+      }
+    }
+    fetchSlides();
+  }, [])
+
+  const baseUrl = import.meta.env.BASE_URL;
   return (
     <section className="relative w-full h-[80vh] overflow-hidden">
       <Swiper
@@ -22,14 +42,14 @@ const Hero: React.FC = () => {
         speed={800}
         className="h-full"
       >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index} className="relative h-full">
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.id} className="relative h-full">
             <div className="absolute inset-0">
               <img
-                src={slide.img}
+                src={`${baseUrl}/${slide.imageUrl}`}
                 alt={slide.title}
                 className="w-full h-full object-cover"
-              />
+                />
               <div className="absolute inset-0 bg-black/40" />
             </div>
 
@@ -38,7 +58,7 @@ const Hero: React.FC = () => {
                 {slide.title}
               </h1>
               <p className="text-lg lg:text-xl max-w-2xl opacity-90 drop-shadow-md">
-                {slide.desc}
+                {slide.description}
               </p>
             </div>
           </SwiperSlide>
