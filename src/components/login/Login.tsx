@@ -1,14 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiX, FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
-import Button from "../components/common/Button";
+import Button from "../common/Button";
+import { loginUser } from "../../features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAuth";
 
 type Props = {
   onClose: () => void;
 };
 
 export const Login = ({ onClose }: Props) => {
+  // const dispatch = useAppDispatch();
+  // const auth = useAppSelector((s) => s.auth);
+
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // const handleSignIn = async () => {
+  //   if (!email || !password) return;
+  //   // dispatch the thunk
+  //   await dispatch(loginUser({ email, password }));
+  //   // do NOT call onClose() here — we'll close on success below
+  // };
+
+  // // Close modal automatically when login succeeds
+  // useEffect(() => {
+  //   if (auth.token) {
+  //     onClose();
+  //   }
+  // }, [auth.token, onClose]);
+
 
   return (
     <>
@@ -31,7 +53,7 @@ export const Login = ({ onClose }: Props) => {
           <div className="mt-3">
             <label className="text-sm text-gray-600 font-medium">Enter Email</label>
             <div className="mt-1 flex h-10 items-center bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none">
-              <input type="text" className="flex-1 py-3 outline-none" placeholder="Enter Email / Phone No" />
+              <input type="text" onChange={(e) => setEmail(e.target.value)} className="flex-1 py-3 outline-none" placeholder="Enter Email / Phone No" />
             </div>
           </div>
 
@@ -39,6 +61,7 @@ export const Login = ({ onClose }: Props) => {
             <label className="text-sm text-gray-600 font-medium">Password</label>
             <div className="mt-1 flex h-10 items-center bg-transparent reg-input border border-gray-400 text-primary px-3 rounded-full outline-none">
               <input
+                onChange={(e) => setPassword(e.target.value)}
                 type={showPassword ? "text" : "password"}
                 className="flex-1 py-3 outline-none"
                 placeholder="Password"
@@ -49,7 +72,7 @@ export const Login = ({ onClose }: Props) => {
             </div>
           </div>
 
-
+          
           <Button text="Sign In" className="w-full h-10 mt-4"/>
 
           <div className="text-center my-2 text-sm text-gray-500">Or Sign in with</div>

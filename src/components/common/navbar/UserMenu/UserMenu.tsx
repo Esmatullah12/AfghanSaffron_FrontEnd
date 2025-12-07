@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import UserMenuTrigger from "./UserMenuTrigger";
 import UserMenuContent from "./UserMenuContent";
-import LoginModal from "../../../../pages/Login";
+import LoginModal from "../../../login/Login";
 
 type UserMenuProps = {
   className?: string;

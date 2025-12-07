@@ -74,7 +74,7 @@ const UserMenuContent = ({
       <p className="text-sm text-gray-600">Sign in to access your account</p>
 
       <div className="space-y-3 pt-3 flex flex-col items-center">
-        <Button className="w-full" text="Login" onClick={() => {openLogin(); onClose();}} />
+        <Button className="w-full" text="Login" onClick={() => { openLogin(); setTimeout(() => onClose(), 50); }} />
 
         <Button
           className="w-full"
