@@ -2,34 +2,34 @@ import { useEffect, useState } from "react";
 import { FiX, FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import Button from "../common/Button";
-import { loginUser } from "../../features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAuth";
+import type { AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { login } from "../../features/auth/authSlice";
 
 type Props = {
   onClose: () => void;
 };
 
 export const Login = ({ onClose }: Props) => {
-  // const dispatch = useAppDispatch();
-  // const auth = useAppSelector((s) => s.auth);
+  const dispatch = useDispatch<AppDispatch>();
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+ 
+  const handleLogin = () => {
+    // In real-world: send API request here
+    if (!email || !password) return;
 
-  // const handleSignIn = async () => {
-  //   if (!email || !password) return;
-  //   // dispatch the thunk
-  //   await dispatch(loginUser({ email, password }));
-  //   // do NOT call onClose() here — we'll close on success below
-  // };
+    dispatch(
+      login({
+        email,
+        token: "fake-token-123", // normally from API
+      })
+    );
 
-  // // Close modal automatically when login succeeds
-  // useEffect(() => {
-  //   if (auth.token) {
-  //     onClose();
-  //   }
-  // }, [auth.token, onClose]);
+    onClose();
+  };
 
 
   return (
@@ -49,7 +49,7 @@ export const Login = ({ onClose }: Props) => {
           <div className="mt-3">
             <label className="text-sm text-gray-600 font-medium">Enter Email</label>
             <div className="mt-1 flex h-10 items-center bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none">
-              <input type="text" className="flex-1 py-3 outline-none" placeholder="Enter Email / Phone No" />
+              <input onChange={(e) => setEmail(e.target.value)} type="text" className="flex-1 py-3 outline-none" placeholder="Enter Email / Phone No" />
             </div>
           </div>
 
@@ -60,6 +60,7 @@ export const Login = ({ onClose }: Props) => {
                 type={showPassword ? "text" : "password"}
                 className="flex-1 py-3 outline-none"
                 placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button onClick={() => setShowPassword(!showPassword)} >
                 {showPassword ? <FiEyeOff className="text-gray-500" /> : <FiEye className="text-gray-500" />}
@@ -67,8 +68,8 @@ export const Login = ({ onClose }: Props) => {
             </div>
           </div>
 
-
-          <Button text="Sign In" className="w-full h-10 mt-4"/>
+ 
+          <Button onClick={handleLogin} text="Sign In" className="w-full h-10 mt-4"/>
 
             <div className="text-center my-2 text-sm text-gray-500">Or Sign in with</div>
 
