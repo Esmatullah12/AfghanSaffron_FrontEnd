@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { FiX, FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import Button from "../common/Button";
 import type { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
-import { login } from "../../features/auth/authSlice";
+import { loginUser } from "../../features/auth/authSlice";
 
 type Props = {
   onClose: () => void;
@@ -18,19 +18,17 @@ export const Login = ({ onClose }: Props) => {
   const [password, setPassword] = useState("");
  
   const handleLogin = () => {
-    // In real-world: send API request here
     if (!email || !password) return;
 
     dispatch(
-      login({
+      loginUser({
         email,
-        token: "fake-token-123", // normally from API
+        password,
       })
     );
 
     onClose();
   };
-
 
   return (
     <>

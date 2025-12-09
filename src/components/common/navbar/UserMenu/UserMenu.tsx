@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../../store/store";
 import UserMenuTrigger from "./UserMenuTrigger";
 import UserMenuContent from "./UserMenuContent";
 import LoginModal from "../../../login/Login";
@@ -11,8 +13,10 @@ const UserMenu = ({ className }: UserMenuProps) => {
   const [open, setOpen] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
 
-  const [isLoggedIn] = useState(false);
-  const user = isLoggedIn ? { name: "Esmatullah", email: "esmat@example.com" } : undefined;
+  // ✅ Get user from Redux store
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isLoggedIn = !!user;
+
   const ref = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
@@ -27,27 +31,26 @@ const UserMenu = ({ className }: UserMenuProps) => {
   }, []);
 
   // Lock body scroll when login modal is open
-  // In UserMenu.tsx — inside the useEffect for openLogin
-useEffect(() => {
-  if (openLogin) {
-    document.body.classList.add("overflow-hidden");
-    document.documentElement.classList.add("login-modal-open"); // ← ADD THIS LINE
+  useEffect(() => {
+    if (openLogin) {
+      document.body.classList.add("overflow-hidden");
+      document.documentElement.classList.add("login-modal-open");
 
-    const scrollY = window.scrollY;
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = "100%";
-  } else {
-    document.documentElement.classList.remove("login-modal-open"); // ← AND HERE
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+    } else {
+      document.documentElement.classList.remove("login-modal-open");
 
-    const scrollY = document.body.style.top;
-    document.body.classList.remove("overflow-hidden");
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.width = "";
-    window.scrollTo(0, parseInt(scrollY || "0") * -1);
-  }
-}, [openLogin]);
+      const scrollY = document.body.style.top;
+      document.body.classList.remove("overflow-hidden");
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      window.scrollTo(0, parseInt(scrollY || "0") * -1);
+    }
+  }, [openLogin]);
 
   return (
     <>
@@ -58,7 +61,7 @@ useEffect(() => {
           <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden z-50 animate-in slide-in-from-top-2 fade-in duration-200">
             <UserMenuContent
               isLoggedIn={isLoggedIn}
-              user={user}
+              user={user ? user.userInfo : undefined} // send userInfo if logged in
               onClose={() => setOpen(false)}
               onLogout={() => alert("Logged out!")}
               openLogin={() => setOpenLogin(true)}
@@ -68,10 +71,8 @@ useEffect(() => {
       </div>
 
       {/* Login Modal */}
-      {openLogin && (
-        <LoginModal
-          onClose={() => setOpenLogin(false)}
-        />
+      {!isLoggedIn && openLogin && (
+        <LoginModal onClose={() => setOpenLogin(false)} />
       )}
     </>
   );
