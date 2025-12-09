@@ -1,15 +1,17 @@
 import { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../store/store";
 import UserMenuTrigger from "./UserMenuTrigger";
 import UserMenuContent from "./UserMenuContent";
 import LoginModal from "../../../login/Login";
+import { logout } from "../../../../features/auth/authSlice";
 
 type UserMenuProps = {
   className?: string;
 };
 
 const UserMenu = ({ className }: UserMenuProps) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
 
@@ -19,7 +21,11 @@ const UserMenu = ({ className }: UserMenuProps) => {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  // Close dropdown when clicking outside
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -63,7 +69,7 @@ const UserMenu = ({ className }: UserMenuProps) => {
               isLoggedIn={isLoggedIn}
               user={user ? user.userInfo : undefined} // send userInfo if logged in
               onClose={() => setOpen(false)}
-              onLogout={() => alert("Logged out!")}
+              onLogout={handleLogout}
               openLogin={() => setOpenLogin(true)}
             />
           </div>

@@ -16,19 +16,33 @@ export const Login = ({ onClose }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- 
-  const handleLogin = () => {
-    if (!email || !password) return;
+  const [error, setError] = useState("");
 
-    dispatch(
+  const handleLogin = async () => {
+    setError("");
+
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    const result = await dispatch(
       loginUser({
         email,
         password,
       })
     );
 
+    // If login failed → DO NOT close modal
+    if (loginUser.rejected.match(result)) {
+      setError("Email or password is incorrect");
+      return;
+    }
+
+    // If login succeeded → close modal
     onClose();
   };
+
 
   return (
     <>
@@ -66,7 +80,12 @@ export const Login = ({ onClose }: Props) => {
             </div>
           </div>
 
- 
+          {error && (
+            <div className="bg-red-100 text-red-600 text-sm p-2 rounded-md mt-2">
+              {error}
+            </div>
+          )}
+
           <Button onClick={handleLogin} text="Sign In" className="w-full h-10 mt-4"/>
 
             <div className="text-center my-2 text-sm text-gray-500">Or Sign in with</div>
