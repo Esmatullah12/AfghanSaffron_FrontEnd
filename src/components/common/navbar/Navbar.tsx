@@ -37,7 +37,7 @@ const Navbar = () => {
         <NavLinks />
         <div className="flex items-center gap-x-6">
           <LanguageSwitcher />
-          <CartButton count={3} />
+          <CartButton />
           <UserMenu className="hidden lg:block"/>
           <MobileMenu />
         </div>

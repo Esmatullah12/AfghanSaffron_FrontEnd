@@ -50,9 +50,15 @@ const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<product | null>(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
+ const baseUrl = import.meta.env.VITE_API_URL;
 
+  const [selectedImage, setSelectedImage] = useState(`${baseUrl}/${productImgs[0]?.imagePath}`);
 
-  const [selectedImage, setSelectedImage] = useState(productImgs?.[0]?.imagePath || "");
+useEffect(() => {
+  if (productImgs.length > 0) {
+    setSelectedImage(`${baseUrl}/${productImgs[0].imagePath}`);
+  }
+}, [productImgs, baseUrl]);
 
   useEffect(() =>{
     const fetchProduct = async () => {
@@ -82,7 +88,7 @@ const ProductDetail: React.FC = () => {
     fetchProductImages();
   }, [id]);
 
-  const baseUrl = import.meta.env.VITE_API_URL;
+ 
 
   
   if (loading) {
@@ -97,13 +103,13 @@ const ProductDetail: React.FC = () => {
     <Layout>
       <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 pt-12 pb-0 bg-white">
         <div className="flex flex-col md:flex-row gap-6">
-          <div className="flex flex-row md:flex-col gap-3 order-2 md:order-1 mt-4 md:mt-0">
+          <div className="flex flex-row md:flex-col gap-3 order-1 md:order-1 mt-4 md:mt-0">
             {productImgs.map((img, index) => (
               <img
                 key={index}
                 src={`${baseUrl}/${img.imagePath}`}
                 alt={product.title}
-                onLoad={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
+                // onLoad={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
                 onClick={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
                 className={`w-20 h-20 object-cover rounded-xl cursor-pointer border-2 transition-all duration-300 ${
                   selectedImage === `${baseUrl}/${img.imagePath}` ? "border-primary" : "border-gray-200"
