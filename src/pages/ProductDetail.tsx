@@ -30,7 +30,7 @@ const features = [
 ];
 
 interface product {
-  id: string;
+  id: number;
   name: string;
   description: string;
   salePrice: number;
@@ -141,7 +141,7 @@ useEffect(() => {
           </p>
 
           <div className="mt-4 flex gap-4">
-            <IncrementDecrement className="px-4 py-2"/>
+            <IncrementDecrement count={1} productId={product.id} className="px-4 py-2"/>
 
             <Button text="Add to Cart" />
             <LikeButton isLiked={false} onToggle={() => console.log("like")} />
