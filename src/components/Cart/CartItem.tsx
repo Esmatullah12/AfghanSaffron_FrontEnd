@@ -1,6 +1,7 @@
 import { FiTrash2 } from "react-icons/fi";
 import { IncrementDecrement } from "../common/IncrementDecrement";
 import { removeFromCart } from "../../features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
 interface CartItemProps {
   item: {
