@@ -3,10 +3,11 @@ import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
 
 interface IncrementDecrementProps{
   className:string
+  count: number
 }
 
-export const IncrementDecrement: React.FC<IncrementDecrementProps> = ({className}) => {
-  const [quantity, setQuantity] = useState(1)
+export const IncrementDecrement: React.FC<IncrementDecrementProps> = ({className, count}) => {
+  const [quantity, setQuantity] = useState(count)
 
   const increment = () => setQuantity((prev) => prev + 1);
   const decrement = () => setQuantity((prev) => Math.max(1, prev - 1));

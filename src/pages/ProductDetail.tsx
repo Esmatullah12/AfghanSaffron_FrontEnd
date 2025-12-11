@@ -31,7 +31,7 @@ const features = [
 
 interface product {
   id: string;
-  title: string;
+  name: string;
   description: string;
   salePrice: number;
   regularPrice: number;
@@ -50,8 +50,7 @@ const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<product | null>(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
- const baseUrl = import.meta.env.VITE_API_URL;
-
+  const baseUrl = import.meta.env.VITE_API_URL;
   const [selectedImage, setSelectedImage] = useState(`${baseUrl}/${productImgs[0]?.imagePath}`);
 
 useEffect(() => {
@@ -89,7 +88,7 @@ useEffect(() => {
   }, [id]);
 
  
-
+  console.log(productImgs)
   
   if (loading) {
     return <div className="text-center mt-20 text-gray-500">Loading...</div>;
@@ -108,8 +107,8 @@ useEffect(() => {
               <img
                 key={index}
                 src={`${baseUrl}/${img.imagePath}`}
-                alt={product.title}
-                // onLoad={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
+                alt={product.name}
+                onLoad={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
                 onClick={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
                 className={`w-20 h-20 object-cover rounded-xl cursor-pointer border-2 transition-all duration-300 ${
                   selectedImage === `${baseUrl}/${img.imagePath}` ? "border-primary" : "border-gray-200"
@@ -120,14 +119,14 @@ useEffect(() => {
           <div className="flex-1 order-1 md:order-2">
             <img
               src={selectedImage}
-              alt={product.title}
+              alt={product.name}
               className="w-full max-w-sm aspect-square object-cover rounded-2xl shadow-lg border border-primary"
             />
           </div>
         </div>
         <div>
           <h2 className="text-3xl tracking-wider font-semibold text-primary font-display">
-            {product.title}
+            {product.name}
           </h2>
           <p className="text-sm text-gray-500 mt-2">by Afghan Saffron Co.</p>
 
@@ -171,7 +170,7 @@ useEffect(() => {
         </div>
       </div>
       <div className="max-w-6xl mx-auto px-6 py-12 bg-white">
-        <h2 className="text-3xl tracking-wider font-semibold text-primary font-display mb-4">Read more about {product.title}</h2>
+        <h2 className="text-3xl tracking-wider font-semibold text-primary font-display mb-4">Read more about {product.name}</h2>
         <p>{product.description}</p>
       </div>
     </Layout>

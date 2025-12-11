@@ -14,7 +14,8 @@ interface ProductCardProps{
     name:string,
     description:string,
     averageRating:number,
-    price:number,
+    salePrice:number,
+    regularPrice:number,
     weight:number,
     grade:string,
     mainImageUrl:string
@@ -37,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({product}) => {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(addToCart({ id: product.id, name: product.name, price: product.price }));
+    dispatch(addToCart({ id: product.id, name: product.name, price: product.salePrice, weight: product.weight, thumbnail: product.mainImageUrl}));
   };
   
   return (
@@ -75,8 +76,8 @@ const ProductCard: React.FC<ProductCardProps> = ({product}) => {
         </p>
 
         <div className="my-3">
-          <span className="line-through text-gray-400 mr-2 text-sm">${product.price}</span>
-          <span className="text-red-600 font-bold text-lg">${product.price}</span>
+          <span className="line-through text-gray-400 mr-2 text-sm">${product.regularPrice}</span>
+          <span className="text-red-600 font-bold text-lg">${product.salePrice}</span>
         </div>
 
         <Button

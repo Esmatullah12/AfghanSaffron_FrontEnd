@@ -1,12 +1,13 @@
-// store/cartSlice.ts
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface CartItem {
   id: number;
+  thumbnail: string,
   name: string;
   price: number;
   quantity: number;
+  weight: number;
 }
 
 interface CartState {
@@ -24,7 +25,6 @@ const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<Omit<CartItem, "quantity">>) => {
     const existingItem = state.items.find((item) => item.id === action.payload.id);
     if (existingItem) {
-        // Only increase quantity, do NOT increase count
         existingItem.quantity += 1;
     } else {
         state.items.push({ ...action.payload, quantity: 1 });

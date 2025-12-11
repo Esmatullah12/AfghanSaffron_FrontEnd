@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { HiOutlineShoppingBag } from "react-icons/hi";
-import { FaPlus } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosInstance";
-import LikeButton from "../common/LikeButton";
-import Button from "../common/Button";
 import ProductCard from "../common/ProductCard";
 
 interface Product{
@@ -12,7 +7,8 @@ interface Product{
   name:string,
   description:string,
   averageRating:number,
-  price:number,
+  salePrice:number,
+  regularPrice:number,
   weight:number,
   grade:string,
   mainImageUrl:string
