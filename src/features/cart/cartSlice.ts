@@ -18,6 +18,10 @@ const initialState: CartState = {
   items: JSON.parse(localStorage.getItem("cart") || "[]"),
 };
 
+const saveToLocalStorage = (state: CartState) => {
+  localStorage.setItem("cart", JSON.stringify(state.items));
+};
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -40,8 +44,24 @@ const cartSlice = createSlice({
       state.items = [];
       localStorage.removeItem("cart");
     },
+
+    increaseQuantity: (state, action: PayloadAction<number>) => {
+      const product = state.items.find((p) => p.id === action.payload);
+      if (product) {
+        product.quantity += 1;
+        saveToLocalStorage(state);
+      }
+    },
+
+    decreaseQuantity: (state, action: PayloadAction<number>) => {
+      const product = state.items.find((p) => p.id === action.payload);
+      if (product && product.quantity > 1) {
+        product.quantity -= 1;
+        saveToLocalStorage(state);
+      }
+    }
   },
 });
 
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = cartSlice.actions;
 export default cartSlice.reducer;

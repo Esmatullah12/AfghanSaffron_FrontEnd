@@ -1,11 +1,12 @@
 import { FiTrash2 } from "react-icons/fi";
 import { IncrementDecrement } from "../common/IncrementDecrement";
+import { removeFromCart } from "../../features/cart/cartSlice";
 
 interface CartItemProps {
   item: {
     id: number,
     thumbnail: string;
-    weight: string;
+    weight: number;
     quantity: number;
     name: string;
     price: number;
@@ -13,6 +14,7 @@ interface CartItemProps {
 }
 
 export default function CartItem({ item }: CartItemProps) {
+  const dispatch = useDispatch();
   const baseUrl = import.meta.env.VITE_API_URL;
 
   return (
@@ -23,17 +25,17 @@ export default function CartItem({ item }: CartItemProps) {
         </div>
         <div className="flex flex-col item-center justify-center">
           <h3 className="font-semibold">{item.name}</h3>
-          <p className="text-sm text-gray-500">Weight: {item.weight}</p>
+          <p className="text-sm text-gray-500">Weight: {item.weight}gr</p>
         </div>
       </div>
 
       <div className="flex justify-end">
-        <IncrementDecrement className="px-2 py-1" count={item.quantity}/>
+        <IncrementDecrement className="px-2 py-1" count={item.quantity} productId={item.id}/>
       </div>
       <div className="font-bold text-xl text-secondary flex justify-end">${item.price}</div>
 
       <button className="text-gray-500 hover:text-red-500 flex justify-end pr-3">
-        <FiTrash2 size={22} className="cursor-pointer"/>
+        <FiTrash2 onClick={() => dispatch(removeFromCart(item.id))} size={22} className="cursor-pointer"/>
       </button>
     </div>
   );
