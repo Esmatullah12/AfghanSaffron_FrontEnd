@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FaPlus } from "react-icons/fa";
@@ -7,40 +7,89 @@ import LikeButton from "./LikeButton";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../features/cart/cartSlice";
 import type { AppDispatch } from "../../store/store";
+import api from "../../api/axiosInstance";
+import { getLocalLikes, setLocalLikes } from "../../utils/localStorageHelpers";
 
-interface ProductCardProps{
- product: {
-    id:number
-    name:string,
-    description:string,
-    averageRating:number,
-    salePrice:number,
-    regularPrice:number,
-    weight:number,
-    grade:string,
-    mainImageUrl:string
- }
+interface ProductCardProps {
+  product: {
+    id: number;
+    name: string;
+    description: string;
+    averageRating: number;
+    salePrice: number;
+    regularPrice: number;
+    weight: number;
+    grade: string;
+    mainImageUrl: string;
+  };
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({product}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [liked, setLiked] = useState<number[]>([]);
   const navigate = useNavigate();
-  const baseURL = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch<AppDispatch>();
-  
-  const toggleLike = (id: number) => {
-    setLiked((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
+  const baseURL = import.meta.env.VITE_API_URL;
+
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  useEffect(() => {
+    if (!user) {
+      setLiked(getLocalLikes());
+    } else {
+      // Fetch liked products from API
+      api
+        .get("/favorites", {
+          headers: { Authorization: `Bearer ${user.token}` },
+        })
+        .then((res) => setLiked(res.data)) // assuming API returns array of product IDs
+        .catch(() => setLiked([]));
+    }
+  }, []);
+
+  const toggleLike = async (id: number) => {
+    if (!user) {
+      // Guest: store in localStorage
+      const localLikes = getLocalLikes();
+      const updatedLikes = localLikes.includes(id)
+        ? localLikes.filter((item) => item !== id)
+        : [...localLikes, id];
+      setLocalLikes(updatedLikes);
+      setLiked(updatedLikes);
+    } else {
+      // Logged-in: call API
+      try {
+        const res = await api.post(
+          "/favorites",
+          { productId: id },
+          { headers: { Authorization: `Bearer ${user.token}` } }
+        );
+
+        if (res.status === 200) {
+          setLiked((prev) =>
+            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+          );
+        }
+      } catch (error) {
+        console.error("Failed to like product:", error);
+      }
+    }
   };
 
-  const handleProductClick = (id: number) => {
-    navigate(`/product/${id}`);
-  };
+  const handleProductClick = (id: number) => navigate(`/product/${id}`);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(addToCart({ id: product.id, name: product.name, price: product.salePrice, weight: product.weight, thumbnail: product.mainImageUrl}));
+    dispatch(
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.salePrice,
+        weight: product.weight,
+        thumbnail: product.mainImageUrl,
+      })
+    );
   };
-  
+
   return (
     <div
       onClick={() => handleProductClick(product.id)}
@@ -54,10 +103,16 @@ const ProductCard: React.FC<ProductCardProps> = ({product}) => {
         />
 
         <div className="absolute top-4 right-4 flex gap-3">
-          <LikeButton isLiked={liked.includes(product.id)} onToggle={() => toggleLike(product.id)} />
+          <LikeButton
+            isLiked={liked.includes(product.id)}
+            onToggle={() => toggleLike(product.id)}
+          />
 
           <button
-            onClick={(e) => { handleAddToCart(e);  e.stopPropagation();}}
+            onClick={(e) => {
+              handleAddToCart(e);
+              e.stopPropagation();
+            }}
             className="group w-10 h-10 relative bg-white flex items-center justify-center rounded-full shadow-md hover:shadow-lg transition hover:bg-[#f2e0fcff]"
             aria-label="add to cart"
           >

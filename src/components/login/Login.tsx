@@ -5,6 +5,8 @@ import Button from "../common/Button";
 import type { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../features/auth/authSlice";
+import { getLocalLikes, setLocalLikes } from "../../utils/localStorageHelpers";
+
 
 type Props = {
   onClose: () => void;
@@ -39,10 +41,27 @@ export const Login = ({ onClose }: Props) => {
       return;
     }
 
-    // If login succeeded → close modal
+    const user = result.payload; // assuming loginUser returns user info including token
+  const localLikes = getLocalLikes();
+
+  if (localLikes.length > 0) {
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL}/favorites/sync`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ productIds: localLikes }),
+      });
+
+        localStorage.removeItem("likedProducts");
+      } catch (err) {
+        console.error("Failed to sync local likes", err);
+      }
+    }
     onClose();
   };
-
 
   return (
     <>
