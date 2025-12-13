@@ -53,11 +53,14 @@ const ProductDetail: React.FC = () => {
   const baseUrl = import.meta.env.VITE_API_URL;
   const [selectedImage, setSelectedImage] = useState(`${baseUrl}/${productImgs[0]?.imagePath}`);
 
-useEffect(() => {
-  if (productImgs.length > 0) {
-    setSelectedImage(`${baseUrl}/${productImgs[0].imagePath}`);
-  }
-}, [productImgs, baseUrl]);
+  const offPercentage = product ? Math.round(((product.regularPrice - product.salePrice) / product.regularPrice) * 100) : 0;
+
+
+  useEffect(() => {
+    if (productImgs.length > 0) {
+      setSelectedImage(`${baseUrl}/${productImgs[0].imagePath}`);
+    }
+  }, [productImgs, baseUrl]);
 
   useEffect(() =>{
     const fetchProduct = async () => {
@@ -133,7 +136,7 @@ useEffect(() => {
           <div className="flex items-center gap-2 mt-3">
             <p className="text-2xl font-bold text-secondary">${product.salePrice}</p>
             <span className="text-gray-400 line-through">{product.regularPrice}</span>
-            <span className="bg-green-100 text-green-600 text-sm px-2 py-1 rounded-md">20% off</span>
+            <span className="bg-green-100 text-green-600 text-sm px-2 py-1 rounded-md">{offPercentage}% off</span>
           </div>
 
           <p className="text-gray-500 text-sm leading-relaxed">
@@ -171,7 +174,14 @@ useEffect(() => {
       </div>
       <div className="max-w-6xl mx-auto px-6 py-12 bg-white">
         <h2 className="text-3xl tracking-wider font-semibold text-primary font-display mb-4">Read more about {product.name}</h2>
-        <p>{product.description}</p>
+        <p className="text-lg">
+          {product.description.split("\\").map((para, i) => (
+            <span key={i}>
+              {para.trim()}
+              <br /><br />
+            </span>
+          ))}
+        </p>
       </div>
     </Layout>
   );

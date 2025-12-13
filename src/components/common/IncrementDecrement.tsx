@@ -18,11 +18,11 @@ export const IncrementDecrement: React.FC<IncrementDecrementProps> = ({className
   return(
     <div className="flex items-center border border-gray-300 rounded-full overflow-hidden">
       <button
-        onClick={() => dispatch(decreaseQuantity(productId))}
+        onClick={decrement}
         className={`${className} pl-3 hover:bg-gray-100 transition-colors border-r border-gray-300`}
         aria-label="Decrease quantity"
       >
-        <HiOutlineMinus className="w-4 h-4" />
+        <HiOutlineMinus onClick={() => dispatch(decreaseQuantity(productId))} className="w-4 h-4" />
       </button>
 
       <div className={`${className} font-medium min-w-[3rem] text-center`}>{quantity}</div>
