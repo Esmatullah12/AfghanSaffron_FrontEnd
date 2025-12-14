@@ -64,7 +64,7 @@ const UserMenuContent = ({
   }
 
   return (
-    <div className="p-6 text-center space-y-5">
+    <div className="p-6 text-center space-y-5 border">
 
       <div className="w-18 h-18 mx-auto bg-gray-100 rounded-full flex items-center justify-center border border-gray-300 ring-4 ring-purple-200">
         <AiOutlineUser className="h-12 w-12 text-gray-400" />

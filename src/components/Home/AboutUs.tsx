@@ -4,22 +4,11 @@ import Button from "../common/Button";
 
 const AboutUs: React.FC = () => {
   return (
-    <section id="about-us" className="relative bg-white py-0 overflow-hidden mb-20">
+    <section id="about-us" className="relative bg-white py-0 overflow-hidden">
 
-      {/* MOBILE + TABLET BACKGROUND IMAGE */}
-      <div
-        className="
-          lg:hidden 
-          relative w-full 
-          h-[550px] sm:h-[600px] md:h-[650px]
-          bg-cover bg-center bg-no-repeat
-        "
-        style={{ backgroundImage: `url(${Kabul})` }}
-      >
-        {/* Dark overlay */}
+      <div className="lg:hidden relative w-full h-[550px] sm:h-[600px] md:h-[650px] bg-cover bg-center bg-no-repeat " style={{ backgroundImage: `url(${Kabul})` }}>
         <div className="absolute inset-0 bg-black/50"></div>
 
-        {/* Text Content on Mobile */}
         <div className="relative z-10 px-6 pt-16 text-white">
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
             About Our Saffron
@@ -39,17 +28,17 @@ const AboutUs: React.FC = () => {
             and authenticity — directly from our farms to your kitchen.
           </p>
 
-          <p className="leading-relaxed mb-5">
+          <p className="leading-relaxed mb-5 ">
             With generations of expertise, we preserve the essence of Afghanistan’s
             red gold with unmatched quality and care.
           </p>
 
-          <Button text="Discover Our Story" className="border border-secondary"/>
+          <Button text="Discover Our Story" className="border"/>
         </div>
       </div>
 
       {/* DESKTOP VERSION (UNCHANGED) */}
-      <div className="hidden lg:block bg-white py-16">
+      <div className="hidden lg:block py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="relative flex flex-col lg:flex-row items-center">
 

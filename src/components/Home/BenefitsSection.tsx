@@ -3,9 +3,9 @@ import type { Benefit } from "../../data/benefits";
 
 const BenefitsSection = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="bg-gray-50">
       <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="mb-10 font-display font-semibold text-primary text-4xl">
+        <h2 className="mb-16 font-display font-semibold text-primary text-4xl">
           Benefits We Provide
         </h2>
 

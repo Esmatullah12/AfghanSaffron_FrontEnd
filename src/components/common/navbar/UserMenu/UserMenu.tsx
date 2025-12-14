@@ -67,7 +67,7 @@ const UserMenu = ({ className }: UserMenuProps) => {
           <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden z-50 animate-in slide-in-from-top-2 fade-in duration-200">
             <UserMenuContent
               isLoggedIn={isLoggedIn}
-              user={user ? user.userInfo : undefined} // send userInfo if logged in
+              user={user ? user.userInfo : undefined}
               onClose={() => setOpen(false)}
               onLogout={handleLogout}
               openLogin={() => setOpenLogin(true)}
