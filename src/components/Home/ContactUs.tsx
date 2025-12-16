@@ -4,9 +4,57 @@ import Button from "../common/Button";
 import { FaWhatsapp } from "react-icons/fa";
 import { IoLogoTiktok } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
+import { useState } from "react";
+import api from "../../api/axiosInstance";
+import axios from "axios";
 
+interface ContactMessagePayload {
+  name: string;
+  userId?: string,
+  emailOrPhone: string;
+  message: string;
+}
 
 const ContactUs = () => {
+  const [form, setForm] = useState<ContactMessagePayload>({
+    name: "",
+    emailOrPhone: "",
+    message: ""
+  })
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
+  const handleChange =(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) : void => {
+    const {name, value} = e.target;
+    setForm(prev => ({...prev, [name]: value}))
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try{
+      await api.post<void>("api/ContactMessage", form);
+      setSuccess("Your message has been sent successfully!");
+      setForm({ name: "", emailOrPhone: "", message: ""});
+    }catch (err: unknown){
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message ?? "Failed to send message.");
+      } else {
+        setError("Unexpected error occurred.");
+      }
+    }finally{
+      setLoading(false);
+    }
+  } 
+
   return (
     <section id="contact-us" className="bg-gray-50 py-16 px-4">
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8  grid grid-cols-1 lg:grid-cols-2 gap-10 border border-gray-200">
@@ -50,25 +98,31 @@ const ContactUs = () => {
         </div>
 
         <div className="bg-gray-50 rounded-xl p-6">
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
               <label className="block text-sm font-medium mb-1 ml-3">
                 Full Name
               </label>
               <input
+                name="name" 
                 type="text"
                 placeholder="Full Name"
+                value={form.name}
+                onChange={handleChange}
                 className="w-full rounded-3xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium mb-1 ml-3">
-                Email address
+                Email Or Phone
               </label>
               <input
-                type="email"
-                placeholder="Enter your email address"
+                type="text"
+                name="emailOrPhone"  
+                value={form.emailOrPhone}
+                onChange={handleChange}
+                placeholder="Enter your email or Phone number"
                 className="w-full rounded-3xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -78,17 +132,23 @@ const ContactUs = () => {
                 About your inquiry
               </label>
               <textarea
+                name="message"
                 placeholder="Enter your message"
                 rows={4}
+                value={form.message}
+                onChange={handleChange}
                 className="w-full rounded-3xl border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
-            <Button text="Send" className="w-full text-base"/>
+            {error && <p className="text-red-600 text-sm">{error}</p>}
+            {success && <p className="text-green-600 text-sm">{success}</p>}
+
+            <Button  text={loading ? "Sending..." : "Send"} className="w-full text-base" disabled={loading}/>
           </form>
         </div>
       </div>
-    </section>
+    </section>  
   );
 };
 

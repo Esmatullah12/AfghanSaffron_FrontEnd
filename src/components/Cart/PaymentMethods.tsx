@@ -27,7 +27,7 @@ export default function PaymentMethods() {
             className={`
               p-2.5 rounded-lg h-12 cursor-pointer bg-gray-100
               border 
-              ${selectedMethod === method.id ? "border-purple-700" : "border-gray-300"}
+              ${selectedMethod === method.id ? "border-2 border-purple-700" : "border-gray-300"}
             `}
           >
             <img className="h-full mx-auto" src={method.logo} alt={method.name} />
@@ -35,7 +35,7 @@ export default function PaymentMethods() {
         ))}
       </div>
 
-      <Button text="Proceed to Checkout" className="w-full" />
+      <Button text="Proceed to Checkout" className="w-full" disabled={false}/>
     </div>
   );
 }
