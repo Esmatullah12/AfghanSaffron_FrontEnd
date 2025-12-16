@@ -1,0 +1,82 @@
+import React from "react";
+import Layout from "../../layout/Layout";
+import Button from "../common/Button";
+
+interface InfoProps {
+  label: string;
+  value: string;
+}
+
+const mockUser = {
+  name: "John",
+  lastName: "Doe",
+  email: "john.doe@example.com",
+  phoneNumber: "+1 234 567 890",
+  address: "123 Main Street, New York, USA",
+  job: "Software Developer",
+  profileImgUrl: "https://i.pravatar.cc/300",
+};
+
+const UserInfo: React.FC = () => {
+  return (
+            <div id="product-showcase" className="bg-gray-100 ">
+
+        <div className="max-w-6xl px-8 mx-auto py-10 bg-gray-100 min-h-screen ">
+      {/* Header */}
+      <h1 className="text-2xl font-semibold mb-1 text-3xl font-display text-primary">Profile</h1>
+      <p className="text-sm text-gray-500 mb-6">
+        View and manage your profile details.
+      </p>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Card */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-300 flex flex-col items-center">
+          <h2 className="text-2xl weight-bold font-semibold">
+            {mockUser.name} {mockUser.lastName}
+          </h2>
+
+          <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-300 items-center justify-center mb-6">
+            <img
+              src={mockUser.profileImgUrl}
+              alt={mockUser.name}
+              className="w-44 h-44 rounded-full object-cover"
+            />
+          </div>
+
+          {/* Buttons */}
+          <div className="flex flex-col gap-3 w-full">
+            <Button className="w-full rounded-full bg-primary text-white py-2 text-sm font-medium hover:bg-white transition" text="Edit Profile" disabled={false} />
+            <Button className="w-full rounded-full bg-primary text-white py-2 text-sm font-medium bg-white text-primary hover:shadow transition" text="Change Password" disabled={false} />
+          </div>
+        </div>
+
+        {/* Right Card */}
+        <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-300">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold">Bio & Details</h3>
+            <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <Info label="First Name" value={mockUser.name} />
+            <Info label="Last Name" value={mockUser.lastName} />
+            <Info label="Email" value={mockUser.email} />
+            <Info label="Phone Number" value={mockUser.phoneNumber} />
+            <Info label="Address" value={mockUser.address} />
+            <Info label="Job Title" value={mockUser.job} />
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  );
+};
+
+const Info: React.FC<InfoProps> = ({ label, value }) => (
+  <div>
+    <p className="text-gray-500 text-lg mb-1">{label}</p>
+    <p className="font-medium text-lg text-gray-800">{value}</p>
+  </div>
+);
+
+export default UserInfo;

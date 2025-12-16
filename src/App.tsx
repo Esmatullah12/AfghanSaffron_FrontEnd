@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import ProductDetail from './pages/ProductDetail'
 import Register from "./pages/Register"
 import Cart from "./pages/Cart"
+import Profile from "./pages/Profile"
 function App() {
 
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
     </Router>

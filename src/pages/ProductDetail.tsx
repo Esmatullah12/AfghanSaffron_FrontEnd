@@ -146,7 +146,7 @@ const ProductDetail: React.FC = () => {
           <div className="mt-4 flex gap-4">
             <IncrementDecrement count={1} productId={product.id} className="px-4 py-2"/>
 
-            <Button text="Add to Cart" />
+            <Button text="Add to Cart" disabled={false} />
             <LikeButton isLiked={false} onToggle={() => console.log("like")} />
           </div>
 

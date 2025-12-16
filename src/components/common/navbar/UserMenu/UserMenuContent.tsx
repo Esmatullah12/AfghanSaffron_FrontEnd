@@ -36,7 +36,7 @@ const UserMenuContent = ({
 
         <div className="py-2">
           {[
-            { icon: AiOutlineUser, label: "My Profile", href: "/profile" },
+            { icon: AiOutlineUser, label: "My Profile", href: " /AfghanSaffron_FrontEnd/profile" },
             { icon: AiOutlineHistory, label: "Order History", href: "/orders" },
             { icon: AiOutlineHeart, label: "Wishlist", href: "/wishlist" },
           ].map((item) => (
@@ -64,7 +64,7 @@ const UserMenuContent = ({
   }
 
   return (
-    <div className="p-6 text-center space-y-5 border">
+    <div className="p-6 text-center space-y-5">
 
       <div className="w-18 h-18 mx-auto bg-gray-100 rounded-full flex items-center justify-center border border-gray-300 ring-4 ring-purple-200">
         <AiOutlineUser className="h-12 w-12 text-gray-400" />
@@ -74,9 +74,10 @@ const UserMenuContent = ({
       <p className="text-sm text-gray-600">Sign in to access your account</p>
 
       <div className="space-y-3 pt-3 flex flex-col items-center">
-        <Button className="w-full" text="Login" onClick={() => { openLogin(); setTimeout(() => onClose(), 50); }} />
+        <Button disabled={false} className="w-full" text="Login" onClick={() => { openLogin(); setTimeout(() => onClose(), 50); }} />
 
         <Button
+          disabled={false}
           className="w-full"
           text="Sign Up"
           onClick={() => {

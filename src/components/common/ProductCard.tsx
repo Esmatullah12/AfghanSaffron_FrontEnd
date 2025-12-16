@@ -59,7 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       // Logged-in: call API
       try {
         const res = await api.post(
-          "/favorites",
+          "api/FavoriteProduct",
           { productId: id },
           { headers: { Authorization: `Bearer ${user.token}` } }
         );
@@ -140,8 +140,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           onClick={(e) => {
             e.stopPropagation();
             handleProductClick(product.id);
-          }}
-        />
+          } } disabled={false}/>
       </div>
     </div>
   );

@@ -23,8 +23,8 @@ export default function Cart() {
           <CartItemList />
 
           <div className="flex gap-x-4">
-            <Button text="Back" className="text-black bg-transparent border-gray-400 px-6 hover:bg-primary hover:text-white hover:transition duration-500 ease-in-out" />
-            <Button text="Cancel Order " className="bg-red-100 text-black transition duration-300 ease-in-out px-4 border-secondary hover:bg-secondary hover:text-white hover:border-primary hover:transition duration-500 ease-in-out" />
+            <Button disabled={false} text="Back" className="text-black bg-transparent border-gray-400 px-6 hover:bg-primary hover:text-white hover:transition duration-500 ease-in-out" />
+            <Button disabled={false} text="Cancel Order " className="bg-red-100 text-black transition duration-300 ease-in-out px-4 border-secondary hover:bg-secondary hover:text-white hover:border-primary hover:transition duration-500 ease-in-out" />
           </div>
         </div>
 
