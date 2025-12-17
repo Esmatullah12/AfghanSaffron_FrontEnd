@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../../layout/Layout";
 import Button from "../common/Button";
 
 interface InfoProps {
@@ -19,39 +18,34 @@ const mockUser = {
 
 const UserInfo: React.FC = () => {
   return (
-            <div id="product-showcase" className="bg-gray-100 ">
+            <section id="product-showcase" className="bg-gray-100">
 
-        <div className="max-w-6xl px-8 mx-auto py-10 bg-gray-100 min-h-screen ">
-      {/* Header */}
-      <h1 className="text-2xl font-semibold mb-1 text-3xl font-display text-primary">Profile</h1>
+        <div className="max-w-6xl px-8 mx-auto py-10 bg-gray-100">
+      <h1 className="font-semibold mb-1 text-3xl font-display text-primary">Profile</h1>
       <p className="text-sm text-gray-500 mb-6">
         View and manage your profile details.
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Card */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-300 flex flex-col items-center">
-          <h2 className="text-2xl weight-bold font-semibold">
-            {mockUser.name} {mockUser.lastName}
-          </h2>
-
-          <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-300 items-center justify-center mb-6">
+        <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col items-center">
+          <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-300 items-center justify-center mb-2">
             <img
               src={mockUser.profileImgUrl}
               alt={mockUser.name}
-              className="w-44 h-44 rounded-full object-cover"
+              className="w-46 h-46 rounded-full object-cover"
             />
           </div>
+          <h2 className="text-2xl weight-bold font-semibold mb-4">
+            {mockUser.name} {mockUser.lastName}
+          </h2>
 
-          {/* Buttons */}
           <div className="flex flex-col gap-3 w-full">
             <Button className="w-full rounded-full bg-primary text-white py-2 text-sm font-medium hover:bg-white transition" text="Edit Profile" disabled={false} />
-            <Button className="w-full rounded-full bg-primary text-white py-2 text-sm font-medium bg-white text-primary hover:shadow transition" text="Change Password" disabled={false} />
+            <Button className="w-full rounded-full py-2 text-sm font-medium bg-white text-primary hover:shadow transition" text="Change Password" disabled={false} />
           </div>
         </div>
 
-        {/* Right Card */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-300">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-6  border border-gray-200">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold">Bio & Details</h3>
             <span className="w-2 h-2 bg-green-500 rounded-full"></span>
@@ -68,7 +62,7 @@ const UserInfo: React.FC = () => {
         </div>
       </div>
     </div>
-    </div>
+    </section>
   );
 };
 
