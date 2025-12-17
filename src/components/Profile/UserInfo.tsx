@@ -28,7 +28,7 @@ const UserInfo: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col items-center">
-          <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-300 items-center justify-center mb-2">
+          <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-200 items-center justify-center mb-2">
             <img
               src={mockUser.profileImgUrl}
               alt={mockUser.name}

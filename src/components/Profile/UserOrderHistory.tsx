@@ -46,7 +46,6 @@ const UserOrderHistory: React.FC = () => {
     <section className="bg-gray-100">
       <div className="max-w-6xl mx-auto px-6 pb-16">
         <div className="bg-white rounded-2xl border border-gray-200  p-6">
-          {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-semibold text-gray-800 font-display text-primary">
               Order History
@@ -56,56 +55,7 @@ const UserOrderHistory: React.FC = () => {
             </span>
           </div>
 
-          {/* ================= TABLE (md only) ================= */}
-          <div className="hidden md:block lg:hidden overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-gray-500 border-b">
-                <tr>
-                  <th className="px-4 py-3">Order ID</th>
-                  <th className="px-4 py-3">Date</th>
-                  <th className="px-4 py-3">Items</th>
-                  <th className="px-4 py-3">Total</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {mockOrders.map((order) => (
-                  <tr
-                    key={order.id}
-                    className="border-b last:border-0"
-                  >
-                    <td className="px-4 py-4 font-medium">
-                      {order.id}
-                    </td>
-                    <td className="px-4 py-4">{order.date}</td>
-                    <td className="px-4 py-4">{order.items}</td>
-                    <td className="px-4 py-4">
-                      ${order.total.toFixed(2)}
-                    </td>
-                    <td className="px-4 py-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${statusStyles[order.status]}`}
-                      >
-                        {order.status}
-                      </span>
-                    </td>
-                    <td className="px-4 py-4 text-right">
-                      <Button
-                        text="View"
-                        disabled={false}
-                        className="px-4 py-1 rounded-full bg-primary text-white text-sm"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* ================= LARGE SCREEN ================= */}
-          <div className="hidden lg:block text-center">
-            {/* Header Row */}
+          <div className="hidden md:block text-center">
             <div className="grid grid-cols-6 gap-4 px-5 py-3 mb-2 text-sm font-semibold text-gray-500">
               <div className="text-left">Order ID</div>
               <div>Date</div>
@@ -115,12 +65,11 @@ const UserOrderHistory: React.FC = () => {
               <div className="text-right">Action</div>
             </div>
 
-            {/* Orders */}
             <div className="grid grid-cols-1 gap-4">
               {mockOrders.map((order) => (
                 <div
                   key={order.id}
-                  className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm hover:shadow-md transition"
+                  className="border border-gray-200 rounded-xl p-5 bg-white hover:shadow-md transition"
                 >
                   <div className="grid grid-cols-6 items-center gap-4">
                     <div className="text-left font-medium">{order.id}</div>
@@ -149,7 +98,6 @@ const UserOrderHistory: React.FC = () => {
             </div>
           </div>
 
-          {/* ================= MOBILE ================= */}
           <div className="md:hidden space-y-4">
             {mockOrders.map((order) => (
               <div

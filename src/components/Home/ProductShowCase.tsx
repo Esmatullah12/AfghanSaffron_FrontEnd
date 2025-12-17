@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/axiosInstance";
-import ProductCard from "../common/ProductCard";
+import ProductList from "../common/ProductList";
 
 interface Product{
   id:number
@@ -46,11 +46,7 @@ const ProductShowCase: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="font-display font-semibold text-primary tracking-wider text-4xl mb-14">Product Showcase</h2>
 
-        <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-12 cursor-pointer">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <ProductList products={products} />
       </div>
     </section>
   );
