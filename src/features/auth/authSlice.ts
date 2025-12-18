@@ -13,6 +13,7 @@ export interface LoginResponse {
   requiresEmailVerification: boolean;
   userRole: string;
   userInfo: {
+    id: string;
     name: string;
     lastName: string;
     email: string;
