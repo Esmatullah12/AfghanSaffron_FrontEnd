@@ -2,14 +2,6 @@ import CartItem from "./CartItem";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 
-interface CartItem{
-  id: number,
-  thumbnail: string;
-  weight: number;
-  quantity: number;
-  name: string;
-  price: number;
-}
 export default function CartItemList() {
   const cart = useSelector((state : RootState) => state.cart.items);
 

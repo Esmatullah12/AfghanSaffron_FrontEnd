@@ -1,22 +1,15 @@
-import React from "react";
 import Button from "../common/Button";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
 
 interface InfoProps {
-  label: string;
-  value: string;
+  label?: string;
+  value?: string;
 }
 
-const mockUser = {
-  name: "John",
-  lastName: "Doe",
-  email: "john.doe@example.com",
-  phoneNumber: "+1 234 567 890",
-  address: "123 Main Street, New York, USA",
-  job: "Software Developer",
-  profileImgUrl: "https://i.pravatar.cc/300",
-};
-
 const UserInfo: React.FC = () => {
+  const user = useSelector((state : RootState) => state.auth.user?.userInfo)
+
   return (
             <section id="product-showcase" className="bg-gray-100">
 
@@ -30,13 +23,13 @@ const UserInfo: React.FC = () => {
         <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col items-center">
           <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-200 items-center justify-center mb-2">
             <img
-              src={mockUser.profileImgUrl}
-              alt={mockUser.name}
+              src={"https://icons.veryicon.com/png/o/miscellaneous/user-avatar/user-avatar-male-5.png"}
+              alt={user?.name}
               className="w-46 h-46 rounded-full object-cover"
             />
           </div>
           <h2 className="text-2xl weight-bold font-semibold mb-4">
-            {mockUser.name} {mockUser.lastName}
+            {user?.name} {user?.lastName}
           </h2>
 
           <div className="flex flex-col gap-3 w-full">
@@ -52,12 +45,12 @@ const UserInfo: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-            <Info label="First Name" value={mockUser.name} />
-            <Info label="Last Name" value={mockUser.lastName} />
-            <Info label="Email" value={mockUser.email} />
-            <Info label="Phone Number" value={mockUser.phoneNumber} />
-            <Info label="Address" value={mockUser.address} />
-            <Info label="Job Title" value={mockUser.job} />
+            <Info label="First Name" value={user?.name} />
+            <Info label="Last Name" value={user?.lastName} />
+            <Info label="Email" value={user?.email} />
+            <Info label="Phone Number" value={user?.phoneNumber} />
+            <Info label="Address" value={user?.address} />
+            <Info label="Job Title" value={user?.jobTitle} />
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ export default function CouponBox() {
         className="bg-transparent reg-input border border-gray-300 text-primary px-3 h-10 rounded-3xl mb-4 outline-none w-full"
       />
 
-      <Button text="Apply Your Coupon" className="w-full" />
+      <Button disabled={false} text="Apply Your Coupon" className="w-full" />
     </div>
   );
 }

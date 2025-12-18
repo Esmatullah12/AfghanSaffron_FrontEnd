@@ -17,6 +17,10 @@ export interface LoginResponse {
     lastName: string;
     email: string;
     picture: string | null;
+    phoneNumber: string,
+    countryCode: string,
+    address: string,
+    jobTitle: string
   };
 }
 
