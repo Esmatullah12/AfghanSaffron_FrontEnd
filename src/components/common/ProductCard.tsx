@@ -36,7 +36,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     if (!user) {
       setLiked(getLocalLikes());
     } else {
-      // Fetch liked products from API
       api
         .get("/favorites", {
           headers: { Authorization: `Bearer ${user.token}` },

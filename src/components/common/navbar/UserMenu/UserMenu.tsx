@@ -36,7 +36,6 @@ const UserMenu = ({ className }: UserMenuProps) => {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  // Lock body scroll when login modal is open
   useEffect(() => {
     if (openLogin) {
       document.body.classList.add("overflow-hidden");

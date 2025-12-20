@@ -14,10 +14,10 @@ export interface LoginResponse {
   userRole: string;
   userInfo: {
     id: string;
-    name: string;
+    firstName: string;
     lastName: string;
     email: string;
-    picture: string | null;
+    profileImgUrl: string | null;
     phoneNumber: string,
     countryCode: string,
     address: string,
@@ -41,6 +41,18 @@ interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
+}
+
+interface UserInfomation{
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  countryCode: string;
+  address: string;
+  jobTitle: string;
+  profileImgUrl?: string;
 }
 
 const storedUser = localStorage.getItem("user");
@@ -78,6 +90,24 @@ const authSlice = createSlice({
       state.user = null;
       localStorage.removeItem("user");
     },
+    updateUserInformation: (state, action: PayloadAction<UserInfomation>) => {
+  if (state.user) {
+    state.user.userInfo = {
+      id: action.payload.id,
+      firstName: action.payload.firstName,
+      lastName: action.payload.lastName,
+      email: action.payload.email,
+      phoneNumber: action.payload.phoneNumber,
+      countryCode: action.payload.countryCode,
+      address: action.payload.address,
+      jobTitle: action.payload.jobTitle,
+      profileImgUrl: action.payload.profileImgUrl ?? null
+    };
+
+    localStorage.setItem("user", JSON.stringify(state.user));
+  }
+}
+
   },
   extraReducers: (builder) => {
     builder
@@ -106,5 +136,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, updateUserInformation } = authSlice.actions;
 export default authSlice.reducer;

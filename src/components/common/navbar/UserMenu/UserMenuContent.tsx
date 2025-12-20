@@ -5,7 +5,7 @@ import Button from "../../Button";
 
 interface UserMenuContentProps {
   isLoggedIn: boolean;
-  user?: { name: string; email: string };
+  user?: { firstName: string; email: string };
   onClose: () => void;
   onLogout: () => void;
   openLogin: () => void; 
@@ -25,10 +25,10 @@ const UserMenuContent = ({
         <div className="px-5 py-6 bg-gradient-to-br from-purple-50 to-pink-50 border-b border-gray-200">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-              {user.name.charAt(0)}
+              {user.firstName.charAt(0)}
             </div>
             <div>
-              <p className="font-semibold text-gray-900">{user.name}</p>
+              <p className="font-semibold text-gray-900">{user.firstName}</p>
               <p className="text-sm text-gray-600">{user.email}</p>
             </div>
           </div>

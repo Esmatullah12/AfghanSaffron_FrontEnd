@@ -9,8 +9,6 @@ import SocialMediaLinks from "./SocialMediaLinks";
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
-  const token = localStorage.set
-
   return (
     <footer className="bg-[#f2e0fcff] pt-10 pb-3 font-sans">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -107,7 +105,7 @@ const Footer: React.FC = () => {
                 placeholder="Enter e-mail"
                 className="px-4 py-2.5 border border-primary/40 rounded-full focus:outline-none text-sm placeholder-gray-500 focus:border-primary"
               />
-              <Button text="JOIN" />
+              <Button disabled={false} text="JOIN" />
             </form>
           </div>
         </div>

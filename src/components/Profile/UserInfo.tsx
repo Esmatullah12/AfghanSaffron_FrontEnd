@@ -1,8 +1,9 @@
 import Button from "../common/Button";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../../store/store";
 import React, { useState } from "react";
 import api from "../../api/axiosInstance";
+import { updateUserInformation } from "../../features/auth/authSlice";
 
 interface InfoProps {
   label?: string;
@@ -11,50 +12,79 @@ interface InfoProps {
   isEditing?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+const baseURL = import.meta.env.VITE_API_URL;
+
+
 
 const UserInfo: React.FC = () => {
   const user = useSelector(
     (state: RootState) => state.auth.user?.userInfo
   );
 
+  const hasProfileImage =
+  !!user?.profileImgUrl && user.profileImgUrl.trim() !== "";
+
+  const imageSrc =
+  user?.profileImgUrl?.startsWith("http")
+    ? user.profileImgUrl
+    : `${baseURL}/${user?.profileImgUrl}`;
+
   const [isEditing, setIsEditing] = useState(false);
 
   const [form, setForm] = useState({
-    firstName: user?.name || "",
+    firstName: user?.firstName || "",
     lastName: user?.lastName || "",
     email: user?.email || "",
     phoneNumber: user?.phoneNumber || "",
     address: user?.address || "",
     jobTitle: user?.jobTitle || "",
+    profileImgUrl: user?.profileImgUrl || ""
   });
+
+  const dispatch = useDispatch()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSave = async () => {
-    if (!user?.id) {
-      console.error("User ID missing");
-      return;
-  }
+  if (!user?.id) return;
 
   const formData = new FormData();
   Object.entries(form).forEach(([key, value]) => {
     formData.append(key, value as string);
   });
 
-  formData.append("id", user.id);
-
   try {
-    // Let Axios handle headers automatically
-    await api.put(`api/UMS/updateUserInfo/${user.id}`, formData);
+    const response = await api.put(
+      `api/UMS/updateUserInfo/${user.id}`,
+      formData
+    );
+
+    const updatedUserInfo = response.data;
+
+    dispatch(updateUserInformation(updatedUserInfo))    
+    setForm(updatedUserInfo);
+
+    const authData = JSON.parse(localStorage.getItem("auth") || "{}");
+
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        ...authData,
+        userInfo: {
+          ...authData.userInfo,
+          ...updatedUserInfo
+        }
+      })
+    );
 
     setIsEditing(false);
-    console.log("User updated successfully");
   } catch (error) {
     console.error("Update failed", error);
   }
 };
+
 
 
 
@@ -72,16 +102,21 @@ const UserInfo: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* LEFT */}
           <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col items-center">
-            <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-200 items-center justify-center mb-2">
-              <img
-                src="https://icons.veryicon.com/png/o/miscellaneous/user-avatar/user-avatar-male-5.png"
-                alt={user?.name}
-                className="w-46 h-46 rounded-full object-cover"
-              />
+            <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-200 items-center justify-center mb-2 p-2">
+              {hasProfileImage ? (
+                <img
+                  src={imageSrc}
+                  alt={user?.firstName}
+                  className="w-46 h-46 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full text-8xl bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                  {user?.firstName?.charAt(0).toUpperCase()}
+                </div>
+              )}
             </div>
-
             <h2 className="text-2xl weight-bold font-semibold mb-4">
-              {user?.name} {user?.lastName}
+              {user?.firstName} {user?.lastName}
             </h2>
 
             <div className="flex flex-col gap-3 w-full">
@@ -100,7 +135,6 @@ const UserInfo: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT */}
           <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold">Bio & Details</h3>
@@ -108,7 +142,7 @@ const UserInfo: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              <Info label="First Name" name="name" value={form.firstName} isEditing={isEditing} onChange={handleChange} />
+              <Info label="First Name" name="firstName" value={form.firstName} isEditing={isEditing} onChange={handleChange} />
               <Info label="Last Name" name="lastName" value={form.lastName} isEditing={isEditing} onChange={handleChange} />
               <Info label="Email" name="email" value={form.email} isEditing={isEditing} onChange={handleChange} />
               <Info label="Phone Number" name="phoneNumber" value={form.phoneNumber} isEditing={isEditing} onChange={handleChange} />

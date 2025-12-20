@@ -39,16 +39,21 @@ const ProductShowCase: React.FC = () => {
     fetchProducts();
   }, [])
 
-  if (loading) return <p>Loading...</p>;
 
   return (
-    <section id="product-showcase" className="bg-gray-50 py-16">
-      <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="font-display font-semibold text-primary tracking-wider text-4xl mb-14">Product Showcase</h2>
+  <section id="product-showcase" className="bg-gray-50 py-16">
+    <div className="max-w-6xl mx-auto px-6 text-center">
+      <h2 className="font-display font-semibold text-primary tracking-wider text-4xl mb-14">
+        Product Showcase
+      </h2>
 
+      {loading ? (
+        <p className="text-2xl text-center">Loading...</p>
+      ) : (
         <ProductList products={products} />
-      </div>
-    </section>
+      )}
+    </div>
+  </section>
   );
 };
 
