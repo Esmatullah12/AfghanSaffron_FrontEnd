@@ -111,7 +111,6 @@ const ProductDetail: React.FC = () => {
                 key={index}
                 src={`${baseUrl}/${img.imagePath}`}
                 alt={product.name}
-                onLoad={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
                 onClick={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
                 className={`w-20 h-20 object-cover rounded-xl cursor-pointer border-2 transition-all duration-300 ${
                   selectedImage === `${baseUrl}/${img.imagePath}` ? "border-primary" : "border-gray-200"
