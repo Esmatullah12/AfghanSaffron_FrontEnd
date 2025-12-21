@@ -43,7 +43,7 @@ const mockWishlist: Product[] = [
 
 const UserWishlist: React.FC = () => {
   return (
-   <section id="product-showcase" className="bg-gray-100 pb-16">
+   <section id="fav-products" className="bg-gray-100 pb-16">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="font-display font-semibold text-primary tracking-wider text-3xl mb-14">Your Favorite Products</h2>
         <ProductList products={mockWishlist} />

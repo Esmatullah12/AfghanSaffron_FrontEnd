@@ -1,39 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../common/Button";
+import api from "../../api/axiosInstance";
 
 type OrderStatus = "Pending" | "Completed" | "Cancelled";
 
 interface Order {
-  id: string;
-  date: string;
-  total: number;
+  id: number;
+  orderDate: string;
+  totalItemsCount: number;
+  totalPrice: number;
   status: OrderStatus;
-  items: number;
 }
-
-const mockOrders: Order[] = [
-  {
-    id: "ORD-1001",
-    date: "2024-10-12",
-    total: 129.99,
-    status: "Completed",
-    items: 3,
-  },
-  {
-    id: "ORD-1002",
-    date: "2024-11-05",
-    total: 59.5,
-    status: "Pending",
-    items: 1,
-  },
-  {
-    id: "ORD-1003",
-    date: "2024-12-01",
-    total: 249.0,
-    status: "Cancelled",
-    items: 5,
-  },
-];
 
 const statusStyles: Record<OrderStatus, string> = {
   Completed: "bg-green-100 text-green-700",
@@ -42,8 +19,39 @@ const statusStyles: Record<OrderStatus, string> = {
 };
 
 const UserOrderHistory: React.FC = () => {
+  const [userOrders, setUserOrders] = React.useState<Order[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(true);
+
+  useEffect(() => {
+      const fetchUserOrders = async () => {
+        setLoading(true);
+        const payload = {
+          pageIndex: 0,
+          pageSize: 10,
+          searchBy: ""
+        };
+        try{
+          const res = await api.post("api/Order/getUserOrdersList", payload);
+          setUserOrders(res.data.data || res.data);
+        }catch(err){
+          console.log("error fetching products", err);
+        }finally{
+          setLoading(false);
+        }
+      };
+      fetchUserOrders();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading Your Orders...
+      </div>
+    );
+  }
+
   return (
-    <section className="bg-gray-100">
+    <section id="order-history" className="bg-gray-100">
       <div className="max-w-6xl mx-auto px-6 pb-16">
         <div className="bg-white rounded-2xl border border-gray-200  p-6">
           <div className="flex items-center justify-between mb-6">
@@ -51,7 +59,7 @@ const UserOrderHistory: React.FC = () => {
               Order History
             </h2>
             <span className="text-sm text-gray-500">
-              {mockOrders.length} orders
+              {userOrders.length} orders
             </span>
           </div>
 
@@ -66,17 +74,17 @@ const UserOrderHistory: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-4">
-              {mockOrders.map((order) => (
+              {userOrders.map((order) => (
                 <div
                   key={order.id}
                   className="border border-gray-200 rounded-xl p-5 bg-white hover:shadow-md transition"
                 >
                   <div className="grid grid-cols-6 items-center gap-4">
                     <div className="text-left font-medium">{order.id}</div>
-                    <div className="text-gray-600">{order.date}</div>
-                    <div>{order.items}</div>
-                    <div className="font-semibold">
-                      ${order.total.toFixed(2)}
+                    <div className="text-gray-600 text-sm">{order.orderDate}</div>
+                    <div className="font-bold text-lg text-primary">{order.totalItemsCount}</div>
+                    <div className="font-bold text-secondary text-lg">
+                      ${order.totalPrice}
                     </div>
                     <div>
                       <span
@@ -99,7 +107,7 @@ const UserOrderHistory: React.FC = () => {
           </div>
 
           <div className="md:hidden space-y-4">
-            {mockOrders.map((order) => (
+            {userOrders.map((order) => (
               <div
                 key={order.id}
                 className="border border-gray-200 rounded-xl p-4 bg-white"
@@ -114,15 +122,14 @@ const UserOrderHistory: React.FC = () => {
                 </div>
 
                 <p className="text-sm text-gray-500">
-                  Date: {order.date}
+                  Date: {order.orderDate}
                 </p>
                 <p className="text-sm text-gray-500">
-                  Items: {order.items}
+                  Items: {order.totalItemsCount}
                 </p>
                 <p className="font-medium mt-1">
-                  Total: ${order.total.toFixed(2)}
+                  Total: ${order.totalPrice}
                 </p>
-
                 <Button
                   text="View Details"
                   disabled={false}

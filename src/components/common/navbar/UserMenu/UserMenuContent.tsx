@@ -2,6 +2,7 @@
 import { AiOutlineUser, AiOutlineHistory, AiOutlineHeart } from "react-icons/ai";
 import { IoLogOutOutline } from "react-icons/io5";
 import Button from "../../Button";
+import { useNavigate } from "react-router-dom";
 
 interface UserMenuContentProps {
   isLoggedIn: boolean;
@@ -18,6 +19,11 @@ const UserMenuContent = ({
   onLogout,
   openLogin,
 }: UserMenuContentProps) => {
+  const navigate = useNavigate();
+
+   const handleClick = (to:string) => {
+    navigate(to);
+  };
 
   if (isLoggedIn && user) {
     return (
@@ -36,14 +42,13 @@ const UserMenuContent = ({
 
         <div className="py-2">
           {[
-            { icon: AiOutlineUser, label: "My Profile", href: " /AfghanSaffron_FrontEnd/profile" },
-            { icon: AiOutlineHistory, label: "Order History", href: "/orders" },
-            { icon: AiOutlineHeart, label: "Wishlist", href: "/wishlist" },
+            { icon: AiOutlineUser, label: "My Profile", to: "/profile" },
+            { icon: AiOutlineHistory, label: "Order History", to: "/profile/#order-history" },
+            { icon: AiOutlineHeart, label: "Wishlist", to: "/profile/#fav-products" },
           ].map((item) => (
             <a
               key={item.label}
-              href={item.href}
-              onClick={onClose}
+              onClick={() => { onClose(); handleClick(item.to); }}
               className="flex items-center gap-3 px-5 py-3 text-gray-800 hover:bg-purple-50 hover:text-[#44155B] transition-all"
             >
               <item.icon className="h-5 w-5" />

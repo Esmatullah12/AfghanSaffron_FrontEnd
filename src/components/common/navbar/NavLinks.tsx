@@ -1,3 +1,4 @@
+import { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const navItems = [
@@ -9,17 +10,8 @@ const navItems = [
 const NavLinks = () => {
   const navigate = useNavigate();
 
-  const handleClick = (to: string) => {
-    if (to.includes("#")) {
-      const [path, hash] = to.split("#");
-      navigate(path); // navigate to the base path first
-      setTimeout(() => {
-        const el = document.getElementById(hash);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-      }, 50);
-    } else {
-      navigate(to);
-    }
+  const handleClick = (to:string) => {
+    navigate(to);
   };
 
   return (

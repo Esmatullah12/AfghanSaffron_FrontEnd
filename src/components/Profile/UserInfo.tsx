@@ -89,7 +89,7 @@ const UserInfo: React.FC = () => {
 
 
   return (
-    <section id="product-showcase" className="bg-gray-100">
+    <section  className="bg-gray-100">
       <div className="max-w-6xl px-8 mx-auto py-10 bg-gray-100">
         <h1 className="font-semibold mb-1 text-3xl font-display text-primary">
           Profile
@@ -182,7 +182,7 @@ const Info: React.FC<InfoProps> = ({
         name={name}
         value={value}
         onChange={onChange}
-        className="w-full border rounded-lg px-3 py-2"
+        className="w-full border rounded-full px-3 py-2 border-gray-300 focus:border-primary outline-none"
       />
     ) : (
       <p className="font-medium text-lg text-gray-800">{value}</p>
