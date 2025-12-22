@@ -21,9 +21,9 @@ const UserMenuContent = ({
 }: UserMenuContentProps) => {
   const navigate = useNavigate();
 
-   const handleClick = (to:string) => {
-    navigate(to);
-  };
+    const handleClick = (to:string) => {
+      navigate(to);
+    };
 
   if (isLoggedIn && user) {
     return (
