@@ -4,6 +4,7 @@ import Layout from "../layout/Layout";
 import { FcGoogle } from "react-icons/fc";
 import Button from "../components/common/Button";
 import api from "../api/axiosInstance";
+import GoogleLoginButton from "../components/common/GoogleLoginButton";
 
 interface SignUpData {
   email: string;
@@ -47,21 +48,21 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try{
+    try {
       const response = await api.post("api/Auth/register", form)
       const data = response.data;
-      if(data.success){
+      if (data.success) {
         console.log("User created successfully!");
         console.log("Message:", data.message);
         console.log("Requires Email Verification:", data.requiresEmailVerification);
         console.log("Email Confirmed:", data.emailConfirmed);
         console.log("User Info:", data.userInfo);
         alert(data.message);
-      }else{
+      } else {
         console.log("Registration failed:", data.errors);
         alert("Registration failed. Check errors in console.");
       }
-    }catch(err){
+    } catch (err) {
       console.log("Error Occured when Creating new User", err);
     }
   };
@@ -193,7 +194,6 @@ const SignUp: React.FC = () => {
                   </svg>
                 </span>
 
-                {/* Hidden SVG symbol for checkbox animation */}
                 <svg xmlns="http://www.w3.org/2000/svg" style={{ display: "none" }}>
                   <symbol className="text-primary" id="term-checkbox" viewBox="0 0 22 22">
                     <path
@@ -211,18 +211,10 @@ const SignUp: React.FC = () => {
               </label>
             </div>
 
-            {/* Submit */}
-            <Button text="Create Account" className="h-10"/>
-            <button className="google-btn h-10 border border-primary rounded-full text-primary flex justify-center items-center py-1 cursor-pointer mt-2">
-              <FcGoogle size={28} /><span className="ml-2">Continue with Google</span>
-            </button>
-            {/* <button
-              type="submit"
-              className="w-full py-3 rounded-lg text-white font-semibold"
-              style={{ backgroundColor: "#44155B" }}
-            >
-              Create account
-            </button> */}
+            <Button disabled={false} text="Create Account" className="h-10" />
+            <div className="flex justify-center mt-20">
+              <GoogleLoginButton />
+            </div>
           </form>
         </div>
       </div>
