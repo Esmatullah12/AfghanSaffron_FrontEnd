@@ -63,10 +63,7 @@ const initialState: AuthState = {
   error: null,
 };
 
-export const loginUser = createAsyncThunk<
-  LoginResponse,              
-  LoginPayload,                
-  { rejectValue: string }     
+export const loginUser = createAsyncThunk<LoginResponse, LoginPayload, { rejectValue: string }     
 >(
   "auth/loginUser",
   async (payload, { rejectWithValue }) => {
@@ -81,6 +78,26 @@ export const loginUser = createAsyncThunk<
     }
   }
 );
+
+export const loginWithGoogle = createAsyncThunk<
+  LoginResponse,          
+  string,                 
+  { rejectValue: string } 
+>(
+  "auth/loginWithGoogle",
+  async (idToken, { rejectWithValue }) => {
+    try {
+      const response = await api.post<LoginResponse>("/api/Auth/google", { idToken });
+      return response.data;
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        return rejectWithValue(err.response?.data?.message || "Google login failed");
+      }
+      return rejectWithValue("Google login failed");
+    }
+  }
+);
+
 
 const authSlice = createSlice({
   name: "auth",
@@ -133,6 +150,28 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Login failed";
       })
+
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action: PayloadAction<LoginResponse>) => {
+        state.loading = false;
+
+        state.user = {
+          token: action.payload.token,
+          refreshToken: action.payload.refreshToken,
+          role: action.payload.userRole,
+          userInfo: action.payload.userInfo,
+        };
+
+        localStorage.setItem("user", JSON.stringify(state.user));
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Google login failed";
+      });
+
   },
 });
 

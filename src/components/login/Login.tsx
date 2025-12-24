@@ -5,7 +5,7 @@ import Button from "../common/Button";
 import type { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../features/auth/authSlice";
-import { getLocalLikes, setLocalLikes } from "../../utils/localStorageHelpers";
+import { getLocalLikes } from "../../utils/localStorageHelpers";
 
 
 type Props = {
@@ -105,7 +105,7 @@ export const Login = ({ onClose }: Props) => {
             </div>
           )}
 
-          <Button onClick={handleLogin} text="Sign In" className="w-full h-10 mt-4"/>
+          <Button disabled={false} onClick={handleLogin} text="Sign In" className="w-full h-10 mt-4"/>
 
             <div className="text-center my-2 text-sm text-gray-500">Or Sign in with</div>
 
