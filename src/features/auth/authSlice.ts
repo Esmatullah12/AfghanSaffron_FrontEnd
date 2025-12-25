@@ -17,7 +17,7 @@ export interface LoginResponse {
     firstName: string;
     lastName: string;
     email: string;
-    profileImgUrl: string | null;
+    picture: string | null;
     phoneNumber: string,
     countryCode: string,
     address: string,
@@ -52,7 +52,7 @@ interface UserInfomation{
   countryCode: string;
   address: string;
   jobTitle: string;
-  profileImgUrl?: string;
+  picture?: string;
 }
 
 const storedUser = localStorage.getItem("user");
@@ -118,7 +118,7 @@ const authSlice = createSlice({
       countryCode: action.payload.countryCode,
       address: action.payload.address,
       jobTitle: action.payload.jobTitle,
-      profileImgUrl: action.payload.profileImgUrl ?? null
+      picture: action.payload.picture ?? null
     };
 
     localStorage.setItem("user", JSON.stringify(state.user));

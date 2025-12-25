@@ -212,7 +212,7 @@ const SignUp: React.FC = () => {
             </div>
 
             <Button disabled={false} text="Create Account" className="h-10" />
-            <div className="flex justify-center mt-20">
+            <div className="flex justify-center">
               <GoogleLoginButton />
             </div>
           </form>

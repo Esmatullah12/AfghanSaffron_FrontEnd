@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 interface UserMenuContentProps {
   isLoggedIn: boolean;
-  user?: { firstName: string; email: string };
+  user?: { firstName: string; email: string; picture?: string };
   onClose: () => void;
   onLogout: () => void;
   openLogin: () => void; 
@@ -30,9 +30,17 @@ const UserMenuContent = ({
       <>
         <div className="px-5 py-6 bg-gradient-to-br from-purple-50 to-pink-50 border-b border-gray-200">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-              {user.firstName.charAt(0)}
-            </div>
+            {user.picture ? (
+              <img
+                src={user.picture}
+                alt="Profile"
+                className="w-14 h-14 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-14 h-14 bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                {user.firstName.charAt(0).toUpperCase()}
+              </div>
+            )}
             <div>
               <p className="font-semibold text-gray-900">{user.firstName}</p>
               <p className="text-sm text-gray-600">{user.email}</p>
@@ -57,7 +65,7 @@ const UserMenuContent = ({
           ))}
 
           <button
-            onClick={() => { onLogout(); onClose(); }}
+            onClick={() => { onLogout(); onClose(); navigate("/")}}
             className="flex w-full items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50 transition-all"
           >
             <IoLogOutOutline className="h-5 w-5" />
