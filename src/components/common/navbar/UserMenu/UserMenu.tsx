@@ -15,7 +15,6 @@ const UserMenu = ({ className }: UserMenuProps) => {
   const [open, setOpen] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
 
-  // ✅ Get user from Redux store
   const user = useSelector((state: RootState) => state.auth.user);
   const isLoggedIn = !!user;
 

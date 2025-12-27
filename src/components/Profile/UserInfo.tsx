@@ -21,13 +21,10 @@ const UserInfo: React.FC = () => {
     (state: RootState) => state.auth.user?.userInfo
   );
 
-  const hasProfileImage =
-  !!user?.profileImgUrl && user.profileImgUrl.trim() !== "";
-
   const imageSrc =
-  user?.profileImgUrl?.startsWith("http")
-    ? user.profileImgUrl
-    : `${baseURL}/${user?.profileImgUrl}`;
+  user?.picture?.startsWith("http")
+    ? user.picture
+    : `${baseURL}/${user?.picture}`;
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -38,7 +35,7 @@ const UserInfo: React.FC = () => {
     phoneNumber: user?.phoneNumber || "",
     address: user?.address || "",
     jobTitle: user?.jobTitle || "",
-    profileImgUrl: user?.profileImgUrl || ""
+    profileImgUrl: user?.picture || ""
   });
 
   const dispatch = useDispatch()
@@ -85,9 +82,6 @@ const UserInfo: React.FC = () => {
   }
 };
 
-
-
-
   return (
     <section  className="bg-gray-100">
       <div className="max-w-6xl px-8 mx-auto py-10 bg-gray-100">
@@ -100,16 +94,16 @@ const UserInfo: React.FC = () => {
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* LEFT */}
           <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col items-center">
             <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-200 items-center justify-center mb-2 p-2">
-              {hasProfileImage ? (
+              {user?.picture ? (
                 <img
                   src={imageSrc}
                   alt={user?.firstName}
                   className="w-46 h-46 rounded-full object-cover"
                 />
               ) : (
+                
                 <div className="w-full h-full text-8xl bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                   {user?.firstName?.charAt(0).toUpperCase()}
                 </div>

@@ -34,7 +34,7 @@ const UserMenuContent = ({
               <img
                 src={user.picture}
                 alt="Profile"
-                className="w-14 h-14 rounded-full object-cover"
+                className="w-16 h-16 bg-purple-300 rounded-full object-cover p-0.5"
               />
             ) : (
               <div className="w-14 h-14 bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
