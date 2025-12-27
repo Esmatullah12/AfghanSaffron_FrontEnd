@@ -1,7 +1,7 @@
 import Button from "../common/Button";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../../store/store";
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import api from "../../api/axiosInstance";
 import { updateUserInformation } from "../../features/auth/authSlice";
 
@@ -14,19 +14,24 @@ interface InfoProps {
 }
 const baseURL = import.meta.env.VITE_API_URL;
 
-
-
 const UserInfo: React.FC = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const user = useSelector(
     (state: RootState) => state.auth.user?.userInfo
   );
 
-  const imageSrc =
-  user?.picture?.startsWith("http")
-    ? user.picture
-    : `${baseURL}/${user?.picture}`;
+  const userImage = user?.picture || user?.picture;
 
-  const [isEditing, setIsEditing] = useState(false);
+  const imageSrc =
+    userImage?.startsWith("http")
+      ? userImage
+      : userImage
+        ? `${baseURL}/${userImage}`
+        : "";
+
+  const previewImage = selectedImage ? URL.createObjectURL(selectedImage) : imageSrc;
 
   const [form, setForm] = useState({
     firstName: user?.firstName || "",
@@ -35,52 +40,76 @@ const UserInfo: React.FC = () => {
     phoneNumber: user?.phoneNumber || "",
     address: user?.address || "",
     jobTitle: user?.jobTitle || "",
-    profileImgUrl: user?.picture || ""
+    picture: user?.picture || ""
   });
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    if (user) {
+      setForm({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        email: user.email || "",
+        phoneNumber: user.phoneNumber || "",
+        address: user.address || "",
+        jobTitle: user.jobTitle || "",
+        picture: user.picture || ""
+      });
+    }
+  }, [user]);
+
+  // Cleanup object URL
+  useEffect(() => {
+    return () => {
+      if (previewImage && previewImage.startsWith('blob:')) {
+        URL.revokeObjectURL(previewImage);
+      }
+    };
+  }, [previewImage]);
+
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSave = async () => {
+ const handleSave = async () => {
   if (!user?.id) return;
 
   const formData = new FormData();
+
+  // add text fields
   Object.entries(form).forEach(([key, value]) => {
-    formData.append(key, value as string);
+    if (key !== "picture") {
+      formData.append(key, value as string);
+    }
   });
+
+  // add image ONLY if user selected one
+  if (selectedImage) {
+    formData.append("ProfileImg", selectedImage);
+  }
 
   try {
     const response = await api.put(
       `api/UMS/updateUserInfo/${user.id}`,
-      formData
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
     );
 
-    const updatedUserInfo = response.data;
+    // Map ProfileImgUrl from backend response to picture field in Redux
+    const updatedUser = {
+      ...response.data,
+      picture: response.data.picture
+    };
 
-    dispatch(updateUserInformation(updatedUserInfo))    
-    setForm(updatedUserInfo);
-
-    const authData = JSON.parse(localStorage.getItem("auth") || "{}");
-
-    localStorage.setItem(
-      "auth",
-      JSON.stringify({
-        ...authData,
-        userInfo: {
-          ...authData.userInfo,
-          ...updatedUserInfo
-        }
-      })
-    );
-
+    dispatch(updateUserInformation(updatedUser));
+    setSelectedImage(null);
     setIsEditing(false);
   } catch (error) {
     console.error("Update failed", error);
   }
 };
+
 
   return (
     <section  className="bg-gray-100">
@@ -94,24 +123,52 @@ const UserInfo: React.FC = () => {
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col items-center">
-            <div className="w-50 h-50 rounded-full border border-gray-200 flex bg-purple-200 items-center justify-center mb-2 p-2">
-              {user?.picture ? (
-                <img
-                  src={imageSrc}
-                  alt={user?.firstName}
-                  className="w-46 h-46 rounded-full object-cover"
-                />
-              ) : (
-                
-                <div className="w-full h-full text-8xl bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                  {user?.firstName?.charAt(0).toUpperCase()}
-                </div>
-              )}
-            </div>
-            <h2 className="text-2xl weight-bold font-semibold mb-4">
-              {user?.firstName} {user?.lastName}
-            </h2>
+         <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col items-center">
+  <div
+    className={`relative w-50 h-50 rounded-full mb-2 p-2 border border-gray-200
+      ${isEditing ? "cursor-pointer group" : ""}`}
+    onClick={() => isEditing && fileInputRef.current?.click()}
+  >
+    {userImage || selectedImage ? (
+      <img
+        src={previewImage}
+        alt={user?.firstName}
+        className={`w-46 h-46 rounded-full object-cover transition
+          ${isEditing ? "group-hover:brightness-75" : ""}`}
+      />
+    ) : (
+      <div className="w-full h-full text-8xl bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+        {user?.firstName?.charAt(0).toUpperCase()}
+      </div>
+    )}
+
+    {/* Overlay */}
+    {isEditing && (
+      <div className="absolute inset-0 rounded-full bg-black/40 opacity-0 
+        group-hover:opacity-100 transition flex items-center justify-center">
+        <span className="text-white text-sm font-medium">
+          Select new profile
+        </span>
+      </div>
+    )}
+  </div>
+
+  {/* Hidden input */}
+  <input
+    type="file"
+    accept="image/*"
+    ref={fileInputRef}
+    className="hidden"
+    onChange={(e) => {
+      if (e.target.files?.[0]) {
+        setSelectedImage(e.target.files[0]);
+      }
+    }}
+  />
+
+  <h2 className="text-2xl font-semibold mb-4">
+    {user?.firstName} {user?.lastName}
+  </h2>
 
             <div className="flex flex-col gap-3 w-full">
               <Button

@@ -107,23 +107,18 @@ const authSlice = createSlice({
       state.user = null;
       localStorage.removeItem("user");
     },
-    updateUserInformation: (state, action: PayloadAction<UserInfomation>) => {
-  if (state.user) {
-    state.user.userInfo = {
-      id: action.payload.id,
-      firstName: action.payload.firstName,
-      lastName: action.payload.lastName,
-      email: action.payload.email,
-      phoneNumber: action.payload.phoneNumber,
-      countryCode: action.payload.countryCode,
-      address: action.payload.address,
-      jobTitle: action.payload.jobTitle,
-      picture: action.payload.picture ?? null
-    };
+    updateUserInformation: (state, action: PayloadAction<Partial<UserInfomation>>) => {
+      if (state.user) {
+        state.user.userInfo = {
+          ...state.user.userInfo,
+          ...action.payload,
+          // Ensure picture is updated correctly if present, or kept if not
+          picture: action.payload.picture !== undefined ? action.payload.picture : state.user.userInfo.picture
+        };
 
-    localStorage.setItem("user", JSON.stringify(state.user));
-  }
-}
+        localStorage.setItem("user", JSON.stringify(state.user));
+      }
+    }
 
   },
   extraReducers: (builder) => {

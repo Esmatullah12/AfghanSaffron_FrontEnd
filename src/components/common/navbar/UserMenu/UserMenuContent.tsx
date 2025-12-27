@@ -12,6 +12,8 @@ interface UserMenuContentProps {
   openLogin: () => void; 
 }
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 const UserMenuContent = ({
   isLoggedIn,
   user,
@@ -32,7 +34,7 @@ const UserMenuContent = ({
           <div className="flex items-center gap-4">
             {user.picture ? (
               <img
-                src={user.picture}
+                src={`${baseURL}/${user.picture}`}
                 alt="Profile"
                 className="w-16 h-16 bg-purple-300 rounded-full object-cover p-0.5"
               />
