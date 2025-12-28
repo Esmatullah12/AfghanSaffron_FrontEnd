@@ -17,7 +17,7 @@ export default function OrderSummary() {
   const total = productsCost - discount + delivery;
 
   return (
-    <div className="bg-white p-5 rounded-2xl">
+    <div className="bg-white p-5 rounded-2xl border border-gray-300">
       <h3 className="font-semibold mb-2 border-b border-gray-300 pb-2">Order Summary</h3>
 
       <div className="space-y-1 text-sm">

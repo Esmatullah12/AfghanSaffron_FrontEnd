@@ -22,7 +22,7 @@ interface Props {
 const PaymentMethods : React.FC<Props> = ({selectedMethod, onChange, onCheckout, loading}) => {
 
   return (
-    <div className="bg-white p-5 rounded-2xl">
+    <div className="bg-white p-5 rounded-2xl border border-gray-300">
       <h3 className="font-semibold mb-3 border-b border-gray-300 pb-2">Payment Method</h3>
 
       <div className="gap-3 mb-4 grid grid-cols-4">

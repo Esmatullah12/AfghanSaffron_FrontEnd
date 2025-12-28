@@ -58,7 +58,7 @@ export default function Cart() {
       <div className="w-full bg-gray-100 p-6 md:p-10">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 ">
 
-        <div className="lg:col-span-2 space-y-6 p-6 rounded-2xl bg-white">
+        <div className="lg:col-span-2 space-y-6 p-6 rounded-2xl bg-white border border-gray-300">
           <h2 className="text-2xl font-semibold font-display text-primary border-b pb-2 border-gray-300">Shopping Cart</h2>
           <div className="grid grid-cols-4 text-center gap-4 mb-2 font-bold">
             <div>Product</div>

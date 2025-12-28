@@ -2,7 +2,7 @@ import Button from "../common/Button";
 
 export default function CouponBox() {
   return (
-    <div className="bg-white p-5 rounded-2xl">
+    <div className="bg-white p-5 rounded-2xl border border-gray-300">
       <h3 className="font-semibold pb-3">Coupon Code</h3>
 
       <input
