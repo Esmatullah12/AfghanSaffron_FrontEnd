@@ -6,6 +6,7 @@ import type { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../features/auth/authSlice";
 import { getLocalLikes } from "../../utils/localStorageHelpers";
+import { useNavigate } from "react-router-dom";
 
 
 type Props = {
@@ -14,6 +15,7 @@ type Props = {
 
 export const Login = ({ onClose }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -114,7 +116,7 @@ export const Login = ({ onClose }: Props) => {
             </button>
             <p className="text-center text-sm text-gray-600 mt-4">
               Don’t have an account?{" "}
-              <span className="text-purple-600 cursor-pointer font-bold">Request Now</span>
+              <span onClick={() => navigate("/register")} className="text-purple-600 cursor-pointer font-bold">Request Now</span>
             </p>
           </div>
       </div>

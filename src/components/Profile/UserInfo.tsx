@@ -25,7 +25,7 @@ const UserInfo: React.FC = () => {
   const userImage = user?.picture || user?.picture;
 
   const imageSrc =
-    userImage?.startsWith("http")
+    userImage?.startsWith("https://lh3.googleusercontent.com/")
       ? userImage
       : userImage
         ? `${baseURL}/${userImage}`
@@ -125,7 +125,7 @@ const UserInfo: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
          <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col items-center">
   <div
-    className={`relative w-50 h-50 rounded-full mb-2 p-2 border border-gray-200
+    className={`relative w-50 h-50 rounded-full mb-2 p-2 bg-purple-200
       ${isEditing ? "cursor-pointer group" : ""}`}
     onClick={() => isEditing && fileInputRef.current?.click()}
   >

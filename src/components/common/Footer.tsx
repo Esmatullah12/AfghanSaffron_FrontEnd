@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#f2e0fcff] pt-10 pb-3 font-sans">
+    <footer className="bg-[#f2e0fcff] pt-10 pb-3 font-sans border-t border-purple-300">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-gray-700">
 

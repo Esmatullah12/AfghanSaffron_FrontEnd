@@ -65,7 +65,7 @@ const ContactUs = () => {
            Contact us to learn more about our services or get personalized support.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-6">
             
             <InfoCard
               icon={<MdOutlineMail className="text-red-600" />}
@@ -165,7 +165,7 @@ const InfoCard = ({
   value: string;
   className: string
 }) => (
-  <div className="border border-gray-300 rounded-xl p-4 flex flex-col gap-2 hover:shadow-md transition">
+  <div className="border border-gray-300 rounded-xl p-4 flex flex-col gap-2 hover:shadow-md transition cursor-pointer">
     <div className={twMerge("bg-gray-100 p-2 text-3xl rounded-xl w-12", className)}>{icon}</div>
     <div>
       <h4 className="font-medium">{title}</h4>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import register from "../assets/register.jpg";
 import Layout from "../layout/Layout";
-import { FcGoogle } from "react-icons/fc";
 import Button from "../components/common/Button";
 import api from "../api/axiosInstance";
 import GoogleLoginButton from "../components/common/GoogleLoginButton";
@@ -69,7 +68,7 @@ const SignUp: React.FC = () => {
 
   return (
     <Layout>
-      <div className="py-10 bg-gray-200 flex items-center justify-center px-8 border-b border-purple-300">
+      <div className="py-10 bg-gray-200 flex items-center justify-center px-8">
         <div className="text-white p-6 rounded-2xl max-w-3xl border border-gray-300 grid grid-cols-1 md:grid-cols-2 gap-5 bg-white">
           {/* LEFT IMAGE */}
           <div className="rounded-2xl overflow-hidden border border-gray-300 hidden md:block h-115">

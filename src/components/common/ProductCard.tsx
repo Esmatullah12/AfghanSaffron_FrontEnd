@@ -40,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         .get("/favorites", {
           headers: { Authorization: `Bearer ${user.token}` },
         })
-        .then((res) => setLiked(res.data)) // assuming API returns array of product IDs
+        .then((res) => setLiked(res.data)) 
         .catch(() => setLiked([]));
     }
   }, []);

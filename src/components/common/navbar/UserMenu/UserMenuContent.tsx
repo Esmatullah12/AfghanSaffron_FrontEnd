@@ -3,10 +3,11 @@ import { AiOutlineUser, AiOutlineHistory, AiOutlineHeart } from "react-icons/ai"
 import { IoLogOutOutline } from "react-icons/io5";
 import Button from "../../Button";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../../store/store";
 
 interface UserMenuContentProps {
   isLoggedIn: boolean;
-  user?: { firstName: string; email: string; picture?: string };
   onClose: () => void;
   onLogout: () => void;
   openLogin: () => void; 
@@ -16,16 +17,27 @@ const baseURL = import.meta.env.VITE_API_URL;
 
 const UserMenuContent = ({
   isLoggedIn,
-  user,
   onClose,
   onLogout,
   openLogin,
 }: UserMenuContentProps) => {
   const navigate = useNavigate();
 
-    const handleClick = (to:string) => {
-      navigate(to);
-    };
+  const handleClick = (to:string) => {
+    navigate(to);
+  };
+
+  const user = useSelector((state: RootState) => state.auth.user?.userInfo);
+
+
+  const userImage = user?.picture || user?.picture;
+
+  const imageSrc =
+    userImage?.startsWith("https://lh3.googleusercontent.com/")
+      ? userImage
+      : userImage
+        ? `${baseURL}/${userImage}`
+        : "";
 
   if (isLoggedIn && user) {
     return (
@@ -34,7 +46,7 @@ const UserMenuContent = ({
           <div className="flex items-center gap-4">
             {user.picture ? (
               <img
-                src={`${baseURL}/${user.picture}`}
+                src={imageSrc}
                 alt="Profile"
                 className="w-16 h-16 bg-purple-300 rounded-full object-cover p-0.5"
               />

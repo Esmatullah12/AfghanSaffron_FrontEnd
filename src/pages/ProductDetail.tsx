@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../store/store";
 import Layout from "../layout/Layout";
 import { RiMentalHealthLine } from "react-icons/ri";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { BiLeaf } from "react-icons/bi";
 import { BsCupHot } from "react-icons/bs";
+import { addToCart } from "../features/cart/cartSlice";
 import api from "../api/axiosInstance";
 import { IncrementDecrement } from "../components/common/IncrementDecrement";
 import Button from "../components/common/Button";
 import LikeButton from "../components/common/LikeButton";
+import { getLocalLikes, setLocalLikes } from "../utils/localStorageHelpers";
+import StarRating from "../components/common/StarRating";
+
 
 const features = [
   {
-    icon: <RiMentalHealthLine className="text-3xl text-primary" />,
+    icon: <RiMentalHealthLine className="text-2xl text-primary" />,
     title: "Mood Support",
   },
   {
-    icon: <FaRegCircleCheck className="text-3xl text-primary" />,
+    icon: <FaRegCircleCheck className="text-2xl text-primary" />,
     title: "Premium Purity",
   },
   {
-    icon: <BsCupHot className="text-3xl text-primary" />,
+    icon: <BsCupHot className="text-2xl text-primary" />,
     title: "Premium Aroma",
   },
   {
-    icon: <BiLeaf className="text-3xl text-primary" />,
+    icon: <BiLeaf className="text-2xl text-primary" />,
     title: "Natural & Sustainable",
   },
 ];
@@ -48,6 +54,9 @@ interface ProductImg{
 const ProductDetail: React.FC = () => {
   const [productImgs, setProductImgs] = useState<ProductImg[]>([]);
   const [product, setProduct] = useState<product | null>(null);
+  const [liked, setLiked] = useState<number[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const baseUrl = import.meta.env.VITE_API_URL;
@@ -55,6 +64,20 @@ const ProductDetail: React.FC = () => {
 
   const offPercentage = product ? Math.round(((product.regularPrice - product.salePrice) / product.regularPrice) * 100) : 0;
 
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  useEffect(() => {
+      if (!user) {
+        setLiked(getLocalLikes());
+      } else {
+        api
+          .get("/favorites", {
+            headers: { Authorization: `Bearer ${user.token}` },
+          })
+          .then((res) => setLiked(res.data))
+          .catch(() => setLiked([]));
+      }
+    }, []);
 
   useEffect(() => {
     if (productImgs.length > 0) {
@@ -89,6 +112,50 @@ const ProductDetail: React.FC = () => {
 
     fetchProductImages();
   }, [id]);
+
+  const toggleLike = async (id: number) => {
+    if (!user) {
+      // Guest: store in localStorage
+      const localLikes = getLocalLikes();
+      const updatedLikes = localLikes.includes(id)
+        ? localLikes.filter((item) => item !== id)
+        : [...localLikes, id];
+      setLocalLikes(updatedLikes);
+      setLiked(updatedLikes);
+    } else {
+      // Logged-in: call API
+      try {
+        const res = await api.post(
+          "api/FavoriteProduct",
+          { productId: id },
+          { headers: { Authorization: `Bearer ${user.token}` } }
+        );
+
+        if (res.status === 200) {
+          setLiked((prev) =>
+            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+          );
+        }
+      } catch (error) {
+        console.error("Failed to like product:", error);
+      }
+    }
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+      if (!product) return;
+      e.stopPropagation();
+      dispatch(
+        addToCart({
+          
+          id: product.id,
+          name: product.name,
+          price: product.salePrice,
+          weight: product.weight,
+          thumbnail: product.mainImageUrl,
+        })
+      );
+    };
 
  
   console.log(productImgs)
@@ -130,7 +197,7 @@ const ProductDetail: React.FC = () => {
           <h2 className="text-3xl tracking-wider font-semibold text-primary font-display">
             {product.name}
           </h2>
-          <p className="text-sm text-gray-500 mt-2">by Afghan Saffron Co.</p>
+          <p className="text-sm text-gray-500 mt-2">by Afghan SilkRoad Co.</p>
 
           <div className="flex items-center gap-2 mt-3">
             <p className="text-2xl font-bold text-secondary">${product.salePrice}</p>
@@ -138,15 +205,19 @@ const ProductDetail: React.FC = () => {
             <span className="bg-green-100 text-green-600 text-sm px-2 py-1 rounded-md">{offPercentage}% off</span>
           </div>
 
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <StarRating />
+          {/* <p className="text-gray-500 text-sm leading-relaxed">
             {product.description.split(".")[0]} <span className="text-lg">...</span>
-          </p>
+          </p> */}
 
           <div className="mt-4 flex gap-4">
-            <IncrementDecrement count={1} productId={product.id} className="px-4 py-2"/>
+            <IncrementDecrement count={1} productId={product.id} className="px-4 py-1"/>
 
-            <Button text="Add to Cart" disabled={false} />
-            <LikeButton isLiked={false} onToggle={() => console.log("like")} />
+            <Button text="Add to Cart" onClick={handleAddToCart} disabled={false} />
+            <LikeButton 
+              isLiked={liked.includes(product.id)} 
+              onToggle={() => toggleLike(product.id)} 
+            />
           </div>
 
           {/* Extra Info */}
@@ -155,14 +226,14 @@ const ProductDetail: React.FC = () => {
               <p className="text-gray-600">Premium quality, ethically sourced, and crafted for wellness.</p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto px-6">
+            <div className="grid grid-cols-4 sm:grid-cols-4 justify-items-center md:grid-cols-4 gap-6 max-w-6xl mx-auto px-6">
               {features.map((f, i) => (
                 <div
                   key={i}
-                  className="flex flex-col items-center text-center p-3 rounded-2xl shadow-sm border border-gray-300"
+                  className="flex flex-col items-center text-center p-3 w-22 rounded-2xl shadow-sm border border-gray-300"
                 >
                   {f.icon}
-                  <h3 className="mt-4 text-[10px] font-bold tracking-wide uppercase text-gray-600">
+                  <h3 className="mt-2 text-[9px] font-bold tracking-wide uppercase text-gray-600">
                     {f.title}
                   </h3>
                 </div>

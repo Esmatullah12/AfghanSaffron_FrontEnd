@@ -17,6 +17,7 @@ interface Product{
 const ProductShowCase: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     const fetchProducts = async () => {
