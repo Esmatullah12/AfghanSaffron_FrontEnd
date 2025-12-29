@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../../features/auth/authSlice";
 import { getLocalLikes } from "../../utils/localStorageHelpers";
 import { useNavigate } from "react-router-dom";
+import GoogleLoginButton from "../common/GoogleLoginButton";
 
 
 type Props = {
@@ -110,10 +111,7 @@ export const Login = ({ onClose }: Props) => {
           <Button disabled={false} onClick={handleLogin} text="Sign In" className="w-full h-10 mt-4"/>
 
             <div className="text-center my-2 text-sm text-gray-500">Or Sign in with</div>
-
-            <button className="google-btn w-full border border-primary h-10 rounded-full flex justify-center items-center py-1 cursor-pointer mt-2">
-              <FcGoogle size={28} /> <span className="ml-2">Sign in with Google</span>
-            </button>
+            <GoogleLoginButton />
             <p className="text-center text-sm text-gray-600 mt-4">
               Don’t have an account?{" "}
               <span onClick={() => navigate("/register")} className="text-purple-600 cursor-pointer font-bold">Request Now</span>
