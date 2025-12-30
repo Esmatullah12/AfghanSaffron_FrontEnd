@@ -3,10 +3,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../store/store";
 import Layout from "../layout/Layout";
-import { RiMentalHealthLine } from "react-icons/ri";
-import { FaRegCircleCheck } from "react-icons/fa6";
-import { BiLeaf } from "react-icons/bi";
-import { BsCupHot } from "react-icons/bs";
 import { addToCart } from "../features/cart/cartSlice";
 import api from "../api/axiosInstance";
 import { IncrementDecrement } from "../components/common/IncrementDecrement";
@@ -14,26 +10,7 @@ import Button from "../components/common/Button";
 import LikeButton from "../components/common/LikeButton";
 import { getLocalLikes, setLocalLikes } from "../utils/localStorageHelpers";
 import StarRating from "../components/common/StarRating";
-
-
-const features = [
-  {
-    icon: <RiMentalHealthLine className="text-2xl text-primary" />,
-    title: "Mood Support",
-  },
-  {
-    icon: <FaRegCircleCheck className="text-2xl text-primary" />,
-    title: "Premium Purity",
-  },
-  {
-    icon: <BsCupHot className="text-2xl text-primary" />,
-    title: "Premium Aroma",
-  },
-  {
-    icon: <BiLeaf className="text-2xl text-primary" />,
-    title: "Natural & Sustainable",
-  },
-];
+import features from "../data/features";
 
 interface product {
   id: number;
@@ -51,14 +28,24 @@ interface ProductImg{
   imagePath: string;
 }
 
+interface ProductRating {
+  productId: number;
+  totalRating: number;
+  averageRating: number;
+}
+
+
+
 const ProductDetail: React.FC = () => {
   const [productImgs, setProductImgs] = useState<ProductImg[]>([]);
   const [product, setProduct] = useState<product | null>(null);
   const [liked, setLiked] = useState<number[]>([]);
-  const dispatch = useDispatch<AppDispatch>();
-  
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
+  const [rating, setRating] = useState<ProductRating | null>(null);
+  
+  const dispatch = useDispatch<AppDispatch>();
+  
   const baseUrl = import.meta.env.VITE_API_URL;
   const [selectedImage, setSelectedImage] = useState(`${baseUrl}/${productImgs[0]?.imagePath}`);
 
@@ -143,22 +130,33 @@ const ProductDetail: React.FC = () => {
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
-      if (!product) return;
-      e.stopPropagation();
-      dispatch(
-        addToCart({
-          
-          id: product.id,
-          name: product.name,
-          price: product.salePrice,
-          weight: product.weight,
-          thumbnail: product.mainImageUrl,
-        })
-      );
+    if (!product) return;
+    e.stopPropagation();
+    dispatch(
+      addToCart({
+        
+        id: product.id,
+        name: product.name,
+        price: product.salePrice,
+        weight: product.weight,
+        thumbnail: product.mainImageUrl,
+      })
+    );
+  };
+
+  useEffect(() => {
+    const fetchRating = async () => {
+      try {
+        const res = await api.get(`api/Review/productRating/${id}`);
+        setRating(res.data);
+      } catch (err) {
+        console.error("Failed to fetch rating", err);
+      }
     };
 
- 
-  console.log(productImgs)
+    if (id) fetchRating();
+  }, [id]);
+
   
   if (loading) {
     return <div className="text-center mt-20 text-gray-500">Loading...</div>;
@@ -205,10 +203,12 @@ const ProductDetail: React.FC = () => {
             <span className="bg-green-100 text-green-600 text-sm px-2 py-1 rounded-md">{offPercentage}% off</span>
           </div>
 
-          <StarRating />
-          {/* <p className="text-gray-500 text-sm leading-relaxed">
-            {product.description.split(".")[0]} <span className="text-lg">...</span>
-          </p> */}
+          {rating && (
+            <StarRating
+              averageRating={rating.averageRating}
+              totalRating={rating.totalRating}
+            />
+          )}
 
           <div className="mt-2 flex gap-4">
             <IncrementDecrement count={1} productId={product.id} className="px-4 py-1"/>
@@ -221,7 +221,7 @@ const ProductDetail: React.FC = () => {
           </div>
 
           {/* Extra Info */}
-          <div className="w-full py-4 bg-gray-100 my-5 rounded-2xl border border-gray-400">
+          <div className="py-4 bg-gray-100 my-5 rounded-2xl border border-gray-400 max-w-xl mx-auto">
             <div className="max-w-5xl mx-auto text-center mb-3">
               <p className="text-gray-600">Premium quality, ethically sourced, and crafted for wellness.</p>
             </div>
