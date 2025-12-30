@@ -5,12 +5,12 @@ const StarRating = () => {
   const [hoveredStar, setHoveredStar] = useState<number | null>(null);
 
   return (
-    <div className="flex gap-1 my-6">
+    <div className="flex gap-0.5 my-4 items-center">
       {[1, 2, 3, 4, 5].map((star) => (
         <FaRegStar
           key={star}
-          size={20}
-          className={`cursor-pointer transition-opacity duration-200 ${
+          size={19}
+          className={`cursor-pointer text-yellow-500 transition-opacity duration-200 ${
             hoveredStar !== null && star <= hoveredStar
               ? "opacity-100"
               : "opacity-40"
@@ -19,6 +19,7 @@ const StarRating = () => {
           onMouseLeave={() => setHoveredStar(null)}
         />
       ))}
+      <span>( Reviews 44 )</span>
     </div>
   );
 };

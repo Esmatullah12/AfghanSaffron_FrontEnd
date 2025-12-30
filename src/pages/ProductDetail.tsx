@@ -197,7 +197,7 @@ const ProductDetail: React.FC = () => {
           <h2 className="text-3xl tracking-wider font-semibold text-primary font-display">
             {product.name}
           </h2>
-          <p className="text-sm text-gray-500 mt-2">by Afghan SilkRoad Co.</p>
+          <p className=" text-gray-500 mt-2">by Afghan SilkRoad Co.</p>
 
           <div className="flex items-center gap-2 mt-3">
             <p className="text-2xl font-bold text-secondary">${product.salePrice}</p>
@@ -210,7 +210,7 @@ const ProductDetail: React.FC = () => {
             {product.description.split(".")[0]} <span className="text-lg">...</span>
           </p> */}
 
-          <div className="mt-4 flex gap-4">
+          <div className="mt-2 flex gap-4">
             <IncrementDecrement count={1} productId={product.id} className="px-4 py-1"/>
 
             <Button text="Add to Cart" onClick={handleAddToCart} disabled={false} />
