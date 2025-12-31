@@ -11,6 +11,9 @@ import LikeButton from "../components/common/LikeButton";
 import { getLocalLikes, setLocalLikes } from "../utils/localStorageHelpers";
 import StarRating from "../components/common/StarRating";
 import features from "../data/features";
+import comments from "../data/comment";
+import Comment from "../components/common/Comment";
+import UserComment from "../components/common/UserComment";
 
 interface product {
   id: number;
@@ -242,7 +245,7 @@ const ProductDetail: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="max-w-6xl mx-auto px-6 py-12 bg-white">
+      <div className="max-w-4xl mx-auto px-6 py-12 bg-white">
         <h2 className="text-3xl tracking-wider font-semibold text-primary font-display mb-4">Read more about {product.name}</h2>
         <p className="text-lg">
           {product.description.split("\\").map((para, i) => (
@@ -253,6 +256,19 @@ const ProductDetail: React.FC = () => {
           ))}
         </p>
       </div>
+      <div className="max-w-4xl mx-auto px-6 py-2 bg-white">
+        {comments.map((item) => (
+        <Comment
+          key={item.id}
+          profileImage={item.profileImage}
+          fullName={item.fullName}
+          rating={item.rating}
+          date={item.date}
+          comment={item.comment}
+        />
+        ))}
+      </div>
+      <UserComment/>
     </Layout>
   );
 };
