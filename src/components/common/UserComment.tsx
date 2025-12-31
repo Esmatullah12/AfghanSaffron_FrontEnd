@@ -1,15 +1,65 @@
 import { useState } from "react";
 import { FaRegStar } from "react-icons/fa";
 import Button from "./Button";
+import api from "../../api/axiosInstance";
+import axios from "axios";
 
-const UserComment = () => {
+interface UserCommentProps {
+  productId: number;
+  rating?: number;
+  comment?: string;
+}
+
+const UserComment : React.FC<UserCommentProps> = ({productId}) => {
+  const [form, setForm] = useState<UserCommentProps>({
+    productId,
+    rating: undefined,
+    comment: ""
+  });
+
   const [hoveredStar, setHoveredStar] = useState<number | null>(null);
   const [selectedStar, setSelectedStar] = useState<number | null>(null);
-  const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) : void => {
+    const {value} = e.target;
+    setForm(prev => ({...prev, comment: value}))
+  };
+
+   const handleSubmit = async () => {
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try{
+      if (!form.rating || !form.comment?.trim()) {
+        setError("Please select a rating and write a comment.");
+        setLoading(false);
+        return;
+      }
+
+      await api.post<void>("api/Review", form);
+      setSuccess("Your comment has been submitted successfully!");
+      setForm(prev => ({ ...prev, comment: "", rating: undefined}));
+      setSelectedStar(null)
+
+    }catch (err: unknown){
+      if(axios.isAxiosError(err)){
+        setError(err.response?.data?.message ?? "Failed to submit comment.");
+      } else {
+        setError("Unexpected error occurred.");
+      }
+    }finally{
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="max-w-4xl bg-white p-5 rounded-xl mx-auto mb-11 ">
-      {/* Stars */}
       <div className="flex gap-2 justify-center mb-4">
         {[1, 2, 3, 4, 5].map((star) => {
           const isActive =
@@ -23,7 +73,7 @@ const UserComment = () => {
               size={30}
               onMouseEnter={() => setHoveredStar(star)}
               onMouseLeave={() => setHoveredStar(null)}
-              onClick={() => setSelectedStar(star)}
+              onClick={() =>{setSelectedStar(star); setForm(prev => ({ ...prev, rating: star })); setHoveredStar(null);}}
               className={`cursor-pointer transition-all duration-200
                 ${isActive ? "text-amber-500 opacity-100" : "opacity-40"}
               `}
@@ -34,14 +84,13 @@ const UserComment = () => {
 
       <textarea
         placeholder="Write your comment..."
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        value={form.comment}
+        onChange={handleChange}
         className="w-full border border-gray-300 rounded-2xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-0 resize-none"
         rows={4}
       />
 
-      {/* Submit Button */}
-      <Button text={"Submit"}  disabled={false}/>
+      <Button text={loading ? "Sending..." : "Submit"} onClick={handleSubmit} disabled={loading}/>
     </div>
   );
 };

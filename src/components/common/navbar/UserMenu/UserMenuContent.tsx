@@ -5,6 +5,8 @@ import Button from "../../Button";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../../store/store";
+import UserProfile from "./UserProfile";
+import UserProfileImg from "../../UserProfileImg";
 
 interface UserMenuContentProps {
   isLoggedIn: boolean;
@@ -30,37 +32,10 @@ const UserMenuContent = ({
   const user = useSelector((state: RootState) => state.auth.user?.userInfo);
 
 
-  const userImage = user?.picture || user?.picture;
-
-  const imageSrc =
-    userImage?.startsWith("https://lh3.googleusercontent.com/")
-      ? userImage
-      : userImage
-        ? `${baseURL}/${userImage}`
-        : "";
-
   if (isLoggedIn && user) {
     return (
       <>
-        <div className="px-5 py-6 bg-gradient-to-br from-purple-50 to-pink-50 border-b border-gray-200">
-          <div className="flex items-center gap-4">
-            {user.picture ? (
-              <img
-                src={imageSrc}
-                alt="Profile"
-                className="w-16 h-16 bg-purple-300 rounded-full object-cover p-0.5"
-              />
-            ) : (
-              <div className="w-14 h-14 bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                {user.firstName.charAt(0).toUpperCase()}
-              </div>
-            )}
-            <div>
-              <p className="font-semibold text-gray-900">{user.firstName}</p>
-              <p className="text-sm text-gray-600">{user.email}</p>
-            </div>
-          </div>
-        </div>
+        <UserProfileImg/>
 
         <div className="py-2">
           {[

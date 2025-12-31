@@ -37,6 +37,19 @@ interface ProductRating {
   averageRating: number;
 }
 
+interface UserCommenttype {
+  id: number;
+  productId: number;
+  productName: string;
+  userId: string;
+  userName: string;
+  userJobTitle: string;
+  rating: number;
+  comment: string;
+  profileImage: string;
+  createdOn: Date;
+}
+
 
 
 const ProductDetail: React.FC = () => {
@@ -46,6 +59,7 @@ const ProductDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const [rating, setRating] = useState<ProductRating | null>(null);
+  const [userComments, setUserComments] = useState<UserCommenttype[]>([]);
   
   const dispatch = useDispatch<AppDispatch>();
   
@@ -102,6 +116,24 @@ const ProductDetail: React.FC = () => {
 
     fetchProductImages();
   }, [id]);
+
+  useEffect(() => {
+    const fetchUserComments = async () =>{
+      const payload = {
+        pageIndex: 0,
+        pageSize: 10,
+        searchBy: ""
+      };
+      try{
+        const res = await api.post(`api/Review/list`, payload);
+        setUserComments(res.data.data);
+      }catch(err){
+        console.log("error fetching user comments", err);
+      }
+    }
+
+    fetchUserComments();
+  }, [id])
 
   const toggleLike = async (id: number) => {
     if (!user) {
@@ -171,7 +203,7 @@ const ProductDetail: React.FC = () => {
   
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 pt-12 pb-0 bg-white">
+      <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-0 pt-12 pb-0 bg-white">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex flex-row md:flex-col gap-3 order-1 md:order-1 mt-4 md:mt-0">
             {productImgs.map((img, index) => (
@@ -195,7 +227,7 @@ const ProductDetail: React.FC = () => {
           </div>
         </div>
         <div>
-          <h2 className="text-3xl tracking-wider font-semibold text-primary font-display">
+          <h2 className="text-4xl tracking-wider font-semibold text-primary font-display">
             {product.name}
           </h2>
           <p className=" text-gray-500 mt-2">by Afghan SilkRoad Co.</p>
@@ -257,18 +289,18 @@ const ProductDetail: React.FC = () => {
         </p>
       </div>
       <div className="max-w-4xl mx-auto px-6 py-2 bg-white">
-        {comments.map((item) => (
+        {userComments.map((item) => (
         <Comment
           key={item.id}
           profileImage={item.profileImage}
-          fullName={item.fullName}
+          fullName={item.userName}
           rating={item.rating}
-          date={item.date}
+          date={item.createdOn}
           comment={item.comment}
         />
         ))}
       </div>
-      <UserComment/>
+      <UserComment productId={product.id}/>
     </Layout>
   );
 };

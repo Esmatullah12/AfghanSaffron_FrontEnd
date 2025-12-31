@@ -68,8 +68,8 @@ export const Login = ({ onClose }: Props) => {
 
   return (
     <>
-      <div className="fixed inset-x-0 top-16 bottom-0 bg-black/40 z-40 pointer-events-none"/>
-        <div className="fixed inset-0 z-45 flex min-h-screen items-center justify-center pointer-events-none">
+      <div className="fixed inset-x-0 top-16 bottom-0 z-40"/>
+        <div className="fixed inset-0 z-45 flex min-h-screen items-center justify-center">
           <div className="relative w-full max-w-[380px] mx-4 bg-white p-6 rounded-2xl shadow-2xl border border-gray-400 pointer-events-auto">
             <button onClick={onClose} className="absolute top-1 right-1 cursor-pointer p-2 rounded-xl hover:bg-purple-100 transition-all ">
               <FiX size={22} className="text-gray-600 hover:text-black" />

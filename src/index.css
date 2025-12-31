@@ -126,7 +126,7 @@ body {
 
 /* Blur ONLY the main page content when login modal is open */
 html.login-modal-open {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* Target the main scrolling content container in Next.js */
@@ -134,23 +134,23 @@ html.login-modal-open {
 html.login-modal-open #__next > div:first-child,
 html.login-modal-open main,
 html.login-modal-open [data-nextjs-scroll-focus-boundary] {
-  filter: blur(12px) !important;
-  transition: filter 0.4s ease;
-  pointer-events: none; /* disables interaction */
+  /* filter: blur(12px) !important; */
+  /* transition: filter 0.4s ease; */
+  /* pointer-events: none; */
 }
 
 /* Keep navbar completely sharp and interactive */
 html.login-modal-open header {
-  filter: none !important;
-  pointer-events: auto !important;
-  z-index: 100 !important;
-  background: white !important;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  /* filter: none !important; */
+  /* pointer-events: auto !important; */
+  /* z-index: 100 !important; */
+  /* background: white !important; */
+  /* backdrop-filter: blur(20px); */
+  /* box-shadow: 0 10px 30px rgba(0,0,0,0.15); */
 }
 
 /* Keep the login modal sharp */
 html.login-modal-open .fixed.inset-0.z-45 * {
-  filter: none !important;
-  pointer-events: auto !important;
+  /* filter: none !important; */
+  /* pointer-events: auto !important; */
 }
