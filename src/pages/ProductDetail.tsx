@@ -11,7 +11,6 @@ import LikeButton from "../components/common/LikeButton";
 import { getLocalLikes, setLocalLikes } from "../utils/localStorageHelpers";
 import StarRating from "../components/common/StarRating";
 import features from "../data/features";
-import comments from "../data/comment";
 import Comment from "../components/common/Comment";
 import UserComment from "../components/common/UserComment";
 

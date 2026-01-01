@@ -6,6 +6,10 @@ import Logo from "../../assets/Logo.png";
 import Button from "./Button";
 import SocialMediaLinks from "./SocialMediaLinks";
 
+interface Email {
+  email: string;
+}
+
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
