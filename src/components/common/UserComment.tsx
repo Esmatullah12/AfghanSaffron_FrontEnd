@@ -51,7 +51,7 @@ const UserComment : React.FC<UserCommentProps> = ({productId}) => {
       if(axios.isAxiosError(err)){
         setError(err.response?.data?.message ?? "Failed to submit comment.");
       } else {
-        setError("Unexpected error occurred.");
+        setError("Unexpected error occurred...");
       }
     }finally{
       setLoading(false);
@@ -91,7 +91,7 @@ const UserComment : React.FC<UserCommentProps> = ({productId}) => {
       />
 
       <Button text={loading ? "Sending..." : "Submit"} onClick={handleSubmit} disabled={loading}/>
-    </div>
+      </div>
   );
 };
 

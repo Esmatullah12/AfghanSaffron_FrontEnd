@@ -11,7 +11,6 @@ import LikeButton from "../components/common/LikeButton";
 import { getLocalLikes, setLocalLikes } from "../utils/localStorageHelpers";
 import StarRating from "../components/common/StarRating";
 import features from "../data/features";
-import comments from "../data/comment";
 import Comment from "../components/common/Comment";
 import UserComment from "../components/common/UserComment";
 
@@ -39,18 +38,13 @@ interface ProductRating {
 
 interface UserCommenttype {
   id: number;
-  productId: number;
-  productName: string;
-  userId: string;
-  userName: string;
+  userProfileImg: string;
+  fullName: string;
   userJobTitle: string;
   rating: number;
   comment: string;
-  profileImage: string;
-  createdOn: Date;
+  date: string;
 }
-
-
 
 const ProductDetail: React.FC = () => {
   const [productImgs, setProductImgs] = useState<ProductImg[]>([]);
@@ -122,7 +116,8 @@ const ProductDetail: React.FC = () => {
       const payload = {
         pageIndex: 0,
         pageSize: 10,
-        searchBy: ""
+        searchBy: "",
+        productId: id,
       };
       try{
         const res = await api.post(`api/Review/list`, payload);
@@ -289,14 +284,14 @@ const ProductDetail: React.FC = () => {
         </p>
       </div>
       <div className="max-w-4xl mx-auto px-6 py-2 bg-white">
-        {userComments.map((item) => (
+        {userComments.map((comment) => (
         <Comment
-          key={item.id}
-          profileImage={item.profileImage}
-          fullName={item.userName}
-          rating={item.rating}
-          date={item.createdOn}
-          comment={item.comment}
+          key={comment.id}
+          profileImage={comment.userProfileImg}
+          fullName={comment.fullName}
+          rating={comment.rating}
+          date={new Date(comment.date).toDateString()}
+          comment={comment.comment}
         />
         ))}
       </div>

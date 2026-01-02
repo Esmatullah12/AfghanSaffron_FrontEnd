@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { FaRegStar, FaStar } from "react-icons/fa";
+import { FaRegStar } from "react-icons/fa";
 
 interface CommentProps {
   profileImage: string;
