@@ -20,8 +20,8 @@ const UserComment : React.FC<UserCommentProps> = ({productId}) => {
   const [hoveredStar, setHoveredStar] = useState<number | null>(null);
   const [selectedStar, setSelectedStar] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  // const [success, setSuccess] = useState<string>("");
+  // const [error, setError] = useState<string>("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
@@ -32,26 +32,30 @@ const UserComment : React.FC<UserCommentProps> = ({productId}) => {
 
    const handleSubmit = async () => {
     setLoading(true);
-    setError("");
-    setSuccess("");
+    // setError("");
+    // setSuccess("");
 
     try{
-      if (!form.rating || !form.comment?.trim()) {
-        setError("Please select a rating and write a comment.");
+      if (!form.rating || !form.comment?.trim()) { 
+        console.log("Please select a rating and write a comment.")
+        // setError("Please select a rating and write a comment.");
         setLoading(false);
         return;
       }
 
       await api.post<void>("api/Review", form);
-      setSuccess("Your comment has been submitted successfully!");
+      console.log("Your comment has been submitted successfully!")
+      // setSuccess("Your comment has been submitted successfully!");
       setForm(prev => ({ ...prev, comment: "", rating: undefined}));
       setSelectedStar(null)
 
     }catch (err: unknown){
       if(axios.isAxiosError(err)){
-        setError(err.response?.data?.message ?? "Failed to submit comment.");
+        console.log("Failed to submit comment.")
+        // setError(err.response?.data?.message ?? "Failed to submit comment.");
       } else {
-        setError("Unexpected error occurred...");
+        console.log("Unexpected error occurred...")
+        // setError("Unexpected error occurred...");
       }
     }finally{
       setLoading(false);

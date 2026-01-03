@@ -7,41 +7,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import api from "../../api/axiosInstance";
 
-const testimonials = [
-  {
-    id: 1,
-    name: "Aisha Rahmani",
-    review: "The aroma and color of this saffron is unlike anything I've bought before. Pure and!",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjDGMp734S91sDuUFqL51_xRTXS15iiRoHew&s",
-    rating: 5,
-    role: "Café Owner",
-  },
-  {
-    id: 2,
-    name: "Chef Lorenzo",
-    review: "Our desserts have elevated in taste and presentation since using this saffron. Highly!",
-    image: "https://static.vecteezy.com/system/resources/previews/060/231/338/non_2x/classic-chef-profile-illustration-with-hat-and-mustache-ideal-for-culinary-designs-vector.jpg",
-    rating: 3,
-    role: "Michelin Chef",
-  },
-  {
-    id: 3,
-    name: "Nisha Patil",
-    review: "Packaging is premium, saffron strands are thick and fresh. Worth every penny!",
-    image: "https://www.shutterstock.com/image-photo/indian-shop-keeper-grocery-store-260nw-2503621023.jpg",
-    rating: 4,
-    role: "Home Baker",
-  },
-  {
-    id: 4,
-    name: "Akmad",
-    review: "Packaging is premium, saffron strands are thick and fresh. Worth every penny!",
-    image: "https://s3.amazonaws.com/media.mixrank.com/profilepic/4617fd477557681df88c34c2e462ff25",
-    rating: 4,
-    role: "Home Baker",
-  }
-];
-
 interface review{
   id: number,
   userProfileImg: string,
@@ -143,4 +108,4 @@ const Testimonial: React.FC = () => {
   );
 };
 
-export default Testimonial;
+export default Testimonial; 
