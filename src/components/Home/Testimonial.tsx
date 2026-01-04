@@ -25,7 +25,7 @@ const Testimonial: React.FC = () => {
   useEffect(() => {
     const fetchUserReviews = async() =>{
       try{
-        const res = await api.get("api/Review/topReviews");
+        const res = await api.get<review[]>("api/Review/topReviews");
         setReviews(res.data);
         setLoading(false)
       }catch(err){
@@ -35,7 +35,7 @@ const Testimonial: React.FC = () => {
       }
     };
     fetchUserReviews();
-  })
+  },[])
 
   const renderStars = (count: number) =>
     Array.from({ length: 5 }, (_, i) => (

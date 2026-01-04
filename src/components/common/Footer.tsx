@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiPhone } from "react-icons/fi";
 import { LuMail } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
 import Logo from "../../assets/Logo.png";
 import Button from "./Button";
 import SocialMediaLinks from "./SocialMediaLinks";
+import api from "../../api/axiosInstance";
 
 interface Email {
   email: string;
@@ -12,6 +13,29 @@ interface Email {
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const [form, setForm] = useState<Email>({
+    email: "",
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) : void => {
+     const {value} = e.target;
+    setForm({ email: value})
+  }
+
+  const handleSubscribe = async()  => {
+    try{
+      if(!form.email.trim()){
+        console.log("Please enter a valid email address.");
+        return;
+      }
+      await api.post<void>("api/Subscriber", form);
+      console.log("Subscribed successfully!");
+      setForm({email: ""});
+    }catch( err: unknown){
+      console.error("Error subscribing:", err);
+    }
+    
+  };
 
   return (
     <footer className="bg-[#f2e0fcff] pt-10 pb-3 font-sans border-t border-purple-300">
@@ -108,8 +132,15 @@ const Footer: React.FC = () => {
                 type="email"
                 placeholder="Enter e-mail"
                 className="px-4 py-2.5 border border-primary/40 rounded-full focus:outline-none text-sm placeholder-gray-500 focus:border-primary"
+                value={form.email}
+                onChange={handleChange}
               />
-              <Button disabled={false} text="JOIN" />
+            <Button disabled={false} text="JOIN" onClick={(e) => {
+              e.preventDefault();
+              handleSubscribe()
+
+            }}  
+            />
             </form>
           </div>
         </div>
