@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Button from "../components/common/Button";
+import { Button } from "../components/ui";
 import Layout from "../layout/Layout";
-import CartItemList from "./../components/Cart/CartItemList";
-import CouponBox from "./../components/Cart/CouponBox";
-import OrderSummary from "./../components/Cart/OrderSummary";
-import PaymentMethods from "./../components/Cart/PaymentMethods";
+import { CartItemList, CouponBox, OrderSummary, PaymentMethods, clearCart } from "../features/cart";
 import type { RootState } from "../store/store";
-import { clearCart } from "../features/cart/cartSlice";
 import api from "../api/axiosInstance";
 
 export default function Cart() {

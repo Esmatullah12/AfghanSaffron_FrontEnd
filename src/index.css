@@ -154,3 +154,11 @@ html.login-modal-open .fixed.inset-0.z-45 * {
   /* filter: none !important; */
   /* pointer-events: auto !important; */
 }
+
+.contact-link:hover{
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.contact-link{
+  transition: all 0.5s ease-in-out;
+}

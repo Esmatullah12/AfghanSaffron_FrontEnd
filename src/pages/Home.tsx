@@ -1,9 +1,5 @@
-import AboutUs from "../components/Home/AboutUs"
-import BenefitsSection from "../components/Home/BenefitsSection"
-import ContactUs from "../components/Home/ContactUs"
-import Hero from "../components/Home/Hero"
-import ProductShowCase from "../components/Home/ProductShowCase"
-import Testimonial from "../components/Home/Testimonial"
+import { AboutUs, BenefitsSection, ContactUs, Hero, Testimonial } from "../features/home";
+import ProductShowCase from "../features/products/components/ProductShowCase"
 import Layout from "../layout/Layout"
 
 

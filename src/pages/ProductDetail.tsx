@@ -3,16 +3,12 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../store/store";
 import Layout from "../layout/Layout";
-import { addToCart } from "../features/cart/cartSlice";
+import { addToCart } from "../features/cart";
 import api from "../api/axiosInstance";
-import { IncrementDecrement } from "../components/common/IncrementDecrement";
-import Button from "../components/common/Button";
-import LikeButton from "../components/common/LikeButton";
+import { IncrementDecrement, Button } from "../components/ui";
+import { LikeButton, StarRating, Comment, UserComment } from "../features/products";
 import { getLocalLikes, setLocalLikes } from "../utils/localStorageHelpers";
-import StarRating from "../components/common/StarRating";
 import features from "../data/features";
-import Comment from "../components/common/Comment";
-import UserComment from "../components/common/UserComment";
 
 interface product {
   id: number;

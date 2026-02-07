@@ -1,6 +1,4 @@
-import UserInfo from "../components/Profile/UserInfo"
-import UserOrderHistory from "../components/Profile/UserOrderHistory"
-import UserWishlist from "../components/Profile/WishList"
+import { UserInfo, UserOrderHistory, WishList as UserWishlist } from "../features/profile";
 import Layout from "../layout/Layout"
 
 const Profile = () => {

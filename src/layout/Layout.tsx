@@ -1,5 +1,4 @@
-import Footer from "../components/common/Footer";
-import Navbar from "../components/common/navbar/Navbar";
+import { Footer, Navbar } from "./components";
 import { useScrollToHash } from "../hooks/useScrollToHash";
 
 
