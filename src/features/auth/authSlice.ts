@@ -17,7 +17,7 @@ export interface LoginResponse {
     firstName: string;
     lastName: string;
     email: string;
-    picture: string | null;
+    picture?: string;
     phoneNumber: string,
     countryCode: string,
     address: string,
