@@ -9,12 +9,12 @@ import api from "../../../api/axiosInstance";
 
 interface review{
   id: number,
-  userProfileImg: string,
-  fullName: string,
-  userJobTitle: string,
-  rating: number,
   comment: string,
-  date: string,
+  rating: number,
+  firstName: string,
+  lastName: string,
+  jobsTitle: string,
+  userProfileImg: string,
 }
 
 
@@ -25,7 +25,7 @@ const Testimonial: React.FC = () => {
   useEffect(() => {
     const fetchUserReviews = async() =>{
       try{
-        const res = await api.get<review[]>("api/Review/topReviews");
+        const res = await api.get<review[]>("api/Testimonial/list");
         setReviews(res.data);
         setLoading(false)
       }catch(err){
@@ -91,12 +91,12 @@ const Testimonial: React.FC = () => {
                 <div className="flex items-center gap-4 mt-8">
                   <img
                     src={t.userProfileImg}
-                    alt={t.fullName}
+                    alt={`${t.firstName} ${t.lastName}`}
                     className="w-14 h-14 rounded-full object-cover ring-4 ring-purple-100"
                   />
                   <div>
-                    <h3 className="font-semibold text-gray-900 text-lg">{t.fullName}</h3>
-                    <p className="text-gray-500 text-sm">{t.userJobTitle}</p>
+                    <h3 className="font-semibold text-gray-900 text-lg">{t.firstName} {t.lastName}</h3>
+                    <p className="text-gray-500 text-sm">{t.jobsTitle}</p>
                   </div>
                 </div>
               </div>
