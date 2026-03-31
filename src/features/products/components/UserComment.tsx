@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { FaRegStar } from "react-icons/fa";
 import { Button } from "../../../components/ui";
-import api from "../../../api/axiosInstance";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../../store/store";
+import { createReview, fetchReviews } from "../../review";
 
 interface UserCommentProps {
   productId: number;
@@ -23,6 +24,8 @@ const UserComment : React.FC<UserCommentProps> = ({productId}) => {
   // const [success, setSuccess] = useState<string>("");
   // const [error, setError] = useState<string>("");
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) : void => {
@@ -31,33 +34,35 @@ const UserComment : React.FC<UserCommentProps> = ({productId}) => {
   };
 
    const handleSubmit = async () => {
+    if (!form.rating || !form.comment?.trim()) { 
+      console.log("Please select a rating and write a comment.")
+      return;
+    }
+
     setLoading(true);
-    // setError("");
-    // setSuccess("");
 
-    try{
-      if (!form.rating || !form.comment?.trim()) { 
-        console.log("Please select a rating and write a comment.")
-        // setError("Please select a rating and write a comment.");
-        setLoading(false);
-        return;
-      }
+    try {
+      await dispatch(createReview({
+        productId: form.productId,
+        rating: form.rating,
+        comment: form.comment
+      })).unwrap();
 
-      await api.post<void>("api/Review", form);
-      console.log("Your comment has been submitted successfully!")
-      // setSuccess("Your comment has been submitted successfully!");
+      console.log("Your comment has been submitted successfully!");
       setForm(prev => ({ ...prev, comment: "", rating: undefined}));
-      setSelectedStar(null)
+      setSelectedStar(null);
 
-    }catch (err: unknown){
-      if(axios.isAxiosError(err)){
-        console.log("Failed to submit comment.")
-        // setError(err.response?.data?.message ?? "Failed to submit comment.");
-      } else {
-        console.log("Unexpected error occurred...")
-        // setError("Unexpected error occurred...");
-      }
-    }finally{
+      // Refresh reviews list
+      dispatch(fetchReviews({
+        pageIndex: 0,
+        pageSize: 10,
+        searchBy: "",
+        productId: form.productId,
+      }));
+
+    } catch (err) {
+      console.error("Failed to submit comment:", err);
+    } finally {
       setLoading(false);
     }
   };

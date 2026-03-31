@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../store/store";
 import Layout from "../layout/Layout";
 import { addToCart } from "../features/cart";
 import api from "../api/axiosInstance";
 import { IncrementDecrement, Button } from "../components/ui";
-import { LikeButton, StarRating, Comment, UserComment } from "../features/products";
+import { LikeButton, StarRating, UserComment } from "../features/products";
 import { getLocalLikes, setLocalLikes } from "../utils/localStorageHelpers";
 import features from "../data/features";
+import Review from "../features/products/components/Review";
+import { fetchReviews } from "../features/review";
 
 interface product {
   id: number;
@@ -32,16 +34,6 @@ interface ProductRating {
   averageRating: number;
 }
 
-interface UserCommenttype {
-  id: number;
-  userProfileImg: string;
-  fullName: string;
-  userJobTitle: string;
-  rating: number;
-  comment: string;
-  date: string;
-}
-
 const ProductDetail: React.FC = () => {
   const [productImgs, setProductImgs] = useState<ProductImg[]>([]);
   const [product, setProduct] = useState<product | null>(null);
@@ -49,7 +41,7 @@ const ProductDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const [rating, setRating] = useState<ProductRating | null>(null);
-  const [userComments, setUserComments] = useState<UserCommenttype[]>([]);
+  const { reviews, loading: reviewsLoading, error: reviewsError } = useSelector((state: RootState) => state.review);
   
   const dispatch = useDispatch<AppDispatch>();
   
@@ -106,23 +98,15 @@ const ProductDetail: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    const fetchUserComments = async () =>{
-      const payload = {
+    if (id) {
+      dispatch(fetchReviews({
         pageIndex: 0,
         pageSize: 10,
         searchBy: "",
-        productId: id,
-      };
-      try{
-        const res = await api.post(`api/Review/list`, payload);
-        setUserComments(res.data.data);
-      }catch(err){
-        console.log("error fetching user comments", err);
-      }
+        productId: Number(id),
+      }));
     }
-
-    fetchUserComments();
-  }, [id])
+  }, [id, dispatch]);
 
   const toggleLike = async (id: number) => {
     if (!user) {
@@ -277,20 +261,30 @@ const ProductDetail: React.FC = () => {
         </p>
       </div>
       <div className="max-w-4xl mx-auto px-6 py-2 bg-white">
-        {userComments.map((comment) => (
-        <Comment
-          key={comment.id}
-          profileImage={comment.userProfileImg}
-          fullName={comment.fullName}
-          rating={comment.rating}
-          date={new Date(comment.date).toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-          })}
-          comment={comment.comment}
-        />
-        ))}
+        {reviewsLoading ? (
+          <p className="text-center py-4 text-gray-500">Loading reviews...</p>
+        ) : reviewsError ? (
+          <p className="text-center py-4 text-red-500">{reviewsError}</p>
+        ) : reviews.length > 0 ? (
+          reviews.map((comment) => (
+            <Review
+              key={comment.id}
+              id={comment.id}
+              profileImage={comment.userProfileImg}
+              fullName={comment.fullName}
+              rating={comment.rating}
+              date={new Date(comment.date).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+              comment={comment.comment}
+              isCurrentUserReview={comment.isCurrentUserReview}
+            />
+          ))
+        ) : (
+          <p className="text-center py-4 text-gray-500 font-display text-xl tracking-wider">No reviews yet.</p>
+        )}
       </div>
       <UserComment productId={product.id}/>
     </Layout>

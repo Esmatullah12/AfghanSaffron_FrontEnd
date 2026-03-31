@@ -1,4 +1,4 @@
-export { default as Comment } from './Comment';
+export { default as Comment } from './Review';
 export { default as LikeButton } from './LikeButton';
 export { default as ProductCard } from './ProductCard';
 export { default as ProductList } from './ProductList';
