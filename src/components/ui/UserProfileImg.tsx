@@ -26,7 +26,7 @@ const UserProfileImg: React.FC = () => {
           <img
             src={imageSrc}
             alt="Profile"
-            className="w-16 h-16 rounded-full object-cover border-2 border-purple-300"
+            className="w-16 h-16 rounded-full object-cover ring-4 ring-purple-200"
           />
         ) : (
           <div className="w-16 h-16 bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">

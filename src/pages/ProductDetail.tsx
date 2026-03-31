@@ -65,9 +65,7 @@ const ProductDetail: React.FC = () => {
         setLiked(getLocalLikes());
       } else {
         api
-          .get("/favorites", {
-            headers: { Authorization: `Bearer ${user.token}` },
-          })
+          .get("/favorites")
           .then((res) => setLiked(res.data))
           .catch(() => setLiked([]));
       }
@@ -139,9 +137,8 @@ const ProductDetail: React.FC = () => {
       // Logged-in: call API
       try {
         const res = await api.post(
-          "api/FavoriteProduct",
-          { productId: id },
-          { headers: { Authorization: `Bearer ${user.token}` } }
+          "/favorites",
+          { productId: id }
         );
 
         if (res.status === 200) {
@@ -286,7 +283,11 @@ const ProductDetail: React.FC = () => {
           profileImage={comment.userProfileImg}
           fullName={comment.fullName}
           rating={comment.rating}
-          date={new Date(comment.date).toDateString()}
+          date={new Date(comment.date).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+          })}
           comment={comment.comment}
         />
         ))}

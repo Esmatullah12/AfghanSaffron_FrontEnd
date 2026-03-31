@@ -1,14 +1,10 @@
-import paypal from "../../../assets/payment/paypal.png";
-import stripe from "../../../assets/payment/stripe.png";
-import bitcoin from "../../../assets/payment/betcoin.png";
+import touchngo from "../../../assets/payment/tuchngo-logo.png";
 import { Button } from "../../../components/ui";
 import React from "react";
 
 const paymentMethods = [
   { id: 1, name: "Cash on Delivery", logo: null },
-  { id: 2, name: "paypal", logo: paypal },
-  { id: 3, name: "stripe", logo: stripe },
-  { id: 4, name: "bitcoin", logo: bitcoin }
+  { id: 2, name: "touchngo", logo: touchngo },
 ];
 
 interface Props {

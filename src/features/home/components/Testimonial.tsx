@@ -6,26 +6,26 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import api from "../../../api/axiosInstance";
+import { resolveImageUrl } from "../../../utils/index";
 
-interface review{
+interface testimonial{
   id: number,
   comment: string,
   rating: number,
-  firstName: string,
-  lastName: string,
-  jobsTitle: string,
+  firstname: string,
+  lastname: string,
+  userJobTitle: string,
   userProfileImg: string,
 }
 
-
 const Testimonial: React.FC = () => {
-  const [reviews, setReviews] = useState<review[]>([]);
+  const [reviews, setReviews] = useState<testimonial[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserReviews = async() =>{
       try{
-        const res = await api.get<review[]>("api/Testimonial/list");
+        const res = await api.get<testimonial[]>("api/Testimonial/list");
         setReviews(res.data);
         setLoading(false)
       }catch(err){
@@ -89,14 +89,20 @@ const Testimonial: React.FC = () => {
                 <div className="flex mt-6">{renderStars(t.rating)}</div>
 
                 <div className="flex items-center gap-4 mt-8">
-                  <img
-                    src={t.userProfileImg}
-                    alt={`${t.firstName} ${t.lastName}`}
-                    className="w-14 h-14 rounded-full object-cover ring-4 ring-purple-100"
-                  />
+                  {t.userProfileImg ? (
+                      <img
+                        src={resolveImageUrl(t.userProfileImg)}
+                        alt="userprofileimage"
+                        className="w-14 h-14 rounded-full object-cover ring-4 ring-purple-100"
+                      />
+                    ) : (
+                      <div className="ring-purple-100 ring-4 w-14 text-2xl h-14 bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                        {t.firstname?.charAt(0).toUpperCase()}
+                      </div>
+                    )}
                   <div>
-                    <h3 className="font-semibold text-gray-900 text-lg">{t.firstName} {t.lastName}</h3>
-                    <p className="text-gray-500 text-sm">{t.jobsTitle}</p>
+                    <h3 className="font-semibold text-gray-900 text-lg">{t.firstname} {t.lastname}</h3>
+                    <p className="text-gray-500 text-sm">{t.userJobTitle}</p>
                   </div>
                 </div>
               </div>

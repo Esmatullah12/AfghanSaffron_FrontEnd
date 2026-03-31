@@ -136,7 +136,7 @@ const UserInfo: React.FC = () => {
         className={`w-46 h-46 rounded-full object-cover transition
           ${isEditing ? "group-hover:brightness-75" : ""}`}
       />
-    ) : (
+    )  : (
       <div className="w-full h-full text-8xl bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white font-bold shadow-lg">
         {user?.firstName?.charAt(0).toUpperCase()}
       </div>

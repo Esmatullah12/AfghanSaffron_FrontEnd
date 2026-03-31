@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button } from "../components/ui";
 import Layout from "../layout/Layout";
-import { CartItemList, CouponBox, OrderSummary, PaymentMethods, clearCart } from "../features/cart";
+import { CartItemList, CouponBox, OrderSummary, PaymentMethods, clearCart, TouchNGoModal } from "../features/cart";
 import type { RootState } from "../store/store";
 import api from "../api/axiosInstance";
 
@@ -12,13 +11,17 @@ export default function Cart() {
 
   const [paymentMethod, setPaymentMethod] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleCheckout = async () => {
-    if (!paymentMethod) {
-      alert("Please select a payment method");
-      return;
-    }
+  // Calculate total amount
+  const productsCost = useMemo(() => {
+    return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }, [cartItems]);
+  const discount = 0;
+  const delivery = 0;
+  const totalAmount = productsCost - discount + delivery;
 
+  const placeOrder = async () => {
     if (cartItems.length === 0) {
       alert("Your cart is empty");
       return;
@@ -39,6 +42,7 @@ export default function Cart() {
       await api.post("/api/Order", orderPayload);
 
       dispatch(clearCart());
+      setIsModalOpen(false);
       alert("Order placed successfully ✅");
 
     } catch (error) {
@@ -46,6 +50,24 @@ export default function Cart() {
       alert("Failed to place order ❌");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCheckout = () => {
+    if (!paymentMethod) {
+      alert("Please select a payment method");
+      return;
+    }
+
+    if (cartItems.length === 0) {
+      alert("Your cart is empty");
+      return;
+    }
+
+    if (paymentMethod === 2) {
+      setIsModalOpen(true);
+    } else {
+      placeOrder();
     }
   };
 
@@ -78,6 +100,14 @@ export default function Cart() {
         </div>
       </div>
     </div>
+
+    {/* Touch 'n Go Payment Modal */}
+    <TouchNGoModal
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      amount={totalAmount}
+      onPaid={placeOrder}
+    />
     </Layout>
   );
 }

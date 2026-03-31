@@ -37,9 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       setLiked(getLocalLikes());
     } else {
       api
-        .get("/favorites", {
-          headers: { Authorization: `Bearer ${user.token}` },
-        })
+        .get("/favorites")
         .then((res) => setLiked(res.data)) 
         .catch(() => setLiked([]));
     }
@@ -58,9 +56,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       // Logged-in: call API
       try {
         const res = await api.post(
-          "api/FavoriteProduct",
-          { productId: id },
-          { headers: { Authorization: `Bearer ${user.token}` } }
+          "/favorites",
+          { productId: id }
         );
 
         if (res.status === 200) {
