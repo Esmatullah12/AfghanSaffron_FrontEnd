@@ -52,7 +52,7 @@ const Review: FC<ReviewProps> = ({
             className="w-14 h-14 rounded-full object-cover ring-4 ring-purple-100"
           />
           ) : (
-            <div className="ring-purple-100 ring-4 w-14 text-2xl h-14 bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white font-bold">
+            <div className="ring-purple-100 ring-4  w-16 text-xl h-14 bg-gradient-to-br from-[#44155B] to-[#E42F1C] rounded-full flex items-center justify-center text-white font-bold">
               {fullName?.charAt(0).toUpperCase()}
             </div>
           )}
