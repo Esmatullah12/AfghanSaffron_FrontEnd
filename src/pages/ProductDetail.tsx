@@ -4,134 +4,87 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../store/store";
 import Layout from "../layout/Layout";
 import { addToCart } from "../features/cart";
-import api from "../api/axiosInstance";
 import { IncrementDecrement, Button } from "../components/ui";
-import { LikeButton, StarRating, UserComment } from "../features/products";
+import { LikeButton, StarRating, UserComment } from "../features/products/components";
 import { getLocalLikes, setLocalLikes } from "../utils/localStorageHelpers";
 import features from "../data/features";
 import Review from "../features/products/components/Review";
 import { fetchReviews } from "../features/review";
-
-interface product {
-  id: number;
-  name: string;
-  description: string;
-  salePrice: number;
-  regularPrice: number;
-  stockQuantity: number;
-  weight: number;
-  grade: string;
-  mainImageUrl: string;
-}
-
-interface ProductImg{
-  imagePath: string;
-}
-
-interface ProductRating {
-  productId: number;
-  totalRating: number;
-  averageRating: number;
-}
+import {
+  fetchProductDetail,
+  fetchProductImages,
+  fetchProductRating,
+  addToFavorites,
+  removeFromFavorites,
+} from "../features/products";
 
 const ProductDetail: React.FC = () => {
-  const [productImgs, setProductImgs] = useState<ProductImg[]>([]);
-  const [product, setProduct] = useState<product | null>(null);
-  const [liked, setLiked] = useState<number[]>([]);
-  const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
-  const [rating, setRating] = useState<ProductRating | null>(null);
-  const { reviews, loading: reviewsLoading, error: reviewsError } = useSelector((state: RootState) => state.review);
-  
-  const dispatch = useDispatch<AppDispatch>();
-  
-  const baseUrl = import.meta.env.VITE_API_URL;
-  const [selectedImage, setSelectedImage] = useState(`${baseUrl}/${productImgs[0]?.imagePath}`);
+  const productId = Number(id);
 
-  const offPercentage = product ? Math.round(((product.regularPrice - product.salePrice) / product.regularPrice) * 100) : 0;
+  const dispatch = useDispatch<AppDispatch>();
+
+  const product = useSelector((state: RootState) => state.product.products[productId]);
+  const detail = useSelector((state: RootState) => state.product.details[productId]);
+  const rating = useSelector((state: RootState) => state.product.ratings[productId]);
+  const { reviews, loading: reviewsLoading, error: reviewsError } = useSelector((state: RootState) => state.review);
+
+  const images = detail?.images || [];
+  const loading = detail?.loading ?? true;
+
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [guestLikes, setGuestLikes] = useState<number[]>([]);
 
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
   useEffect(() => {
-      if (!user) {
-        setLiked(getLocalLikes());
-      } else {
-        api
-          .get("/favorites")
-          .then((res) => setLiked(res.data))
-          .catch(() => setLiked([]));
-      }
-    }, []);
+    if (!user) {
+      setGuestLikes(getLocalLikes());
+    }
+  }, []);
 
   useEffect(() => {
-    if (productImgs.length > 0) {
-      setSelectedImage(`${baseUrl}/${productImgs[0].imagePath}`);
-    }
-  }, [productImgs, baseUrl]);
-
-  useEffect(() =>{
-    const fetchProduct = async () => {
-      setLoading(true);
-      try{
-        const res = await api.get(`api/Product/GetDetail/${id}`);
-        setProduct(res.data);
-      }catch(err){
-        console.log("error fetching product details", err);
-      }finally{
-        setLoading(false);
-      }
-    }
-    fetchProduct();
-  }, [id]);
-
-  useEffect(() =>{
-    const fetchProductImages = async () => {
-      try{
-        const res = await api.get(`api/Product/ProductImages/${id}`);
-        setProductImgs(res.data);
-      }catch(err){
-        console.log("error fetching product images", err);
-      }
-    }
-
-    fetchProductImages();
-  }, [id]);
-
-  useEffect(() => {
-    if (id) {
+    if (productId) {
+      dispatch(fetchProductDetail(productId));
+      dispatch(fetchProductImages(productId));
+      dispatch(fetchProductRating(productId));
       dispatch(fetchReviews({
         pageIndex: 0,
         pageSize: 10,
         searchBy: "",
-        productId: Number(id),
+        productId,
       }));
     }
-  }, [id, dispatch]);
+  }, [productId, dispatch]);
 
-  const toggleLike = async (id: number) => {
+  useEffect(() => {
+    if (images.length > 0 && !selectedImage) {
+      setSelectedImage(`${baseUrl}/${images[0]}`);
+    }
+  }, [images, baseUrl, selectedImage]);
+
+  const offPercentage = product
+    ? Math.round(((product.regularPrice - product.salePrice) / product.regularPrice) * 100)
+    : 0;
+
+  const isLiked = user
+    ? product?.isFavorite ?? false
+    : guestLikes.includes(productId);
+
+  const toggleLike = async () => {
+    if (!product) return;
     if (!user) {
-      // Guest: store in localStorage
-      const localLikes = getLocalLikes();
-      const updatedLikes = localLikes.includes(id)
-        ? localLikes.filter((item) => item !== id)
-        : [...localLikes, id];
+      const updatedLikes = guestLikes.includes(productId)
+        ? guestLikes.filter((item) => item !== productId)
+        : [...guestLikes, productId];
       setLocalLikes(updatedLikes);
-      setLiked(updatedLikes);
+      setGuestLikes(updatedLikes);
     } else {
-      // Logged-in: call API
-      try {
-        const res = await api.post(
-          "/favorites",
-          { productId: id }
-        );
-
-        if (res.status === 200) {
-          setLiked((prev) =>
-            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-          );
-        }
-      } catch (error) {
-        console.error("Failed to like product:", error);
+      if (product.isFavorite) {
+        dispatch(removeFromFavorites(productId));
+      } else {
+        dispatch(addToFavorites(productId));
       }
     }
   };
@@ -141,7 +94,6 @@ const ProductDetail: React.FC = () => {
     e.stopPropagation();
     dispatch(
       addToCart({
-        
         id: product.id,
         name: product.name,
         price: product.salePrice,
@@ -151,41 +103,27 @@ const ProductDetail: React.FC = () => {
     );
   };
 
-  useEffect(() => {
-    const fetchRating = async () => {
-      try {
-        const res = await api.get(`api/Review/productRating/${id}`);
-        setRating(res.data);
-      } catch (err) {
-        console.error("Failed to fetch rating", err);
-      }
-    };
-
-    if (id) fetchRating();
-  }, [id]);
-
-  
   if (loading) {
     return <div className="text-center mt-20 text-gray-500">Loading...</div>;
   }
-  
+
   if (!product) {
     return <div className="text-center mt-20 text-gray-500">Product not found.</div>;
   }
-  
+
   return (
     <Layout>
       <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-0 pt-12 pb-0 bg-white">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex flex-row md:flex-col gap-3 order-1 md:order-1 mt-4 md:mt-0">
-            {productImgs.map((img, index) => (
+            {images.map((img, index) => (
               <img
                 key={index}
-                src={`${baseUrl}/${img.imagePath}`}
+                src={`${baseUrl}/${img}`}
                 alt={product.name}
-                onClick={() => setSelectedImage(`${baseUrl}/${img.imagePath}`)}
+                onClick={() => setSelectedImage(`${baseUrl}/${img}`)}
                 className={`w-20 h-20 object-cover rounded-xl cursor-pointer border-2 transition-all duration-300 ${
-                  selectedImage === `${baseUrl}/${img.imagePath}` ? "border-primary" : "border-gray-200"
+                  selectedImage === `${baseUrl}/${img}` ? "border-primary" : "border-gray-200"
                 }`}
               />
             ))}
@@ -221,9 +159,9 @@ const ProductDetail: React.FC = () => {
             <IncrementDecrement count={1} productId={product.id} className="px-4 py-1"/>
 
             <Button text="Add to Cart" onClick={handleAddToCart} disabled={false} />
-            <LikeButton 
-              isLiked={liked.includes(product.id)} 
-              onToggle={() => toggleLike(product.id)} 
+            <LikeButton
+              isLiked={isLiked}
+              onToggle={toggleLike}
             />
           </div>
 

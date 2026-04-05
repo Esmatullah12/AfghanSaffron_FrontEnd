@@ -46,19 +46,18 @@ const Testimonial: React.FC = () => {
       }`}
       />
     ));
-    
-  if(loading){
-    return(
-      <div>Loading...</div>
-    )
-  }
+
   return (
     <section className="py-20 bg-gray-50">
       <h2 className="font-display font-semibold text-primary text-center text-4xl mb-12">
         What Our Customers Say
       </h2>
-
-      <Swiper
+      {loading ? (
+        <p className="text-center font-display text-xl py-4 text-gray-500">Loading reviews...</p>
+      ) : reviews.length === 0 ? (
+        <p className="text-center font-display text-xl py-4 text-gray-500">No testimonials available.</p>
+      ) : (
+        <Swiper
         slidesPerView={1}
         spaceBetween={30}
         loop={true}
@@ -110,6 +109,9 @@ const Testimonial: React.FC = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      )}
+
+      
     </section>
   );
 };

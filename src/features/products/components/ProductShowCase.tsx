@@ -1,45 +1,17 @@
-import React, { useEffect, useState } from "react";
-import api from "../../../api/axiosInstance";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../../store/store";
+import { fetchProducts } from "../productSlice";
 import ProductList from "./ProductList";
 
-interface Product{
-  id:number
-  name:string,
-  description:string,
-  averageRating:number,
-  salePrice:number,
-  regularPrice:number,
-  weight:number,
-  grade:string,
-  mainImageUrl:string
-}
-
 const ProductShowCase: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  
+  const dispatch = useDispatch<AppDispatch>();
+  const loading = useSelector((state: RootState) => state.product.list.loading);
+  const error = useSelector((state: RootState) => state.product.list.error);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      const payload = {
-        pageIndex: 0,
-        pageSize: 10,
-        searchBy: ""
-      };
-
-      try{
-        const res = await api.post("api/Product/GetProductsList", payload);
-        setProducts(res.data.data || res.data);
-      }catch(err){
-        console.log("error fetching products", err);
-      }finally{
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, [])
-
+    dispatch(fetchProducts({ pageIndex: 0, pageSize: 10, searchBy: "" }));
+  }, [dispatch]);
 
   return (
   <section id="product-showcase" className="bg-gray-50 py-16">
@@ -49,9 +21,11 @@ const ProductShowCase: React.FC = () => {
       </h2>
 
       {loading ? (
-        <p className="text-2xl text-center">Loading...</p>
+        <p className="text-center font-display text-xl py-4 text-gray-500">Loading Products...</p>
+      ) : error ? (
+        <p className="text-center font-display text-xl py-4 text-red-500">{error}</p>
       ) : (
-        <ProductList products={products} />
+        <ProductList />
       )}
     </div>
   </section>
@@ -60,4 +34,3 @@ const ProductShowCase: React.FC = () => {
 
 
 export default ProductShowCase;
-

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FaPlus } from "react-icons/fa";
@@ -15,45 +15,32 @@ interface ProductCardProps {
     id: number;
     name: string;
     description: string;
-    averageRating: number;
     salePrice: number;
     regularPrice: number;
     weight: number;
     grade: string;
+    isFavorite: boolean;
     mainImageUrl: string;
   };
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const [liked, setLiked] = useState<number[]>([]);
+  const [liked, setLiked] = useState<boolean>(product.isFavorite);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const baseURL = import.meta.env.VITE_API_URL;
 
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
-  useEffect(() => {
-    if (!user) {
-      setLiked(getLocalLikes());
-    } else {
-      api
-        .get("/favorites")
-        .then((res) => setLiked(res.data)) 
-        .catch(() => setLiked([]));
-    }
-  }, []);
-
   const toggleLike = async (id: number) => {
     if (!user) {
-      // Guest: store in localStorage
       const localLikes = getLocalLikes();
       const updatedLikes = localLikes.includes(id)
         ? localLikes.filter((item) => item !== id)
         : [...localLikes, id];
       setLocalLikes(updatedLikes);
-      setLiked(updatedLikes);
+      setLiked(updatedLikes.includes(id));
     } else {
-      // Logged-in: call API
       try {
         const res = await api.post(
           "/favorites",
@@ -61,9 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         );
 
         if (res.status === 200) {
-          setLiked((prev) =>
-            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-          );
+          setLiked((prev) => !prev);
         }
       } catch (error) {
         console.error("Failed to like product:", error);
@@ -100,7 +85,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         <div className="absolute top-4 right-4 flex gap-3">
           <LikeButton
-            isLiked={liked.includes(product.id)}
+            isLiked={liked}
             onToggle={() => toggleLike(product.id)}
           />
 
