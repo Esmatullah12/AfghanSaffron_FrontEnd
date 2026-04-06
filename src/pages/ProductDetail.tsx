@@ -82,7 +82,8 @@ const ProductDetail: React.FC = () => {
       setGuestLikes(updatedLikes);
     } else {
       if (product.isFavorite) {
-        dispatch(removeFromFavorites(productId));
+         if (!product.favoriteProductId) return;
+        dispatch(removeFromFavorites(product.favoriteProductId));
       } else {
         dispatch(addToFavorites(productId));
       }

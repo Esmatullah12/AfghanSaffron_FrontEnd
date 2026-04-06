@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import api from "../../api/axiosInstance";
 import axios from "axios";
+import { fa } from "zod/v4/locales";
 
 export interface Product {
   id: number;
@@ -12,6 +13,7 @@ export interface Product {
   weight: number;
   grade: string;
   isFavorite: boolean;
+  favoriteProductId?: number;
   mainImageUrl: string;
   hasFullDetail?: boolean;
 }
@@ -169,10 +171,10 @@ export const removeFromFavorites = createAsyncThunk<
   { rejectValue: string }
 >(
   "product/RemoveFromFavorites",
-  async (productId, { rejectWithValue }) => {
+  async (favoriteProductId, { rejectWithValue }) => {
     try {
-      await api.delete(`/api/FavoriteProduct/${productId}`);
-      return productId;
+      await api.delete(`/api/FavoriteProduct/${favoriteProductId}`);
+      return favoriteProductId;
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         return rejectWithValue(err.response?.data || "Failed to remove from favorites");

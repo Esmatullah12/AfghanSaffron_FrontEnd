@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FaPlus } from "react-icons/fa";
@@ -7,8 +7,8 @@ import LikeButton from "./LikeButton";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../cart";
 import type { AppDispatch } from "../../../store/store";
-import api from "../../../api/axiosInstance";
 import { getLocalLikes, setLocalLikes } from "../../../utils/localStorageHelpers";
+import { addToFavorites, removeFromFavorites } from "../productSlice";
 
 interface ProductCardProps {
   product: {
@@ -20,41 +20,47 @@ interface ProductCardProps {
     weight: number;
     grade: string;
     isFavorite: boolean;
+    favoriteProductId?: number;
     mainImageUrl: string;
   };
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const [liked, setLiked] = useState<boolean>(product.isFavorite);
+  const [guestLikes, setGuestLikes] = useState<number[]>([]);
+  const productId = product.id;
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const baseURL = import.meta.env.VITE_API_URL;
 
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
-  const toggleLike = async (id: number) => {
-    if (!user) {
-      const localLikes = getLocalLikes();
-      const updatedLikes = localLikes.includes(id)
-        ? localLikes.filter((item) => item !== id)
-        : [...localLikes, id];
-      setLocalLikes(updatedLikes);
-      setLiked(updatedLikes.includes(id));
-    } else {
-      try {
-        const res = await api.post(
-          "/favorites",
-          { productId: id }
-        );
+    useEffect(() => {
+      if (!user) {
+        setGuestLikes(getLocalLikes());
+      }
+    }, []);
 
-        if (res.status === 200) {
-          setLiked((prev) => !prev);
-        }
-      } catch (error) {
-        console.error("Failed to like product:", error);
+  const toggleLike = async () => {
+    if (!product) return;
+    if (!user) {
+      const updatedLikes = guestLikes.includes(productId)
+        ? guestLikes.filter((item) => item !== productId)
+        : [...guestLikes, productId];
+      setLocalLikes(updatedLikes);
+      setGuestLikes(updatedLikes);
+    } else {
+      if (product.isFavorite) {
+         if (!product.favoriteProductId) return;
+        dispatch(removeFromFavorites(product.favoriteProductId));
+      } else {
+        dispatch(addToFavorites(productId!));
       }
     }
   };
+
+  const isLiked = user
+    ? product?.isFavorite ?? false
+    : guestLikes.includes(productId);
 
   const handleProductClick = (id: number) => navigate(`/product/${id}`);
 
@@ -85,8 +91,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         <div className="absolute top-4 right-4 flex gap-3">
           <LikeButton
-            isLiked={liked}
-            onToggle={() => toggleLike(product.id)}
+            isLiked={isLiked}
+            onToggle={toggleLike}
           />
 
           <button
