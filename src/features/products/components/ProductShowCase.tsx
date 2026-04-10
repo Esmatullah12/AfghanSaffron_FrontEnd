@@ -19,7 +19,6 @@ const ProductShowCase: React.FC = () => {
       <h2 className="font-display font-semibold text-primary tracking-wider text-4xl mb-14">
         Product Showcase
       </h2>
-
       {loading ? (
         <p className="text-center font-display text-xl py-4 text-gray-500">Loading Products...</p>
       ) : error ? (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FaPlus } from "react-icons/fa";
@@ -7,8 +7,9 @@ import LikeButton from "./LikeButton";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../cart";
 import type { AppDispatch } from "../../../store/store";
-import { getLocalLikes, setLocalLikes } from "../../../utils/localStorageHelpers";
 import { addToFavorites, removeFromFavorites } from "../productSlice";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../store/store";
 
 interface ProductCardProps {
   product: {
@@ -26,41 +27,28 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const [guestLikes, setGuestLikes] = useState<number[]>([]);
   const productId = product.id;
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const currentProduct = useSelector(
+    (state: RootState) => state.product.products[productId]
+  );
   const baseURL = import.meta.env.VITE_API_URL;
 
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
-    useEffect(() => {
-      if (!user) {
-        setGuestLikes(getLocalLikes());
-      }
-    }, []);
-
-  const toggleLike = async () => {
-    if (!product) return;
-    if (!user) {
-      const updatedLikes = guestLikes.includes(productId)
-        ? guestLikes.filter((item) => item !== productId)
-        : [...guestLikes, productId];
-      setLocalLikes(updatedLikes);
-      setGuestLikes(updatedLikes);
-    } else {
-      if (product.isFavorite) {
-         if (!product.favoriteProductId) return;
-        dispatch(removeFromFavorites(product.favoriteProductId));
-      } else {
-        dispatch(addToFavorites(productId!));
-      }
+  const toggleLike = () => {
+    if (!user) return;
+    if (isLiked && favoriteProductId !== undefined) {
+      dispatch(removeFromFavorites({ favoriteProductId, productId }));
+    } else if (!isLiked) {
+      dispatch(addToFavorites(productId));
     }
   };
 
-  const isLiked = user
-    ? product?.isFavorite ?? false
-    : guestLikes.includes(productId);
+
+  const isLiked = currentProduct?.isFavorite ?? false;
+  const favoriteProductId = currentProduct?.favoriteProductId;
 
   const handleProductClick = (id: number) => navigate(`/product/${id}`);
 
@@ -127,7 +115,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           onClick={(e) => {
             e.stopPropagation();
             handleProductClick(product.id);
-          } } disabled={false}/>
+          }}
+          disabled={false}
+        />
       </div>
     </div>
   );
