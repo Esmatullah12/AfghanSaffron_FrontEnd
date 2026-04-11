@@ -39,9 +39,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const toggleLike = () => {
     if (!user) return;
-    if (isLiked && favoriteProductId !== undefined) {
+    if (isLiked) {
+      if(favoriteProductId == null) return;
       dispatch(removeFromFavorites({ favoriteProductId, productId }));
-    } else if (!isLiked) {
+    } else {
       dispatch(addToFavorites(productId));
     }
   };

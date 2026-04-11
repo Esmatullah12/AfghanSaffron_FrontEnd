@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../store/store";
@@ -31,7 +31,7 @@ const ProductDetail: React.FC = () => {
   const rating = useSelector((state: RootState) => state.product.ratings[productId]);
   const { reviews, loading: reviewsLoading, error: reviewsError } = useSelector((state: RootState) => state.review);
 
-  const images = useMemo(() => detail?.images || [], [detail?.images]);
+  const images = detail?.images || [];
   const loading = detail?.loading ?? true;
 
   const baseUrl = import.meta.env.VITE_API_URL;
@@ -68,9 +68,10 @@ const ProductDetail: React.FC = () => {
 
   const toggleLike = () => {
     if (!user) return;
-    if (isLiked && favoriteProductId !== undefined) {
+    if (isLiked) {
+      if (favoriteProductId == null) return;
       dispatch(removeFromFavorites({ favoriteProductId, productId }));
-    } else if (!isLiked) {
+    } else {
       dispatch(addToFavorites(productId));
     }
   };
