@@ -165,8 +165,22 @@ export const addToFavorites = createAsyncThunk<
     try {
       const response = await api.post("/api/FavoriteProduct", { productId });
       const data = response.data.data || response.data;
-      const favoriteProductId = data.id;
-      return { productId, favoriteProductId };
+      let favoriteProductId: number | undefined =
+        data.id ?? data.favoriteProductId ?? data.Id ?? data.FavoriteProductId;
+
+      if (favoriteProductId == null) {
+        const listResponse = await api.get("/api/FavoriteProduct/list");
+        const listData = listResponse.data.data || listResponse.data;
+        const match = Array.isArray(listData)
+          ? listData.find(
+              (item: { productId?: number; id?: number }) =>
+                (item.productId ?? item.id) === productId
+            )
+          : null;
+        favoriteProductId = match?.id;
+      }
+
+      return { productId, favoriteProductId: favoriteProductId! };
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         return rejectWithValue(err.response?.data || "Failed to add to favorites");
