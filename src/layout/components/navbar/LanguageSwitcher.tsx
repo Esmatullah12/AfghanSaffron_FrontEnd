@@ -1,15 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { IoIosGlobe } from "react-icons/io";
 import ReactCountryFlag from "react-country-flag";
+import { useLanguage } from "../../../i18n/LanguageContext";
 
 const languages = [
-  { code: "en", name: "English", countryCode: "US" },
-  { code: "ms", name: "Malaysia", countryCode: "MY" },
+  { code: "en" as const, name: "English", countryCode: "US" },
+  { code: "ms" as const, name: "Malaysia", countryCode: "MY" },
 ];
 
 const LanguageSwitcher = () => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -19,15 +21,18 @@ const LanguageSwitcher = () => {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  const current = languages.find((l) => l.code === language) ?? languages[0];
+
   return (
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
         aria-label="Select language"
         aria-expanded={open}
-        className="p-3 rounded-2xl hover:bg-purple-50 transition-all duration-300"
+        className="flex items-center gap-1.5 p-3 rounded-2xl hover:bg-purple-50 transition-all duration-300"
       >
-        <IoIosGlobe className="h-7 w-7 text-gray-700 hover:text-primary" />
+        <ReactCountryFlag countryCode={current.countryCode} svg className="rounded-sm" style={{ width: "1.2em", height: "1.2em" }} />
+        <IoIosGlobe className="h-5 w-5 text-gray-700 hover:text-primary" />
       </button>
 
       {open && (
@@ -35,8 +40,8 @@ const LanguageSwitcher = () => {
           {languages.map((lang) => (
             <button
               key={lang.code}
-              className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-purple-50 hover:text-primary"
-              onClick={() => setOpen(false)}
+              className={`flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-purple-50 hover:text-primary ${language === lang.code ? "text-primary font-semibold" : ""}`}
+              onClick={() => { setLanguage(lang.code); setOpen(false); }}
             >
               <ReactCountryFlag countryCode={lang.countryCode} svg className="rounded-sm" style={{ width: "1.4em", height: "1.4em" }} />
               <span className="font-medium">{lang.name}</span>

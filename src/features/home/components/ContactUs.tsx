@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 import api from "../../../api/axiosInstance";
 import axios from "axios";
+import { useLanguage } from "../../../i18n/LanguageContext";
 
 interface ContactMessagePayload {
   name: string;
@@ -16,6 +17,7 @@ interface ContactMessagePayload {
 }
 
 const ContactUs = () => {
+  const { t } = useLanguage();
   const [form, setForm] = useState<ContactMessagePayload>({
     name: "",
     emailOrPhone: "",
@@ -42,13 +44,13 @@ const ContactUs = () => {
 
     try{
       await api.post<void>("api/ContactMessage", form);
-      setSuccess("Your message has been sent successfully!");
+      setSuccess(t.contact.successMsg);
       setForm({ name: "", emailOrPhone: "", message: ""});
     }catch (err: unknown){
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message ?? "Failed to send message.");
+        setError(err.response?.data?.message ?? t.contact.errorMsg);
       } else {
-        setError("Unexpected error occurred.");
+        setError(t.contact.unexpectedError);
       }
     }finally{
       setLoading(false);
@@ -60,37 +62,35 @@ const ContactUs = () => {
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8  grid grid-cols-1 lg:grid-cols-2 gap-10 border border-gray-200">
         
         <div>
-          <h2 className="text-4xl text-primary font-semibold mb-4 font-display">Contact Us</h2>
-          <p className="text-gray-500 mb-5">
-           Contact us to learn more about our services or get personalized support.
-          </p>
+          <h2 className="text-4xl text-primary font-semibold mb-4 font-display">{t.contact.heading}</h2>
+          <p className="text-gray-500 mb-5">{t.contact.subheading}</p>
 
           <div className="grid grid-cols-2 gap-6">
             
             <InfoCard
               icon={<MdOutlineMail className="text-red-600" />}
-              title="Mail"
+              title={t.contact.mail}
               value="afghanSaffron@gmail.com"
               className="bg-red-50 border border-red-100"
             />
 
             <InfoCard
               icon={<FiPhone className="text-indigo-600" />}
-              title="Call Us"
+              title={t.contact.callUs}
               value="+60 11 6140 1412"
               className="bg-indigo-50 border border-indigo-200"
             />
 
             <InfoCard
               icon={<FaWhatsapp className="text-green-500" />}
-              title="WhatsApp"
+              title={t.contact.whatsapp}
               value="+61 749 530 742"
               className="bg-green-50 border border-green-100"
             />
 
             <InfoCard
               icon={<IoLogoTiktok className="text-gray-900" />}
-              title="TikTok"
+              title={t.contact.tiktok}
               value="@Esmatullah12"
               className="bg-gray-100 border border-gray-300"
             />
@@ -101,12 +101,12 @@ const ContactUs = () => {
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
               <label className="block text-sm font-medium mb-1 ml-3">
-                Full Name
+                {t.contact.fullName}
               </label>
               <input
                 name="name" 
                 type="text"
-                placeholder="Full Name"
+                placeholder={t.contact.namePlaceholder}
                 value={form.name}
                 onChange={handleChange}
                 className="w-full rounded-3xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -115,25 +115,25 @@ const ContactUs = () => {
 
             <div>
               <label className="block text-sm font-medium mb-1 ml-3">
-                Email Or Phone
+                {t.contact.emailOrPhone}
               </label>
               <input
                 type="text"
                 name="emailOrPhone"  
                 value={form.emailOrPhone}
                 onChange={handleChange}
-                placeholder="Enter your email or Phone number"
+                placeholder={t.contact.emailPlaceholder}
                 className="w-full rounded-3xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium mb-1 ml-3">
-                About your inquiry
+                {t.contact.inquiry}
               </label>
               <textarea
                 name="message"
-                placeholder="Enter your message"
+                placeholder={t.contact.messagePlaceholder}
                 rows={4}
                 value={form.message}
                 onChange={handleChange}
@@ -144,7 +144,7 @@ const ContactUs = () => {
             {error && <p className="text-red-600 text-sm">{error}</p>}
             {success && <p className="text-green-600 text-sm">{success}</p>}
 
-            <Button  text={loading ? "Sending..." : "Send"} className="w-full text-base" disabled={loading}/>
+            <Button text={loading ? t.contact.sending : t.contact.send} className="w-full text-base" disabled={loading}/>
           </form>
         </div>
       </div>

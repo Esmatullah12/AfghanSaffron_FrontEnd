@@ -7,8 +7,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "../schemas/registerSchema";
 import type { RegisterFormData } from "../schemas/registerSchema";
+import { useLanguage } from "../../../i18n/LanguageContext";
 
 const RegisterForm: React.FC = () => {
+  const { t } = useLanguage();
   const {
     register,
     handleSubmit,
@@ -46,7 +48,7 @@ const RegisterForm: React.FC = () => {
 
         <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-3xl font-display font-semibold text-primary">
-            CREATE ACCOUNT
+            {t.register.title}
           </h2>
 
           <div className="grid grid-cols-2 gap-4">
@@ -54,7 +56,7 @@ const RegisterForm: React.FC = () => {
               <input
                 className="bg-transparent reg-input border border-gray-300 text-primary px-3 h-9 rounded-full outline-none"
                 {...register("firstName")}
-                placeholder="First Name"
+                placeholder={t.register.firstName}
               />
               {errors.firstName && (
                 <p className="text-red-500 text-xs ml-2">{errors.firstName.message}</p>
@@ -64,7 +66,7 @@ const RegisterForm: React.FC = () => {
               <input
                 className="bg-transparent reg-input border border-gray-300 text-primary px-3 h-9 rounded-full outline-none"
                 {...register("lastName")}
-                placeholder="LastName"
+                placeholder={t.register.lastName}
               />
               {errors.lastName && (
                 <p className="text-red-500 text-xs ml-2">{errors.lastName.message}</p>
@@ -77,7 +79,7 @@ const RegisterForm: React.FC = () => {
               className="bg-transparent reg-input border border-gray-300 text-primary px-3 h-9 rounded-full outline-none"
               type="email"
               {...register("email")}
-              placeholder="Email"
+              placeholder={t.register.email}
             />
             {errors.email && (
               <p className="text-red-500 text-xs ml-2">{errors.email.message}</p>
@@ -93,7 +95,7 @@ const RegisterForm: React.FC = () => {
               <input
                 className="reg-input bg-transparent border w-full border-gray-300 text-primary px-3 h-9 rounded-full outline-none"
                 {...register("phone")}
-                placeholder="Phone"
+                placeholder={t.register.phone}
               />
               {errors.phone && (
                 <p className="text-red-500 text-xs ml-2">
@@ -107,7 +109,7 @@ const RegisterForm: React.FC = () => {
             <textarea
               className="p-3 h-14 w-full reg-input border border-gray-300 rounded-2xl bg-transparent text-primary resize-none outline-none"
               {...register("address")}
-              placeholder="Shipping Address"
+              placeholder={t.register.address}
             />
             {errors.address && (
               <p className="text-red-500 text-xs ml-2">{errors.address.message}</p>
@@ -119,7 +121,7 @@ const RegisterForm: React.FC = () => {
               className="bg-transparent reg-input border border-gray-300 text-primary px-3 h-9 rounded-full outline-none"
               type="password"
               {...register("password")}
-              placeholder="Password"
+              placeholder={t.register.password}
             />
             {errors.password && (
               <p className="text-red-500 text-xs ml-2">{errors.password.message}</p>
@@ -131,7 +133,7 @@ const RegisterForm: React.FC = () => {
               className="bg-transparent reg-input border border-gray-300 text-primary px-3 h-9 rounded-full outline-none"
               type="password"
               {...register("confirmPassword")}
-              placeholder="Confirm Password"
+              placeholder={t.register.confirmPassword}
             />
             {errors.confirmPassword && (
               <p className="text-red-500 text-xs ml-2">{errors.confirmPassword.message}</p>
@@ -164,8 +166,8 @@ const RegisterForm: React.FC = () => {
               </div>
 
               <label htmlFor="terms-checkbox" className="text-primary cursor-pointer select-none pb-1">
-                I agree to the{" "}
-                <span className="font-bold underline cursor-pointer">Terms &amp; Conditions</span>
+                {t.register.termsPrefix}{" "}
+                <span className="font-bold underline cursor-pointer">{t.register.termsLink}</span>
               </label>
             </div>
             {errors.termsAccepted && (
@@ -175,7 +177,7 @@ const RegisterForm: React.FC = () => {
 
           <Button
             disabled={isSubmitting}
-            text={isSubmitting ? "Creating..." : "Create Account"}
+            text={isSubmitting ? t.register.creating : t.register.create}
             className="h-10"
           />
           <div className="flex justify-center">

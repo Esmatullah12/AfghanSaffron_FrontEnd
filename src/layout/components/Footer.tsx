@@ -5,6 +5,7 @@ import { GrLocation } from "react-icons/gr";
 import Logo from "../../assets/Logo.png";
 import { Button, SocialMediaLinks } from "../../components/ui";
 import api from "../../api/axiosInstance";
+import { useLanguage } from "../../i18n/LanguageContext";
 
 interface Email {
   email: string;
@@ -12,6 +13,7 @@ interface Email {
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
   const [form, setForm] = useState<Email>({
     email: "",
   })
@@ -54,40 +56,40 @@ const Footer: React.FC = () => {
             </div>
 
             <p className="text-sm leading-relaxed text-center md:text-left mb-5 max-w-xs">
-              Learn To Love Growth And Change<br />
-              <span className="font-semibold">And You Will Be A Success.</span>
+              {t.footer.tagline1}<br />
+              <span className="font-semibold">{t.footer.tagline2}</span>
             </p>
 
             <SocialMediaLinks className="text-primary"/>
 
             <p className="text-xs text-gray-500 mt-4">
-              Follow us: <span className="font-medium">@Esmatullah173</span>
+              {t.footer.followUs} <span className="font-medium">@Esmatullah173</span>
             </p>
           </div>
 
           <div className="flex flex-col items-center md:items-start mt-8 text-center md:text-left">
             <h4 className="text-sm font-bold text-primary mb-5 uppercase tracking-wider">
-              Explore
+              {t.footer.explore}
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <a href="#bestseller" className="hover:text-primary transition">
-                  Best Seller
+                  {t.footer.bestSeller}
                 </a>
               </li>
               <li>
                 <a href="#saffron" className="hover:text-primary transition">
-                  Premium Saffron
+                  {t.footer.premiumSaffron}
                 </a>
               </li>
               <li>
                 <a href="#track" className="hover:text-primary transition">
-                  Track Your Order
+                  {t.footer.trackOrder}
                 </a>
               </li>
               <li>
                 <a href="#about" className="hover:text-primary transition">
-                  About Us
+                  {t.footer.aboutUs}
                 </a>
               </li>
             </ul>
@@ -95,13 +97,13 @@ const Footer: React.FC = () => {
 
           <div className="flex flex-col items-center md:items-start mt-8 ">
             <h4 className="text-sm font-bold text-primary mb-5 uppercase tracking-wider">
-              Contact Us
+              {t.footer.contactUs}
             </h4>
             <div className="space-y-4 text-sm">
               <p className="flex items-start gap-2">
                 <GrLocation className="text-primary mt-0.5" size={20} />
                 <span className="text-center md:text-left">
-                  Kabul, Afghanistan<br />
+                  {t.footer.location}<br />
                 </span>
               </p>
               <p className="flex items-center just gap-2">
@@ -121,20 +123,20 @@ const Footer: React.FC = () => {
 
           <div className="flex flex-col items-center md:items-start mt-8">
             <h4 className="text-sm font-bold text-primary mb-5 uppercase tracking-wider">
-              Stay Updated
+              {t.footer.stayUpdated}
             </h4>
             <p className="text-sm mb-4 max-w-xs">
-              Receive special offers and saffron harvest updates.
+              {t.footer.newsletter}
             </p>
             <form className="flex flex-col sm:flex-row gap-2 w-full max-w-xs  h-9">
               <input
                 type="email"
-                placeholder="Enter e-mail"
+                placeholder={t.footer.emailPlaceholder}
                 className="px-4 py-2.5 border border-primary/40 rounded-full focus:outline-none text-sm placeholder-gray-500 focus:border-primary"
                 value={form.email}
                 onChange={handleChange}
               />
-            <Button disabled={false} text="JOIN" onClick={(e) => {
+            <Button disabled={false} text={t.footer.join} onClick={(e) => {
               e.preventDefault();
               handleSubscribe()
 
@@ -146,8 +148,8 @@ const Footer: React.FC = () => {
 
         <div className="mt-12 pt-6 border-t border-purple-300 text-center text-xs text-gray-600">
           <p>
-            © {currentYear} <span className="font-bold text-primary">AfghanSaffron</span>. All rights reserved. 
-            | Proudly from <span className="text-primary font-medium">Afghanistan</span>
+            © {currentYear} <span className="font-bold text-primary">AfghanSaffron</span>. {t.footer.allRights} 
+            | {t.footer.proudlyFrom} <span className="text-primary font-medium">Afghanistan</span>
           </p>
         </div>
       </div>

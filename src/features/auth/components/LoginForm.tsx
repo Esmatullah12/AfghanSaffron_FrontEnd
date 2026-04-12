@@ -1,6 +1,5 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { FiX, FiEye, FiEyeOff } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
 import { Button } from "../../../components/ui";
 import type { AppDispatch } from "../../../store/store";
 import { useDispatch } from "react-redux";
@@ -8,7 +7,7 @@ import { loginUser } from "../authSlice";
 import { getLocalLikes } from "../../../utils/localStorageHelpers";
 import { useNavigate } from "react-router-dom";
 import GoogleLoginButton from "../../../components/ui/GoogleLoginButton";
-
+import { useLanguage } from "../../../i18n/LanguageContext";
 
 type Props = {
   onClose: () => void;
@@ -16,7 +15,8 @@ type Props = {
 
 export const LoginForm = ({ onClose }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ export const LoginForm = ({ onClose }: Props) => {
     setError("");
 
     if (!email || !password) {
-      setError("Email and password are required");
+      setError(t.login.requiredError);
       return;
     }
 
@@ -38,32 +38,31 @@ export const LoginForm = ({ onClose }: Props) => {
       })
     );
 
-    // If login failed → DO NOT close modal
     if (loginUser.rejected.match(result)) {
-      setError("Email or password is incorrect");
+      setError(t.login.incorrectError);
       return;
     }
 
-    const user = result.payload; // assuming loginUser returns user info including token
-  const localLikes = getLocalLikes();
+    const user = result.payload;
+    const localLikes = getLocalLikes();
 
-  if (localLikes.length > 0) {
-    try {
-      await fetch(`${import.meta.env.VITE_API_URL}/favorites/sync`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({ productIds: localLikes }),
-      });
+    if (localLikes.length > 0) {
+      try {
+        await fetch(`${import.meta.env.VITE_API_URL}/favorites/sync`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({ productIds: localLikes }),
+        });
 
-        localStorage.removeItem("likedProducts");
-      } catch (err) {
-        console.error("Failed to sync local likes", err);
+          localStorage.removeItem("likedProducts");
+        } catch (err) {
+          console.error("Failed to sync local likes", err);
+        }
       }
-    }
-    onClose();
+      onClose();
   };
 
   return (
@@ -75,25 +74,25 @@ export const LoginForm = ({ onClose }: Props) => {
               <FiX size={22} className="text-gray-600 hover:text-black" />
             </button>
 
-            <h2 className="text-2xl font-bold text-center">Login to your Account</h2>
+            <h2 className="text-2xl font-bold text-center">{t.login.title}</h2>
             <p className="text-center text-gray-500 text-sm mt-1">
-              Login and start shopping now!
+              {t.login.subtitle}
             </p>
 
           <div className="mt-3">
-            <label className="text-sm text-gray-600 font-medium">Enter Email</label>
+            <label className="text-sm text-gray-600 font-medium">{t.login.emailLabel}</label>
             <div className="mt-1 flex h-10 items-center bg-transparent reg-input border border-gray-400 text-primary px-3 h-9 rounded-full outline-none">
-              <input onChange={(e) => setEmail(e.target.value)} type="text" className="flex-1 py-3 outline-none" placeholder="Enter Email / Phone No" />
+              <input onChange={(e) => setEmail(e.target.value)} type="text" className="flex-1 py-3 outline-none" placeholder={t.login.emailPlaceholder} />
             </div>
           </div>
 
           <div className="mt-1">
-            <label className="text-sm text-gray-600 font-medium">Password</label>
+            <label className="text-sm text-gray-600 font-medium">{t.login.passwordLabel}</label>
             <div className="mt-1 flex h-10 items-center bg-transparent reg-input border border-gray-400 text-primary px-3 rounded-full outline-none">
               <input
                 type={showPassword ? "text" : "password"}
                 className="flex-1 py-3 outline-none"
-                placeholder="Password"
+                placeholder={t.login.passwordPlaceholder}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button onClick={() => setShowPassword(!showPassword)} >
@@ -108,13 +107,13 @@ export const LoginForm = ({ onClose }: Props) => {
             </div>
           )}
 
-          <Button disabled={false} onClick={handleLogin} text="Sign In" className="w-full h-10 mt-4"/>
+          <Button disabled={false} onClick={handleLogin} text={t.login.signIn} className="w-full h-10 mt-4"/>
 
-            <div className="text-center my-2 text-sm text-gray-500">Or Sign in with</div>
+            <div className="text-center my-2 text-sm text-gray-500">{t.login.orSignIn}</div>
             <GoogleLoginButton />
             <p className="text-center text-sm text-gray-600 mt-4">
-              Don’t have an account?{" "}
-              <span onClick={() => navigate("/register")} className="text-purple-600 cursor-pointer font-bold">Request Now</span>
+              {t.login.noAccount}{" "}
+              <span onClick={() => navigate("/register")} className="text-purple-600 cursor-pointer font-bold">{t.login.requestNow}</span>
             </p>
           </div>
       </div>

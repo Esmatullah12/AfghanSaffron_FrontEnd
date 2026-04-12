@@ -1,8 +1,11 @@
 import React from "react";
 import Kabul from "../../../assets/aboutUs.png";
 import Button from "../../../components/ui/Button";
+import { useLanguage } from "../../../i18n/LanguageContext";
 
 const AboutUs: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section id="about-us" className="relative bg-white py-0 overflow-hidden">
 
@@ -11,33 +14,17 @@ const AboutUs: React.FC = () => {
 
         <div className="relative z-10 px-6 pt-16 text-white">
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-            About Our Saffron
+            {t.aboutUs.heading}
           </h2>
 
-          <p className="leading-relaxed mb-5">
-            Our journey began in the heart of Herat, where saffron has been
-            cultivated for centuries. We are passionate about preserving this
-            golden heritage by bringing you saffron that is pure, ethically
-            harvested, and hand-picked with love.
-          </p>
+          <p className="leading-relaxed mb-5">{t.aboutUs.p1}</p>
+          <p className="leading-relaxed mb-5">{t.aboutUs.p2}</p>
+          <p className="leading-relaxed mb-5">{t.aboutUs.p3}</p>
 
-          <p className="leading-relaxed mb-5">
-            Each delicate thread of our saffron is carefully selected from the
-            finest crocus flowers, dried naturally to maintain its rich aroma and
-            vibrant color. We ensure that every package embodies luxury, purity,
-            and authenticity — directly from our farms to your kitchen.
-          </p>
-
-          <p className="leading-relaxed mb-5 ">
-            With generations of expertise, we preserve the essence of Afghanistan’s
-            red gold with unmatched quality and care.
-          </p>
-
-          <Button disabled={false} text="Discover Our Story" className="border"/>
+          <Button disabled={false} text={t.aboutUs.cta} className="border"/>
         </div>
       </div>
 
-      {/* DESKTOP VERSION (UNCHANGED) */}
       <div className="hidden lg:block py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="relative flex flex-col lg:flex-row items-center">
@@ -53,29 +40,14 @@ const AboutUs: React.FC = () => {
             <div className="absolute lg:right-0 lg:w-2/3 w-full lg:ml-8 p-6 lg:p-0">
               <div className="w-full backdrop-blur-md bg-white/40 border border-gray-300 rounded-2xl p-8 shadow-2xl mx-auto lg:mx-0">
                 <h2 className="font-display text-4xl font-bold text-primary mb-6">
-                  About Our Saffron
+                  {t.aboutUs.heading}
                 </h2>
 
-                <p className="text-gray-800 leading-relaxed mb-6">
-                  Our journey began in the heart of Herat, where saffron has been
-                  cultivated for centuries. We are passionate about preserving this
-                  golden heritage by bringing you saffron that is pure, ethically
-                  harvested, and hand-picked with love.
-                </p>
+                <p className="text-gray-800 leading-relaxed mb-6">{t.aboutUs.p1}</p>
+                <p className="text-gray-800 leading-relaxed mb-6">{t.aboutUs.p2}</p>
+                <p className="text-gray-800 leading-relaxed mb-6">{t.aboutUs.p3}</p>
 
-                <p className="text-gray-800 leading-relaxed mb-6">
-                  Each delicate thread of our saffron is carefully selected from the
-                  finest crocus flowers, dried naturally to maintain its rich aroma and
-                  vibrant color. We ensure that every package embodies luxury, purity,
-                  and authenticity — directly from our farms to your kitchen.
-                </p>
-
-                <p className="text-gray-800 leading-relaxed mb-6">
-                  With generations of expertise, we preserve the essence of Afghanistan’s
-                  red gold with unmatched quality and care.
-                </p>
-
-                <Button disabled={false} text="Discover Our Story" />
+                <Button disabled={false} text={t.aboutUs.cta} />
               </div>
             </div>
 

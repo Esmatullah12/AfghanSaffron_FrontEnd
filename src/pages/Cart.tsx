@@ -4,16 +4,19 @@ import Layout from "../layout/Layout";
 import { CartItemList, CouponBox, OrderSummary, PaymentMethods, clearCart, TouchNGoModal } from "../features/cart";
 import type { RootState } from "../store/store";
 import api from "../api/axiosInstance";
+import { useToast } from "../components/ui";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
+  const { showToast } = useToast();
+  const { t } = useLanguage();
 
   const [paymentMethod, setPaymentMethod] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Calculate total amount
   const productsCost = useMemo(() => {
     return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }, [cartItems]);
@@ -23,7 +26,7 @@ export default function Cart() {
 
   const placeOrder = async () => {
     if (cartItems.length === 0) {
-      alert("Your cart is empty");
+      showToast(t.cart.toastEmpty, "error");
       return;
     }
 
@@ -43,11 +46,11 @@ export default function Cart() {
 
       dispatch(clearCart());
       setIsModalOpen(false);
-      alert("Order placed successfully ✅");
+      showToast(t.cart.toastSuccess, "success");
 
     } catch (error) {
       console.error(error);
-      alert("Failed to place order ❌");
+      showToast(t.cart.toastFailed, "error");
     } finally {
       setLoading(false);
     }
@@ -55,12 +58,12 @@ export default function Cart() {
 
   const handleCheckout = () => {
     if (!paymentMethod) {
-      alert("Please select a payment method");
+      showToast(t.cart.toastSelectPayment, "error");
       return;
     }
 
     if (cartItems.length === 0) {
-      alert("Your cart is empty");
+      showToast(t.cart.toastEmpty, "error");
       return;
     }
 
@@ -77,11 +80,11 @@ export default function Cart() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 ">
 
         <div className="lg:col-span-2 space-y-6 p-6 rounded-2xl bg-white border border-gray-300">
-          <h2 className="text-2xl font-semibold font-display text-primary border-b pb-2 border-gray-300">Shopping Cart</h2>
+          <h2 className="text-2xl font-semibold font-display text-primary border-b pb-2 border-gray-300">{t.cart.title}</h2>
           <div className="grid grid-cols-4 text-center gap-4 mb-2 font-bold">
-            <div>Product</div>
-            <div className="pl-8">Quantity</div>
-            <div className="flex justify-end">Price</div>
+            <div>{t.cart.product}</div>
+            <div className="pl-8">{t.cart.quantity}</div>
+            <div className="flex justify-end">{t.cart.price}</div>
           </div>
 
           <CartItemList />
@@ -101,7 +104,6 @@ export default function Cart() {
       </div>
     </div>
 
-    {/* Touch 'n Go Payment Modal */}
     <TouchNGoModal
       isOpen={isModalOpen}
       onClose={() => setIsModalOpen(false)}

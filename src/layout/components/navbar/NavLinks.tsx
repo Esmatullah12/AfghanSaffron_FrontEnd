@@ -1,16 +1,17 @@
-import { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const navItems = [
-  { label: "PRODUCTS", to: "/#product-showcase" },
-  { label: "ABOUT US", to: "/#about-us" },
-  { label: "CONTACT US", to: "/#contact-us" },
-];
+import { useLanguage } from "../../../i18n/LanguageContext";
 
 const NavLinks = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
-  const handleClick = (to:string) => {
+  const navItems = [
+    { label: t.nav.products, to: "/#product-showcase" },
+    { label: t.nav.aboutUs, to: "/#about-us" },
+    { label: t.nav.contactUs, to: "/#contact-us" },
+  ];
+
+  const handleClick = (to: string) => {
     navigate(to);
   };
 

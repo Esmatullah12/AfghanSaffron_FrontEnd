@@ -1,16 +1,16 @@
-// components/navbar/UserMenu/UserMenuContent.tsx
 import { AiOutlineUser, AiOutlineHistory, AiOutlineHeart } from "react-icons/ai";
 import { IoLogOutOutline } from "react-icons/io5";
 import { Button, UserProfileImg } from "../../../../components/ui";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../../store/store";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 
 interface UserMenuContentProps {
   isLoggedIn: boolean;
   onClose: () => void;
   onLogout: () => void;
-  openLogin: () => void; 
+  openLogin: () => void;
 }
 
 const UserMenuContent = ({
@@ -20,25 +20,27 @@ const UserMenuContent = ({
   openLogin,
 }: UserMenuContentProps) => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
-  const handleClick = (to:string) => {
+  const handleClick = (to: string) => {
     navigate(to);
   };
 
   const user = useSelector((state: RootState) => state.auth.user?.userInfo);
 
-
   if (isLoggedIn && user) {
+    const menuItems = [
+      { icon: AiOutlineUser, label: t.userMenu.myProfile, to: "/profile" },
+      { icon: AiOutlineHistory, label: t.userMenu.orderHistory, to: "/profile/#order-history" },
+      { icon: AiOutlineHeart, label: t.userMenu.wishlist, to: "/profile/#fav-products" },
+    ];
+
     return (
       <>
         <UserProfileImg/>
 
         <div className="py-2">
-          {[
-            { icon: AiOutlineUser, label: "My Profile", to: "/profile" },
-            { icon: AiOutlineHistory, label: "Order History", to: "/profile/#order-history" },
-            { icon: AiOutlineHeart, label: "Wishlist", to: "/profile/#fav-products" },
-          ].map((item) => (
+          {menuItems.map((item) => (
             <a
               key={item.label}
               onClick={() => { onClose(); handleClick(item.to); }}
@@ -54,7 +56,7 @@ const UserMenuContent = ({
             className="flex w-full items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50 transition-all"
           >
             <IoLogOutOutline className="h-5 w-5" />
-            <span>Logout</span>
+            <span>{t.userMenu.logout}</span>
           </button>
         </div>
       </>
@@ -68,16 +70,16 @@ const UserMenuContent = ({
         <AiOutlineUser className="h-12 w-12 text-gray-400" />
       </div>
 
-      <h3 className="text-lg font-semibold text-gray-800">Welcome!</h3>
-      <p className="text-sm text-gray-600">Sign in to access your account</p>
+      <h3 className="text-lg font-semibold text-gray-800">{t.userMenu.welcome}</h3>
+      <p className="text-sm text-gray-600">{t.userMenu.signInPrompt}</p>
 
       <div className="space-y-3 pt-3 flex flex-col items-center">
-        <Button disabled={false} className="w-full" text="Login" onClick={() => { openLogin(); setTimeout(() => onClose(), 50); }} />
+        <Button disabled={false} className="w-full" text={t.userMenu.login} onClick={() => { openLogin(); setTimeout(() => onClose(), 50); }} />
 
         <Button
           disabled={false}
           className="w-full"
-          text="Sign Up"
+          text={t.userMenu.signUp}
           onClick={() => {
             onClose();
             (window.location.href = "/AfghanSaffron_FrontEnd/register");

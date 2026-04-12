@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import api from "../../../api/axiosInstance";
 import { resolveImageUrl } from "../../../utils/index";
+import { useLanguage } from "../../../i18n/LanguageContext";
 
 interface testimonial{
   id: number,
@@ -21,6 +22,7 @@ interface testimonial{
 const Testimonial: React.FC = () => {
   const [reviews, setReviews] = useState<testimonial[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const fetchUserReviews = async() =>{
@@ -50,12 +52,12 @@ const Testimonial: React.FC = () => {
   return (
     <section className="py-20 bg-gray-50">
       <h2 className="font-display font-semibold text-primary text-center text-4xl mb-12">
-        What Our Customers Say
+        {t.testimonials.heading}
       </h2>
       {loading ? (
-        <p className="text-center font-display text-xl py-4 text-gray-500">Loading reviews...</p>
+        <p className="text-center font-display text-xl py-4 text-gray-500">{t.testimonials.loading}</p>
       ) : reviews.length === 0 ? (
-        <p className="text-center font-display text-xl py-4 text-gray-500">No testimonials available.</p>
+        <p className="text-center font-display text-xl py-4 text-gray-500">{t.testimonials.empty}</p>
       ) : (
         <Swiper
         slidesPerView={1}
@@ -79,7 +81,7 @@ const Testimonial: React.FC = () => {
           <SwiperSlide key={t.id}>
             <div className="p-8 md:p-4 mb-6">
               <div className="bg-white rounded-xl shadow-xl p-8 flex flex-col h-full border border-gray-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
-                <div className="text-[#5A00A3] text-7xl font-bold mb-4 leading-none">”</div>
+                <div className="text-[#5A00A3] text-7xl font-bold mb-4 leading-none">"</div>
 
                 <p className="text-gray-800 text-lg font-medium leading-relaxed grow">
                   {t.comment}
@@ -116,4 +118,4 @@ const Testimonial: React.FC = () => {
   );
 };
 
-export default Testimonial; 
+export default Testimonial;
