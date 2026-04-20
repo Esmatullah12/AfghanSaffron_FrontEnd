@@ -1,6 +1,4 @@
-import type { Translations } from "./en";
-
-const ms: Translations = {
+const ms = {
   nav: {
     products: "PRODUK",
     aboutUs: "TENTANG KAMI",
