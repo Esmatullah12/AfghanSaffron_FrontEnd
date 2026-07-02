@@ -5,7 +5,6 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  // Get token from localStorage 'user' object
   const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
   const token = storedUser.token;
 
@@ -13,7 +12,9 @@ api.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  // If sending FormData, remove Content-Type to let browser set it
+  const language = localStorage.getItem("language") || "en";
+  config.headers["Accept-Language"] = language;
+
   if (config.data instanceof FormData) {
     delete config.headers["Content-Type"];
   }

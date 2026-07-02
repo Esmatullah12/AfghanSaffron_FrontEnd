@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../store/store";
 import Layout from "../layout/Layout";
-import { addToCart } from "../features/cart";
 import { IncrementDecrement, Button } from "../components/ui";
 import { LikeButton, StarRating, UserComment } from "../features/products/components";
 import features from "../data/features";
@@ -16,6 +15,7 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from "../features/products";
+import { addToCart } from "../features/cart/cartSlice";
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

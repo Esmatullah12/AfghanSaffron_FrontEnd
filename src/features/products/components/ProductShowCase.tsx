@@ -3,15 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../store/store";
 import { fetchProducts } from "../productSlice";
 import ProductList from "./ProductList";
+import { useLanguage } from "../../../i18n/LanguageContext";
 
 const ProductShowCase: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const loading = useSelector((state: RootState) => state.product.list.loading);
   const error = useSelector((state: RootState) => state.product.list.error);
+  const { language } = useLanguage();
 
   useEffect(() => {
     dispatch(fetchProducts({ pageIndex: 0, pageSize: 10, searchBy: "" }));
-  }, [dispatch]);
+  }, [dispatch, language]);
 
   return (
   <section id="product-showcase" className="bg-gray-50 py-16">

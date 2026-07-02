@@ -5,11 +5,11 @@ import { FaPlus } from "react-icons/fa";
 import { Button } from "../../../components/ui";
 import LikeButton from "./LikeButton";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../cart";
 import type { AppDispatch } from "../../../store/store";
 import { addToFavorites, removeFromFavorites } from "../productSlice";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
+import { addToCart } from "../../cart/cartSlice";
 
 interface ProductCardProps {
   product: {

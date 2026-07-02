@@ -46,8 +46,7 @@ const TouchNGoModal: React.FC<TouchNGoModalProps> = ({
         <Button
           onClick={onPaid}
           text={t.touchngo.paid}
-          className="w-full rounded-full font-semibold shadow-lg shadow-primary/20"
-        />
+          className="w-full rounded-full font-semibold shadow-lg shadow-primary/20" disabled={false}        />
       </div>
     </div>
   );

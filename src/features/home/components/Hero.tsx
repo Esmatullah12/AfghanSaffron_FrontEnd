@@ -4,6 +4,7 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import api from "../../../api/axiosInstance";
+import { useLanguage } from "../../../i18n/LanguageContext";
 
 interface Slide{
   id:number,
@@ -14,6 +15,7 @@ interface Slide{
 
 const Hero: React.FC = () => {
   const [slides, setSlides] = useState<Slide[]>([]);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const fetchSlides = async () => {
@@ -25,7 +27,7 @@ const Hero: React.FC = () => {
       }
     }
     fetchSlides();
-  }, [])
+  }, [language])
 
   const baseUrl = import.meta.env.VITE_API_URL;
   return (

@@ -15,8 +15,8 @@ const ConfirmationModal = ({
   isOpen,
   title,
   message,
-  confirmText = "Confirm",
-  cancelText = "Cancel",
+  // confirmText = "Confirm",
+  // cancelText = "Cancel",
   onConfirm,
   onCancel
 }: ConfirmationModalProps) => {

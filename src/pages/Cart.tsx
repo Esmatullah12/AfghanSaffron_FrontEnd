@@ -1,11 +1,12 @@
 import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "../layout/Layout";
-import { CartItemList, CouponBox, OrderSummary, PaymentMethods, clearCart, TouchNGoModal } from "../features/cart";
+import { CartItemList, CouponBox, OrderSummary, PaymentMethods, TouchNGoModal } from "../features/cart";
 import type { RootState } from "../store/store";
 import api from "../api/axiosInstance";
 import { useToast } from "../components/ui";
 import { useLanguage } from "../i18n/LanguageContext";
+import { clearCart } from "../features/cart/cartSlice";
 
 export default function Cart() {
   const dispatch = useDispatch();

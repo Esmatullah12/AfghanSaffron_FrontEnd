@@ -5,7 +5,9 @@ import type { Translations } from "./translations/en";
 
 type Language = "en" | "ms";
 
-const translations: Record<Language, Translations> = { en, ms };
+// use a looser type here to avoid strict literal type mismatches between
+// different translation modules
+const translations: Record<Language, any> = { en, ms };
 
 interface LanguageContextValue {
   language: Language;
@@ -16,10 +18,17 @@ interface LanguageContextValue {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
+  const [language, setLanguage] = useState<Language>(
+    () => (localStorage.getItem("language") as Language) || "en"
+  );
+
+  const handleSetLanguage = (lang: Language) => {
+    localStorage.setItem("language", lang);
+    setLanguage(lang);
+  };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t: translations[language] }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t: translations[language] }}>
       {children}
     </LanguageContext.Provider>
   );

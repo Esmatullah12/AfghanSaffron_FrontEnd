@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import type { RootState } from "../../../../store/store"; // adjust path
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import type { RootState } from "../../../store/store";
 
 const CartButton = () => {
   const items = useSelector((state: RootState) => state.cart.items);
