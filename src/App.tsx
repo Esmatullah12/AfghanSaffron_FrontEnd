@@ -13,7 +13,7 @@ function App() {
   return (
     <LanguageProvider>
     <ToastProvider>
-      <Router basename="/AfghanSaffron_FrontEnd">
+      <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetail />} />
