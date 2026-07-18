@@ -1,15 +1,17 @@
 import { useSelector } from "react-redux";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import type { RootState } from "../../../store/store";
+import { useNavigate } from "react-router-dom";
 
 const CartButton = () => {
   const items = useSelector((state: RootState) => state.cart.items);
+    const navigate = useNavigate();
 
   const count = items.length;
   return (
     <button
       className="relative p-3 rounded-2xl hover:bg-purple-50 transition-all"
-      onClick={() => (window.location.href = "/AfghanSaffron_FrontEnd/cart")}
+      onClick={() => navigate("/shopping-cart")}
     >
       <HiOutlineShoppingBag className="h-7 w-7 text-gray-700 hover:text-primary" />
       {count > 0 && (
