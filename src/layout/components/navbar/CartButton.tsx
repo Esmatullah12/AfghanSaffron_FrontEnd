@@ -9,7 +9,7 @@ const CartButton = () => {
   return (
     <button
       className="relative p-3 rounded-2xl hover:bg-purple-50 transition-all"
-      onClick={() => (window.location.href = "/AfghanSaffron_FrontEnd/cart")}
+      onClick={() => (window.location.href = "/cart")}
     >
       <HiOutlineShoppingBag className="h-7 w-7 text-gray-700 hover:text-primary" />
       {count > 0 && (

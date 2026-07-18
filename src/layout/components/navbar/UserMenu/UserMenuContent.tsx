@@ -82,7 +82,7 @@ const UserMenuContent = ({
           text={t.userMenu.signUp}
           onClick={() => {
             onClose();
-            (window.location.href = "/AfghanSaffron_FrontEnd/register");
+            (window.location.href = "/register");
           }}
         />
       </div>
