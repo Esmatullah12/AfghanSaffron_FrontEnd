@@ -82,7 +82,7 @@ const UserMenuContent = ({
           text={t.userMenu.signUp}
           onClick={() => {
             onClose();
-            (window.location.href = "/register");
+            navigate("/register");
           }}
         />
       </div>
