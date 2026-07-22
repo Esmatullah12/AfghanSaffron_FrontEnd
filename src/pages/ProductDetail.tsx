@@ -93,7 +93,11 @@ const ProductDetail: React.FC = () => {
   return (
     <Layout>
       {loading ? (
-          <div className="text-center font-display text-xl py-4 text-gray-500">Loading Product Detail...</div>
+        <div className="flex items-center justify-center h-full min-h-[50vh]">
+          <div className="text-center font-display text-xl text-gray-500">
+            Loading Product Detail...
+          </div>
+        </div>
       ) : (
         <div>
           <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-0 pt-12 pb-0 bg-white">

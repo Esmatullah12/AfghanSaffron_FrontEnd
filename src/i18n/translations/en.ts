@@ -70,6 +70,8 @@ const en = {
     join: "JOIN",
     allRights: "All rights reserved.",
     proudlyFrom: "Proudly from",
+    invalidEmail: "Please enter a valid email address.",
+    validEmail: "Email subscribed successfully!",
   },
   cart: {
     title: "Shopping Cart",

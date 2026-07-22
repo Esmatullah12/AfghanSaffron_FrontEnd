@@ -70,6 +70,8 @@ const ms = {
     join: "SERTAI",
     allRights: "Hak cipta terpelihara.",
     proudlyFrom: "Dengan bangga dari",
+    invalidEmail: "Sila masukkan alamat e-mel yang sah.",
+    validEmail: "E-mel berjaya dilanggan!",
   },
   cart: {
     title: "Troli Beli-belah",

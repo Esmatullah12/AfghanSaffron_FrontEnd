@@ -3,9 +3,10 @@ import { FiPhone } from "react-icons/fi";
 import { LuMail } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
 import Logo from "../../assets/Logo.png";
-import { Button, SocialMediaLinks } from "../../components/ui";
+import { Button, SocialMediaLinks, useToast } from "../../components/ui";
 import api from "../../api/axiosInstance";
 import { useLanguage } from "../../i18n/LanguageContext";
+import { subscriberSchema } from "./footerSchema/subscriberSchema";
 
 interface Email {
   email: string;
@@ -14,6 +15,8 @@ interface Email {
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const { t } = useLanguage();
+  const { showToast } = useToast();
+  
   const [form, setForm] = useState<Email>({
     email: "",
   })
@@ -23,20 +26,22 @@ const Footer: React.FC = () => {
     setForm({ email: value})
   }
 
-  const handleSubscribe = async()  => {
-    try{
-      if(!form.email.trim()){
-        console.log("Please enter a valid email address.");
-        return;
-      }
-      await api.post<void>("api/Subscriber", form);
-      console.log("Subscribed successfully!");
-      setForm({email: ""});
-    }catch( err: unknown){
-      console.error("Error subscribing:", err);
-    }
-    
-  };
+const handleSubscribe = async () => {
+  const validation = subscriberSchema.safeParse(form);
+
+  if (!validation.success) {
+    showToast(t.footer.invalidEmail, "error");
+    return;
+  }
+
+  try {
+    await api.post<void>("api/Subscriber", validation.data);
+    showToast(t.footer.validEmail, "success");
+    setForm({ email: "" });
+  } catch (err: unknown) {
+    console.error("Error subscribing:", err);
+  }
+};
 
   return (
     <footer className="bg-[#f2e0fcff] pt-10 pb-3 font-sans border-t border-purple-300">

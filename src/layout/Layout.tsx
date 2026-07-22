@@ -12,9 +12,9 @@ const Layout = ({ children }: LayoutProps) => {
   useScrollToHash();
   
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-        <main>{children}</main>
+        <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );
