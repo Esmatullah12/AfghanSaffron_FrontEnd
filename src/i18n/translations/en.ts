@@ -49,7 +49,7 @@ const en = {
     messagePlaceholder: "Enter your message",
     send: "Send",
     sending: "Sending...",
-    successMsg: "Your message has been sent successfully!",
+    successMsg: "Your message sent successfully!",
     errorMsg: "Failed to send message.",
     unexpectedError: "Unexpected error occurred.",
   },
@@ -72,6 +72,7 @@ const en = {
     proudlyFrom: "Proudly from",
     invalidEmail: "Please enter a valid email address.",
     validEmail: "Email subscribed successfully!",
+    subscribeError: "Unable to subscribe. Please try again.",
   },
   cart: {
     title: "Shopping Cart",

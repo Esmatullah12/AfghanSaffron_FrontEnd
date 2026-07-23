@@ -8,6 +8,7 @@ import { useState } from "react";
 import api from "../../../api/axiosInstance";
 import axios from "axios";
 import { useLanguage } from "../../../i18n/LanguageContext";
+import { useToast } from "../../../components/ui";
 
 interface ContactMessagePayload {
   name: string;
@@ -18,6 +19,7 @@ interface ContactMessagePayload {
 
 const ContactUs = () => {
   const { t } = useLanguage();
+  const { showToast } = useToast();
   const [form, setForm] = useState<ContactMessagePayload>({
     name: "",
     emailOrPhone: "",
@@ -25,8 +27,6 @@ const ContactUs = () => {
   })
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<string>("");
-  const [error, setError] = useState<string>("");
 
   const handleChange =(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,18 +39,16 @@ const ContactUs = () => {
     e.preventDefault();
 
     setLoading(true);
-    setError("");
-    setSuccess("");
 
     try{
       await api.post<void>("api/ContactMessage", form);
-      setSuccess(t.contact.successMsg);
+      showToast(t.contact.successMsg, "success");
       setForm({ name: "", emailOrPhone: "", message: ""});
     }catch (err: unknown){
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message ?? t.contact.errorMsg);
+        showToast(t.contact.errorMsg, "error");
       } else {
-        setError(t.contact.unexpectedError);
+        showToast(t.contact.unexpectedError, "error");
       }
     }finally{
       setLoading(false);
@@ -140,10 +138,6 @@ const ContactUs = () => {
                 className="w-full rounded-3xl border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-
-            {error && <p className="text-red-600 text-sm">{error}</p>}
-            {success && <p className="text-green-600 text-sm">{success}</p>}
-
             <Button text={loading ? t.contact.sending : t.contact.send} className="w-full text-base" disabled={loading}/>
           </form>
         </div>

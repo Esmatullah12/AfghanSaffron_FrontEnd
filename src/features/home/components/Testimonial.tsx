@@ -81,7 +81,7 @@ const Testimonial: React.FC = () => {
           <SwiperSlide key={t.id}>
             <div className="p-8 md:p-4 mb-6">
               <div className="bg-white rounded-xl shadow-xl p-8 flex flex-col h-full border border-gray-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
-                <div className="text-[#5A00A3] text-7xl font-bold mb-4 leading-none">"</div>
+                <div className="text-[#5A00A3] text-8xl font-nunitoSans font-bold mb-4 leading-none">”</div>
 
                 <p className="text-gray-800 text-lg font-medium leading-relaxed grow">
                   {t.comment}

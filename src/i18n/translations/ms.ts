@@ -72,6 +72,7 @@ const ms = {
     proudlyFrom: "Dengan bangga dari",
     invalidEmail: "Sila masukkan alamat e-mel yang sah.",
     validEmail: "E-mel berjaya dilanggan!",
+    subscribeError: "Tidak dapat melanggan. Sila cuba lagi.",
   },
   cart: {
     title: "Troli Beli-belah",

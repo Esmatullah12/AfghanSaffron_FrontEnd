@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { FiPhone } from "react-icons/fi";
 import { LuMail } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
@@ -39,7 +40,11 @@ const handleSubscribe = async () => {
     showToast(t.footer.validEmail, "success");
     setForm({ email: "" });
   } catch (err: unknown) {
-    console.error("Error subscribing:", err);
+    const message = axios.isAxiosError<{ errors?: string[] }>(err)
+      ? err.response?.data?.errors?.[0]
+      : undefined;
+
+    showToast(message ?? `${err}`, "error");
   }
 };
 
